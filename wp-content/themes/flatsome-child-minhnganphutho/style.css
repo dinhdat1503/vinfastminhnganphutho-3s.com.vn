@@ -4984,51 +4984,6 @@ button.vf-btn-secondary:hover * {
   line-height: 1.6 !important;
 }
 
-.vf-footer-top {
-  padding: 50px 0 0 !important;
-}
-
-.vf-footer-cta-box {
-  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-left: 4px solid #2563EB !important;
-  border-radius: 16px !important;
-  padding: 36px 44px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 32px !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25) !important;
-}
-
-.vf-footer-cta-sub {
-  font-size: 11px !important;
-  font-weight: 800 !important;
-  letter-spacing: 2px !important;
-  color: #2563EB !important;
-  text-transform: uppercase !important;
-  display: block !important;
-  margin-bottom: 6px !important;
-}
-
-.vf-footer-cta-title {
-  font-size: 20px !important;
-  font-weight: 800 !important;
-  color: #ffffff !important;
-  margin: 0 0 6px !important;
-}
-
-.vf-footer-cta-desc {
-  color: #94A3B8 !important;
-  font-size: 13.5px !important;
-  margin: 0 !important;
-}
-
-.vf-footer-cta-form {
-  display: flex !important;
-  gap: 12px !important;
-  align-items: center !important;
-  flex-shrink: 0 !important;
 }
 
 .vf-footer-input {
@@ -5354,18 +5309,7 @@ button.vf-btn-secondary:hover * {
 }
 
 @media (max-width: 768px) {
-  .vf-footer-cta-box {
-    flex-direction: column !important;
-    padding: 24px !important;
-    text-align: center !important;
-  }
-  
-  .vf-footer-cta-form {
-    flex-direction: column !important;
-    width: 100% !important;
-  }
-
-  .vf-footer-input {
+.vf-footer-input {
     width: 100% !important;
   }
 
@@ -11653,63 +11597,183 @@ input:checked + .vf-slider:before {
 }
 
 /* ============================================================
-   MOBILE HEADER LAYOUT (HAMBURGER LEFT, LOGO CENTERED, BUTTON RIGHT)
+/* ============================================================
+   MOBILE HEADER LAYOUT — PREMIUM SHOWROOM (TASK: HEADER-MOBILE-01)
+   Bố cục 1 hàng chuẩn CSS Grid: Left (Hamburger) - Center (Logo) - Right (CTA)
+   Áp dụng riêng cho viewport Mobile/Tablet (max-width: 849px)
    ============================================================ */
 @media (max-width: 849px) {
-  .header-main .header-inner {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 8px 12px !important;
-    height: 60px !important;
-    min-height: 60px !important;
+  /* Ẩn Top Bar trên mobile để header gọn gàng, đúng chuẩn showroom cao cấp */
+  #top-bar {
+    display: none !important;
   }
 
+  /* Header Container */
+  #header-main,
+  .header-main {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+    height: 66px !important;
+    min-height: 66px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    overflow: visible !important;
+  }
+
+  /* Inner Grid 3 vùng cân xứng quang học: minmax(44px, 1fr) auto minmax(44px, 1fr) */
+  .header-main .header-inner,
+  .header-main .flex-row {
+    display: grid !important;
+    grid-template-columns: minmax(44px, 1fr) auto minmax(44px, 1fr) !important;
+    align-items: center !important;
+    height: 66px !important;
+    min-height: 66px !important;
+    max-width: 100% !important;
+    padding: 0 16px !important;
+    margin: 0 auto !important;
+    gap: 8px !important;
+    overflow: visible !important;
+  }
+
+  /* 1. LEFT — HAMBURGER MENU (Touch target >= 44x44px) */
   .vf-mobile-header-left {
     display: flex !important;
     align-items: center !important;
-    width: 80px !important;
     justify-content: flex-start !important;
+    justify-self: start !important;
+    width: auto !important;
+    min-width: 44px !important;
     flex-shrink: 0 !important;
   }
 
   .vf-mobile-toggle {
-    background: transparent !important;
-    border: none !important;
-    padding: 6px !important;
-    cursor: pointer !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
     display: flex !important;
     flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
     gap: 5px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0 !important;
     margin: 0 !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  .vf-mobile-toggle:hover,
+  .vf-mobile-toggle:focus-visible {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+    outline: none !important;
   }
 
   .vf-mobile-toggle span {
     display: block !important;
     width: 22px !important;
-    height: 2px !important;
-    background: #1E293B !important;
+    height: 2.2px !important;
+    background: #111827 !important;
     border-radius: 2px !important;
+    transition: transform 0.2s ease, opacity 0.2s ease !important;
   }
 
-  #logo {
-    flex: 1 !important;
+  /* 2. CENTER — BRAND LOGO (Căn giữa tuyệt đối quang học & triệt tiêu max-width 110px Flatsome) */
+  .header-main .logo,
+  #logo,
+  .header-main #logo {
     display: flex !important;
-    justify-content: center !important;
     align-items: center !important;
+    justify-content: center !important;
+    justify-self: center !important;
     margin: 0 auto !important;
-    text-align: center !important;
-  }
-
-  .vf-official-vinhphuc-logo-img {
-    height: 56px !important;
-    max-height: 58px !important;
-    max-width: 200px !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
     width: auto !important;
-    display: block !important;
-    margin: 0 auto !important;
+    flex: none !important;
+    position: static !important;
   }
 
+  #logo a,
+  #logo .brand-logo,
+  #logo .vf-official-img-logo-link {
+    background-color: transparent !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    position: static !important;
+    top: auto !important;
+    transform: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    line-height: 1 !important;
+    max-width: none !important;
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  #logo a:hover {
+    transform: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Kích thước Icon & Text VinFast Minh Ngân Phú Thọ 3S */
+  .brand-icon {
+    width: 34px !important;
+    height: 34px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+
+  .brand-icon svg {
+    width: 34px !important;
+    height: 34px !important;
+    display: block !important;
+  }
+
+  .brand-text {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    line-height: 1.15 !important;
+    text-align: left !important;
+  }
+
+  .brand-title {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    color: #111827 !important;
+    display: block !important;
+    line-height: 1.1 !important;
+  }
+
+  .brand-subtitle {
+    font-size: 8.5px !important;
+    font-weight: 600 !important;
+    color: #64748B !important;
+    letter-spacing: 0.05em !important;
+    white-space: nowrap !important;
+    display: block !important;
+    line-height: 1.1 !important;
+  }
+
+  /* 3. RIGHT — TEST DRIVE CTA (Nút LÁI THỬ xanh #2563EB) */
   .vf-mobile-header-right {
     display: none !important;
   }
@@ -11718,37 +11782,101 @@ input:checked + .vf-slider:before {
     display: flex !important;
     align-items: center !important;
     justify-content: flex-end !important;
-    width: 80px !important;
+    justify-self: end !important;
+    width: auto !important;
+    min-width: 44px !important;
     flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .header-right .vf-header-btn,
   .header-right .vf-btn {
-    height: 34px !important;
-    line-height: 34px !important;
-    padding: 0 10px !important;
-    font-size: 11px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.3px !important;
-    border-radius: 4px !important;
-    white-space: nowrap !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    background: #2563EB !important;
-    color: #ffffff !important;
-    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35) !important;
-    width: auto !important;
-    min-width: auto !important;
-    max-width: none !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    line-height: 40px !important;
+    padding: 0 14px !important;
+    background-color: #2563EB !important;
+    color: #FFFFFF !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    border-radius: 6px !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+    box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25) !important;
+    transition: background-color 0.2s ease, transform 0.15s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
+  .header-right .vf-header-btn:hover {
+    background-color: #1D4ED8 !important;
+    color: #FFFFFF !important;
+  }
+
+  .header-right .vf-header-btn:active {
+    transform: scale(0.98) !important;
+  }
+
+  /* Hiển thị nhãn ngắn gọn LÁI THỬ trên Mobile/Tablet */
+  .vf-header-btn-text-desktop,
   .header-right .vf-header-btn-text {
     display: none !important;
   }
 
+  .vf-header-btn-text-mobile,
   .header-right .vf-header-btn-short {
-    display: inline-block !important;
+    display: inline !important;
+  }
+}
+
+/* ============================================================
+   TỐI ƯU CỰC HẠN CHO MÀN HÌNH NHỎ (<= 360px & 320px)
+   ============================================================ */
+@media (max-width: 360px) {
+  .header-main .header-inner,
+  .header-main .flex-row {
+    padding: 0 10px !important;
+    gap: 6px !important;
+  }
+
+  .vf-mobile-toggle {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .brand-icon {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .brand-icon svg {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .brand-title {
+    font-size: 13px !important;
+    letter-spacing: 0.03em !important;
+  }
+
+  .brand-subtitle {
+    font-size: 7.5px !important;
+    letter-spacing: 0.03em !important;
+  }
+
+  .header-right .vf-header-btn,
+  .header-right .vf-btn {
+    height: 38px !important;
+    min-height: 38px !important;
+    line-height: 38px !important;
+    padding: 0 10px !important;
+    font-size: 11px !important;
   }
 }
 
@@ -12288,4 +12416,171 @@ a[href="#so-sanh-chi-phi"] {
 }
 
 .vf9-hero-title, .vf9-hero-desc { color: #ffffff !important; }
+
+/* ==========================================================================
+   FOOTER GRID & QUICK CONSULTATION FORM (TASK: FOOTER-02)
+   ========================================================================== */
+.footer-grid {
+  display: grid !important;
+  grid-template-columns: 1.35fr 0.95fr 1fr 1.35fr !important;
+  gap: 36px !important;
+  align-items: start !important;
+}
+
+.footer-col-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-form-desc {
+  color: #94A3B8;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.vf-footer-consult-form {
+  position: relative;
+  width: 100%;
+}
+
+.vf-hp-field {
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.footer-form-controls {
+  display: flex !important;
+  gap: 8px !important;
+  width: 100% !important;
+  align-items: center !important;
+}
+
+.footer-input-tel {
+  flex: 1 !important;
+  min-width: 0 !important;
+  height: 42px !important;
+  padding: 0 12px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 6px !important;
+  color: #FFFFFF !important;
+  font-size: 13.5px !important;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.footer-input-tel::placeholder {
+  color: #94A3B8 !important;
+  opacity: 1;
+}
+
+.footer-input-tel:focus {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: #3B82F6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+}
+
+.btn-footer-submit {
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 0 18px !important;
+  background: #2563EB !important;
+  color: #FFFFFF !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  border: none !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  text-align: center;
+  white-space: nowrap !important;
+}
+
+.btn-footer-submit:hover:not(:disabled) {
+  background: #1D4ED8 !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35) !important;
+  transform: translateY(-1px);
+}
+
+.btn-footer-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-footer-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.catchie-link {
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.catchie-link:hover {
+  color: #60A5FA !important;
+  text-decoration: underline !important;
+}
+
+.footer-form-status {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  box-sizing: border-box;
+  word-break: break-word;
+}
+
+.footer-form-status.is-success {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+  color: #34D399 !important;
+}
+
+.footer-form-status.is-error {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border: 1px solid rgba(239, 68, 68, 0.35) !important;
+  color: #F87171 !important;
+}
+
+/* Tablet: 2x2 grid */
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 36px 32px !important;
+  }
+}
+
+/* Mobile: Stacked 1 column */
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .site-footer {
+    padding-bottom: 76px !important; /* Space for Sticky Mobile Action Bar */
+  }
+}
 

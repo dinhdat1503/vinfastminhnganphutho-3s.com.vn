@@ -7,6 +7,28 @@
 defined('ABSPATH') || exit;
 
 // =========================================================
+// 🛡️ WOOCOMMERCE SAFE POLYFILLS (TRÁNH FATAL KHI WOO CHƯA BẬT)
+// =========================================================
+if (!function_exists('is_product')) {
+    function is_product() { return false; }
+}
+if (!function_exists('is_cart')) {
+    function is_cart() { return false; }
+}
+if (!function_exists('is_checkout')) {
+    function is_checkout() { return false; }
+}
+if (!function_exists('is_account_page')) {
+    function is_account_page() { return false; }
+}
+if (!function_exists('is_shop')) {
+    function is_shop() { return false; }
+}
+if (!function_exists('is_product_category')) {
+    function is_product_category() { return false; }
+}
+
+// =========================================================
 // 📧 CẤU HÌNH EMAIL NHẬN CONTACT — VinFast Minh Ngân Phú Thọ 3S
 // Thêm email vào mảng bên dưới để nhận đồng thời nhiều địa chỉ
 // =========================================================
@@ -154,7 +176,18 @@ function vfvp_enqueue_assets() {
     ";
     wp_add_inline_style('flatsome-child', $force_white_css);
     // Google Fonts (Tối ưu tải nhanh, chỉ lấy trọng số cần thiết)
-    wp_enqueue_style('vfvp-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap', [], null);
+    wp_enqueue_style('vfvp-fonts', 'https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap', [], null);
+
+    // Enqueue Premium Homepage Showroom Assets (Concept A)
+    if (is_front_page() || is_page_template('page-home.php')) {
+        $hp_css_file = get_stylesheet_directory() . '/assets/css/homepage-premium.css';
+        $hp_css_ver  = file_exists($hp_css_file) ? filemtime($hp_css_file) : '1.0';
+        wp_enqueue_style('vf-homepage-premium', get_stylesheet_directory_uri() . '/assets/css/homepage-premium.css', ['flatsome-child'], $hp_css_ver);
+
+        $hp_js_file  = get_stylesheet_directory() . '/assets/js/homepage-premium.js';
+        $hp_js_ver   = file_exists($hp_js_file) ? filemtime($hp_js_file) : '1.0';
+        wp_enqueue_script('vf-homepage-premium-js', get_stylesheet_directory_uri() . '/assets/js/homepage-premium.js', [], $hp_js_ver, true);
+    }
     // Swiper.js
     wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', [], '11');
     wp_enqueue_script('swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', [], '11', true);
@@ -2014,69 +2047,7 @@ function vfvp_shortcode_so_sanh() {
 add_action('wp_footer', 'vfvp_floating_sidebar', 100);
 function vfvp_floating_sidebar() {
     ?>
-    <ul id="vf-float-sidebar">
-      <li>
-        <a href="<?php echo esc_url(home_url('/bao-gia-lan-banh/')); ?>" title="Báo giá lăn bánh">
-          <span class="vf-float-text">Báo giá lăn bánh</span>
-          <span class="vf-float-icon">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect width="16" height="20" x="4" y="2" rx="2"/>
-              <line x1="8" x2="16" y1="6" y2="6"/>
-              <path d="M16 10h.01M12 10h.01M8 10h.01M16 14h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/>
-            </svg>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="<?php echo esc_url(home_url('/dang-ky-lai-thu/')); ?>" title="Đăng ký lái thử">
-          <span class="vf-float-text">Đăng ký lái thử</span>
-          <span class="vf-float-icon">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
-              <circle cx="7" cy="17" r="2"/>
-              <path d="M9 17h6"/>
-              <circle cx="17" cy="17" r="2"/>
-            </svg>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="<?php echo esc_url(home_url('/du-toan-tra-gop/')); ?>" title="Dự toán trả góp">
-          <span class="vf-float-text">Dự toán trả góp</span>
-          <span class="vf-float-icon">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect width="20" height="14" x="2" y="5" rx="2"/>
-              <line x1="2" x2="22" y1="10" y2="10"/>
-              <line x1="6" x2="10" y1="15" y2="15"/>
-            </svg>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="<?php echo esc_url(home_url('/so-sanh-xe/')); ?>" title="So sánh xe">
-          <span class="vf-float-text">So sánh xe</span>
-          <span class="vf-float-icon">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
-              <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
-              <path d="M7 21h10"/>
-              <path d="M12 3v18"/>
-              <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
-            </svg>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="javascript:void(0)" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Lên đầu trang">
-          <span class="vf-float-text">Lên đầu trang</span>
-          <span class="vf-float-icon">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m18 15-6-6-6 6"/>
-            </svg>
-          </span>
-        </a>
-      </li>
-    </ul>
+    <!-- #vf-float-sidebar đã gỡ bỏ theo yêu cầu của Chủ dự án -->
 
     <!-- Global Modal Nhận Báo Giá / Đăng Ký Lái Thử -->
     <div class="vf-modal-overlay" id="vfQuoteModal" onclick="if(event.target===this)vfCloseModal()">
@@ -2089,9 +2060,10 @@ function vfvp_floating_sidebar() {
           <div class="vf-modal-banner-top">
             <?php 
               $current_promo_month = function_exists('wp_date') ? wp_date('n/Y') : date('n/Y');
-              $theme_modal_logo    = get_stylesheet_directory_uri() . '/assets/images/logo-tan-a-chau-white-horizontal.png';
             ?>
-            <img src="<?php echo esc_url($theme_modal_logo); ?>" alt="VinFast Tân Á Châu" class="vf-modal-logo">
+            <div class="vf-modal-brand" style="display:flex; align-items:center; gap:6px;">
+              <span style="font-size:14px; font-weight:800; color:#fff; letter-spacing:0.04em;">VINFAST MINH NGÂN PHÚ THỌ</span>
+            </div>
             <span class="vf-modal-badge" data-promo-badge>⚡ ƯU ĐÃI THÁNG <?php echo esc_html($current_promo_month); ?></span>
           </div>
 
@@ -2112,30 +2084,6 @@ function vfvp_floating_sidebar() {
         </div>
 
       </div>
-    </div>
-
-    <!-- Sticky Mobile Quick Action Bar (Đáy màn hình điện thoại) -->
-    <div class="vf-mobile-bar show-for-medium">
-      <a href="tel:0562256256" class="vf-mbar-item">
-        <svg class="vf-mobile-bar-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-        <span>Gọi ngay</span>
-      </a>
-      <a href="<?php echo esc_url(home_url('/bao-gia-lan-banh/')); ?>" class="vf-mbar-item">
-        <svg class="vf-mobile-bar-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-        <span>Báo giá</span>
-      </a>
-      <a href="<?php echo esc_url(home_url('/so-sanh-xe/')); ?>" class="vf-mbar-item">
-        <svg class="vf-mobile-bar-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"></path><path d="M4 20L21 3"></path><path d="M21 16v5h-5"></path><path d="M15 15l6 6"></path><path d="M4 4l5 5"></path></svg>
-        <span>So sánh</span>
-      </a>
-      <a href="<?php echo esc_url(home_url('/du-toan-chi-phi/')); ?>" class="vf-mbar-item">
-        <svg class="vf-mobile-bar-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="18"></line><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"></path></svg>
-        <span>Dự toán</span>
-      </a>
-      <a href="<?php echo esc_url(home_url('/dang-ky-lai-thu/')); ?>" class="vf-mbar-item vf-mbar-cta">
-        <svg class="vf-mobile-bar-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3"></circle><line x1="12" y1="3" x2="12" y2="9"></line><line x1="4.2" y1="16.5" x2="9.4" y2="13.5"></line><line x1="19.8" y1="16.5" x2="14.6" y2="13.5"></line></svg>
-        <span>Lái thử</span>
-      </a>
     </div>
 
     <?php
@@ -2848,7 +2796,7 @@ function vf_handle_acc_order_submission() {
     $to = get_option('admin_email');
     $subject = '[ĐẶT MUA PHỤ KIỆN] ' . $prod_name . ' - ' . $name . ' (' . $phone . ')';
 
-    $body = "YÊU CẦU ĐẶT MUA PHỤ KIỆN TỪ WEBSITE VINFAST TÂN Á CHÂU\n";
+    $body = "YÊU CẦU ĐẶT MUA PHỤ KIỆN TỪ WEBSITE VINFAST MINH NGÂN PHÚ THỌ\n";
     $body .= "--------------------------------------------------\n";
     $body .= "Sản phẩm phụ kiện: " . $prod_name . "\n";
     $body .= "Giá tham khảo: " . $prod_price . "\n";
@@ -2861,13 +2809,13 @@ function vf_handle_acc_order_submission() {
 
     $headers = [
         'Content-Type: text/plain; charset=UTF-8',
-        'From: VinFast Tân Á Châu <wordpress@' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost') . '>'
+        'From: VinFast Minh Ngân Phú Thọ 3S <wordpress@' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost') . '>'
     ];
 
     wp_mail($to, $subject, $body, $headers);
 
     wp_send_json_success([
-        'message' => 'Cảm ơn bạn ' . $name . '! Yêu cầu đặt mua "' . $prod_name . '" đã được gửi thành công về hệ thống VinFast Tân Á Châu. Chuyên viên tư vấn sẽ liên hệ với bạn qua SĐT ' . $phone . ' ngay.'
+        'message' => 'Cảm ơn bạn ' . $name . '! Yêu cầu đặt mua "' . $prod_name . '" đã được gửi thành công về hệ thống VinFast Minh Ngân Phú Thọ 3S. Chuyên viên tư vấn sẽ liên hệ với bạn qua SĐT ' . $phone . ' ngay.'
     ]);
 }
 
@@ -3041,7 +2989,7 @@ function vfvp_handle_deposit_form_ajax() {
     $subject = "⚡ [YÊU CẦU ĐẶT CỌC XE] {$car} - Khách hàng: {$name} ({$phone})";
 
     // Nội dung email
-    $body  = "Kính gửi Ban Quản Lý VinFast Tân Á Châu,\n\n";
+    $body  = "Kính gửi Ban Quản Lý VinFast Minh Ngân Phú Thọ 3S,\n\n";
     $body .= "Hệ thống vừa ghi nhận một YÊU CẦU ĐẶT CỌC XE ĐIỆN mới với thông tin chi tiết như sau:\n";
     $body .= "--------------------------------------------------------\n";
     $body .= "👤 Họ và tên khách hàng: {$name}\n";
@@ -3056,11 +3004,11 @@ function vfvp_handle_deposit_form_ajax() {
     $body .= "⏱️ Thời gian gửi: " . current_time('d/m/Y H:i:s') . "\n";
     $body .= "--------------------------------------------------------\n\n";
     $body .= "Vui lòng liên hệ lại khách hàng trong vòng 10 phút để xác nhận đơn cọc và gửi phiếu thu hợp đồng.\n\n";
-    $body .= "Trân trọng,\nHệ Thống Website VinFast Tân Á Châu";
+    $body .= "Trân trọng,\nHệ Thống Website VinFast Minh Ngân Phú Thọ 3S";
 
     $headers = [
         'Content-Type: text/plain; charset=UTF-8',
-        'From: VinFast Tân Á Châu <' . (defined('VFVP_SMTP_USERNAME') ? VFVP_SMTP_USERNAME : get_option('admin_email')) . '>',
+        'From: VinFast Minh Ngân Phú Thọ 3S <' . (defined('VFVP_SMTP_USERNAME') ? VFVP_SMTP_USERNAME : get_option('admin_email')) . '>',
     ];
     if (!empty($email)) {
         $headers[] = 'Reply-To: ' . $email;
@@ -3124,53 +3072,213 @@ function vfvp_send_telegram($text) {
 
 // ============================================================
 // 📩 XỬ LÝ FORM ĐĂNG KÝ TƯ VẤN DỊCH VỤ WEB (FOOTER CỘT 4)
+// Task: FOOTER-02 | Nonce, Honeypot, Rate Limit, Lead Source, Email & Telegram
 // ============================================================
 add_action('wp_ajax_vf_submit_footer_service_form', 'vfvp_handle_footer_service_form');
 add_action('wp_ajax_nopriv_vf_submit_footer_service_form', 'vfvp_handle_footer_service_form');
 function vfvp_handle_footer_service_form() {
-    $phone = sanitize_text_field($_POST['phone'] ?? '');
-
-    $clean_phone = preg_replace('/[^0-9]/', '', $phone);
-    if (empty($phone) || strlen($clean_phone) < 9) {
-        wp_send_json_error(['message' => 'Vui lòng nhập số điện thoại hợp lệ (từ 10 số).']);
+    // 1. Kiểm tra Nonce bảo mật
+    if (!isset($_POST['vf_consult_nonce']) || !wp_verify_nonce($_POST['vf_consult_nonce'], 'vf_footer_consult_nonce')) {
+        wp_send_json_error([
+            'message' => 'Yêu cầu không hợp lệ hoặc phiên làm việc đã hết hạn. Vui lòng tải lại trang.'
+        ]);
     }
 
-    $time = current_time('d/m/Y H:i:s');
-    $subject = "⚡ [YÊU CẦU TƯ VẤN DỊCH VỤ WEB] Khách hàng để lại SĐT: {$phone}";
+    // 2. Chống bot spam qua Honeypot field (nếu field này có dữ liệu -> bot)
+    if (!empty($_POST['vf_hp_check'])) {
+        wp_send_json_error([
+            'message' => 'Phát hiện yêu cầu bất thường. Vui lòng thử lại.'
+        ]);
+    }
 
-    $body  = "Kính gửi Ban Quản Lý,\n\n";
-    $body .= "Hệ thống vừa nhận được một yêu cầu đăng ký tư vấn dịch vụ web từ chân trang:\n";
+    // 3. Giới hạn tần suất gửi (Rate Limiting per IP — 45s cooldown)
+    $client_ip = sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? '');
+    $rate_key = 'vf_footer_rate_' . md5($client_ip);
+    if (get_transient($rate_key)) {
+        wp_send_json_error([
+            'message' => 'Hệ thống đã nhận yêu cầu của bạn. Vui lòng đợi trong giây lát trước khi gửi lại.'
+        ]);
+    }
+
+    // 4. Validate & Sanitize số điện thoại (Chuẩn di động Việt Nam: 10 chữ số, bắt đầu bằng 0)
+    $raw_phone = sanitize_text_field($_POST['phone'] ?? '');
+    $clean_phone = preg_replace('/[^0-9]/', '', $raw_phone);
+
+    if (empty($clean_phone) || (!preg_match('/^0[35789][0-9]{8}$/', $clean_phone) && !preg_match('/^0[1-9][0-9]{8}$/', $clean_phone))) {
+        wp_send_json_error([
+            'message' => 'Vui lòng nhập số điện thoại hợp lệ (10 chữ số, bắt đầu bằng 0).'
+        ]);
+    }
+
+    // 5. Ghi nhận nguồn lead rõ ràng (Tư vấn dịch vụ làm website Catchie)
+    $lead_source = sanitize_text_field($_POST['lead_source'] ?? 'footer_web_service_consultation');
+    $time = current_time('d/m/Y H:i:s');
+    $subject = "⚡ [YÊU CẦU TƯ VẤN THIẾT KẾ WEB] Khách hàng SĐT: {$clean_phone}";
+
+    $body  = "Kính gửi Ban Quản Trị / Bộ Phận Thiết Kế Website Catchie,\n\n";
+    $body .= "Hệ thống vừa tiếp nhận yêu cầu ĐĂNG KÝ TƯ VẤN DỊCH VỤ WEB từ Chân trang (Footer):\n";
     $body .= "--------------------------------------------------------\n";
-    $body .= "📞 Số điện thoại khách hàng: {$phone}\n";
-    $body .= "🎯 Mục yêu cầu: Đăng Ký Tư Vấn Dịch Vụ Web (Catchie)\n";
-    $body .= "🌐 Trang gửi: " . home_url('/') . "\n";
-    $body .= "⏱️ Thời gian: {$time}\n";
+    $body .= "📞 Số điện thoại khách hàng: {$clean_phone}\n";
+    $body .= "🎯 Mục yêu cầu: Tư Vấn Dịch Vụ Thiết Kế & Phát Triển Website\n";
+    $body .= "🌐 Nguồn tiếp nhận: {$lead_source} (VinFast Minh Ngân Phú Thọ 3S)\n";
+    $body .= "⏱️ Thời gian tiếp nhận: {$time}\n";
+    $body .= "💻 Địa chỉ IP: {$client_ip}\n";
     $body .= "--------------------------------------------------------\n\n";
-    $body .= "Vui lòng liên hệ lại khách hàng để tư vấn chi tiết.\n\n";
-    $body .= "Trân trọng,\nHệ Thống Website VinFast Tân Á Châu";
+    $body .= "Vui lòng liên hệ lại khách hàng qua Zalo / Số điện thoại để tư vấn chi tiết.\n\n";
+    $body .= "Trân trọng,\nHệ Thống Website VinFast Minh Ngân Phú Thọ 3S";
 
     $headers = [
         'Content-Type: text/plain; charset=UTF-8',
-        'From: Catchie Service <' . (defined('VFVP_SMTP_USERNAME') ? VFVP_SMTP_USERNAME : get_option('admin_email')) . '>',
+        'From: VinFast Minh Ngân Phú Thọ 3S <' . (defined('VFVP_SMTP_USERNAME') ? VFVP_SMTP_USERNAME : get_option('admin_email')) . '>',
     ];
 
-    // Chỉ gửi về đúng 2 email theo yêu cầu của Dịch vụ Web Catchie
-    $target_emails = [
-        'ngodinhdat15@gmail.com',
-        'phuocvandangdilam@gmail.com'
-    ];
-    $GLOBALS['vf_custom_mail_to'] = $target_emails;
-    @wp_mail($target_emails, $subject, $body, $headers);
-    unset($GLOBALS['vf_custom_mail_to']);
+    $target_emails = defined('VFVP_CONTACT_EMAILS') ? VFVP_CONTACT_EMAILS : [get_option('admin_email')];
+    $mail_sent = @wp_mail($target_emails, $subject, $body, $headers);
 
-    // Gửi Telegram
-    $tg_msg  = "⚡ <b>[YÊU CẦU TƯ VẤN DỊCH VỤ WEB]</b>\n";
-    $tg_msg .= "📞 <b>Số điện thoại:</b> <code>{$phone}</code>\n";
-    $tg_msg .= "🎯 <b>Dịch vụ:</b> Tư vấn Dịch Vụ Web (Catchie)\n";
+    // Bắn thông báo Telegram nếu cấu hình
+    $tg_msg  = "⚡ <b>[YÊU CẦU TƯ VẤN DỊCH VỤ LÀM WEB]</b>\n";
+    $tg_msg .= "📞 <b>Số điện thoại:</b> <code>{$clean_phone}</code>\n";
+    $tg_msg .= "🎯 <b>Dịch vụ:</b> Thiết Kế & Phát Triển Website (Catchie)\n";
     $tg_msg .= "⏱️ <b>Thời gian:</b> {$time}";
-    vfvp_send_telegram($tg_msg);
+    @vfvp_send_telegram($tg_msg);
 
-    wp_send_json_success([
-        'message' => 'Đã nhận số điện thoại thành công! Chúng tôi sẽ liên hệ tư vấn trong ít phút.'
-    ]);
+    // 6. Trả kết quả: Chỉ hiển thị thành công khi mail được gửi thực tế
+    if ($mail_sent) {
+        // Thiết lập cooldown 45s cho IP này
+        set_transient($rate_key, 1, 45);
+
+        wp_send_json_success([
+            'message' => 'Đăng ký thành công! Chuyên viên sẽ liên hệ hỗ trợ tư vấn dịch vụ web trong ít phút.'
+        ]);
+    } else {
+        wp_send_json_error([
+            'message' => 'Hệ thống đang bận. Quý khách vui lòng liên hệ Zalo 0971.69.2675 để được hỗ trợ trực tiếp.'
+        ]);
+    }
 }
+
+/**
+ * Đăng ký ACF Field Group cho Cinematic Motion Hero & Dynamic Car Slider
+ * Task: HOME-02.2 | Quản trị không hardcode nội dung thương mại
+ */
+add_action('acf/init', function() {
+    if (!function_exists('acf_add_local_field_group')) return;
+
+    acf_add_local_field_group([
+        'key' => 'group_hero_slider_settings',
+        'title' => 'Cấu hình Cinematic Hero Slider (Showroom Trang Chủ)',
+        'fields' => [
+            [
+                'key' => 'field_hero_slide_duration',
+                'label' => 'Thời gian giữ mỗi slide (mili-giây)',
+                'name' => 'hero_slide_duration',
+                'type' => 'number',
+                'instructions' => 'Nhập 8000 cho 8 giây (mặc định), 5000 cho 5 giây.',
+                'default_value' => 8000,
+                'min' => 3000,
+                'max' => 20000,
+                'step' => 1000,
+            ],
+            [
+                'key' => 'field_hero_slides',
+                'label' => 'Danh sách các Slide hiển thị',
+                'name' => 'hero_slides',
+                'type' => 'repeater',
+                'instructions' => 'Quản lý các slide ô tô điện hiển thị tại banner đầu trang chủ. Tối đa 5 slide.',
+                'button_label' => 'Thêm Slide mới',
+                'layout' => 'block',
+                'sub_fields' => [
+                    [
+                        'key' => 'field_slide_status',
+                        'label' => 'Trạng thái hiển thị',
+                        'name' => 'slide_status',
+                        'type' => 'true_false',
+                        'default_value' => 1,
+                        'ui' => 1,
+                    ],
+                    [
+                        'key' => 'field_slide_eyebrow',
+                        'label' => 'Dòng định vị (Eyebrow)',
+                        'name' => 'eyebrow',
+                        'type' => 'text',
+                        'default_value' => 'VINFAST VF 7 • ALL-ELECTRIC SUV',
+                    ],
+                    [
+                        'key' => 'field_slide_badge',
+                        'label' => 'Nhãn huy hiệu (Badge)',
+                        'name' => 'badge',
+                        'type' => 'text',
+                        'default_value' => 'Tiêu điểm',
+                    ],
+                    [
+                        'key' => 'field_slide_title',
+                        'label' => 'Tiêu đề chính (H1)',
+                        'name' => 'title',
+                        'type' => 'textarea',
+                        'rows' => 2,
+                        'default_value' => "Bứt Phá Giới Hạn\n<span class=\"text-gradient\">Công Nghệ Tương Lai</span>",
+                    ],
+                    [
+                        'key' => 'field_slide_desc',
+                        'label' => 'Mô tả ngắn',
+                        'name' => 'desc',
+                        'type' => 'textarea',
+                        'rows' => 3,
+                        'default_value' => 'Thiết kế phi đối xứng định hình phong cách thời thượng, công suất 349 mã lực uy lực, dẫn động 2 cầu toàn thời gian AWD và quãng đường di chuyển 496 km.',
+                    ],
+                    [
+                        'key' => 'field_slide_btn_primary_text',
+                        'label' => 'Chữ nút CTA chính',
+                        'name' => 'btn_primary_text',
+                        'type' => 'text',
+                        'default_value' => 'Khám phá VF 7',
+                    ],
+                    [
+                        'key' => 'field_slide_btn_primary_url',
+                        'label' => 'Liên kết nút CTA chính',
+                        'name' => 'btn_primary_url',
+                        'type' => 'text',
+                        'default_value' => '#collection',
+                    ],
+                    [
+                        'key' => 'field_slide_btn_secondary_text',
+                        'label' => 'Chữ nút CTA phụ',
+                        'name' => 'btn_secondary_text',
+                        'type' => 'text',
+                        'default_value' => 'Đăng ký lái thử',
+                    ],
+                    [
+                        'key' => 'field_slide_btn_secondary_url',
+                        'label' => 'Liên kết nút CTA phụ',
+                        'name' => 'btn_secondary_url',
+                        'type' => 'text',
+                        'default_value' => '/dang-ky-lai-thu/',
+                    ],
+                    [
+                        'key' => 'field_slide_image',
+                        'label' => 'Hình ảnh xe (PNG / WebP nền trong suốt)',
+                        'name' => 'image',
+                        'type' => 'image',
+                        'return_format' => 'url',
+                    ],
+                ]
+            ]
+        ],
+        'location' => [
+            [
+                [
+                    'param' => 'page_type',
+                    'operator' => '==',
+                    'value' => 'front_page',
+                ],
+            ],
+            [
+                [
+                    'param' => 'page_template',
+                    'operator' => '==',
+                    'value' => 'page-home.php',
+                ],
+            ],
+        ],
+    ]);
+});

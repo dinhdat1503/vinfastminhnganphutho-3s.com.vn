@@ -1,81 +1,59 @@
 # AI HANDOFF — TRẠNG THÁI TIẾP NỐI
+> **Cập nhật sau MỖI Slice và MỖI lần Kiểm toán.** Đây là tài liệu trạng thái tiếp nối cho AI và Chủ dự án, tuân thủ nghiêm ngặt `AGENTS.md`.
 
-> **Cập nhật sau MỖI Slice.** Đây là tài liệu trạng thái, không thay thế `AGENTS.md` hay `PROJECT_PLAN.md`.
+---
 
 ## 1. Snapshot mới nhất
 
-- **Dự án:** Website Đại Lý VinFast Minh Ngân Phú Thọ 3S (`vinfastminhnganphutho-3s.com.vn`)
+- **Dự án:** Tái cấu trúc Website Đại Lý VinFast Minh Ngân Phú Thọ 3S (`vinfastminhnganphutho-3s.com.vn`)
 - **Ngày cập nhật:** 2026-11-06, Asia/Ho_Chi_Minh
-- **Branch / HEAD:** `main @ 24b3373b` (Remote: `https://github.com/dinhdat1503/vinfastminhnganphutho-3s.com.vn.git`)
-- **Worktree:** Clean (`nothing to commit, working tree clean`). Đã khởi tạo Git repo độc lập và push thành công lên GitHub.
-- **Slice vừa hoàn thành:** **SLICE-01: Khởi tạo bộ khung Full WordPress cho VinFast Minh Ngân Phú Thọ 3S**
-- **Trạng thái:** **HOÀN THÀNH SLICE 1 — CHỜ PHÊ DUYỆT ĐỂ BƯỚC VÀO SLICE 2**
-- **Slice tiếp theo được đề xuất:** **SLICE-02: Khởi tạo CSDL, kích hoạt Child Theme & kiểm tra hiển thị Trang chủ** (Đúng một Slice duy nhất; CHƯA THỰC HIỆN).
+- **Branch / HEAD:** `main` (Remote: `https://github.com/dinhdat1503/vinfastminhnganphutho-3s.com.vn.git`)
+- **Môi trường Local:** LocalWP site `vinfastminhnganphutho-3s` đang chạy tại `http://localhost:10004` (PHP 8.2.29, Nginx, MySQL 8.4).
+- **Nhiệm vụ vừa hoàn thành:** **TASK ID: HEADER-MOBILE-01 — FIX MOBILE HEADER (PREMIUM SHOWROOM)**.
+- **Kết quả nghiệm thu:**
+  1. **Bố cục 1 hàng ngang chuẩn CSS Grid Showroom (Left - Center - Right):**
+     - **LEFT (Hamburger Menu):** Vùng chạm chuẩn 44×44px (`min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center;`), 3 vạch ngang màu đen tinh tế `#111827`, không sát mép màn hình, mở Drawer mượt mà.
+     - **CENTER (Brand Logo):** Giữ nguyên vẹn 100% logo chính thức VinFast Minh Ngân Phú Thọ 3S. Loại bỏ triệt để khung card trắng nổi kích thước lớn, loại bỏ hoàn toàn drop-shadow nặng. Logo căn giữa quang học hoàn hảo trên toàn bộ các kích thước màn hình (`centerDelta = 0px`).
+     - **RIGHT (Test Drive CTA):** Nút **LÁI THỬ** xanh `#2563EB`, text trắng in hoa nổi bật, chiều cao 40px (touch target >= 44px), bo góc 6px, padding 14px, không bị ép chữ, không xuống dòng, liên kết trực tiếp tới `/dang-ky-lai-thu/`.
+     - **Header Container:** Nền trắng `#FFFFFF`, chiều cao 66px, border-bottom mỏng `1px solid rgba(0,0,0,0.08)`, shadow siêu nhẹ `0 1px 3px rgba(0,0,0,0.03)`, thanh thoát, sang trọng.
+  2. **Tối ưu cực hạn cho Viewport 320px – 414px (Đặc biệt Galaxy S21+ 384px):**
+     - Viewport 320px: Header 66px, Hamburger 40×40px, Logo co giãn 110×28px (tên Minh Ngân hiển thị đầy đủ, không bị cắt), CTA 66×38px, `overflow = 0px`, `overlap = false`.
+     - Viewport 384px (Samsung Galaxy S21 Plus): Header 66px, Hamburger 44×44px, Logo 110×34px, CTA 78×40px, `overlap = false`, `centerDelta = 0px`, `overflow = 0px`.
+     - Viewport 390px, 414px, 768px: Bố cục cân xứng tuyệt đối, khoảng cách hai bên thoáng đãng chuẩn showroom ô tô.
+  3. **Bảo toàn 100% Header Desktop (1024px, 1440px):**
+     - Giữ nguyên khối hanging badge của logo cho Desktop.
+     - Giữ nguyên danh mục Mega Menu Desktop (Giới thiệu, Ô tô ▾, Phụ kiện, Dịch vụ ▾, Pin & Trạm sạc, Dự toán...).
+     - Giữ nguyên nút "ĐĂNG KÝ LÁI THỬ" full-size trên desktop.
+     - 0px layout regression trên desktop.
+  4. **Kiểm thử Drawer & Tương tác:**
+     - Hamburger click -> Mở Off-Canvas Drawer (`.vf-mobile-drawer.open`).
+     - Nút đóng nổi '✕' có `event.stopPropagation()` đóng drawer dứt khoát, không bị bubbling kích hoạt lại overlay.
+     - Phím Escape đóng drawer tức thì.
+  5. **Bộ ảnh nghiệm thu trực quan (Screenshots):**
+     - [`docs/audit/screenshots/after_header_mobile_320.png`](file:///d:/DinhDat/Me/vinfastminhnganphutho-3s.com.vn/docs/audit/screenshots/after_header_mobile_320.png) (Mobile 320px)
+     - [`docs/audit/screenshots/after_header_mobile_375.png`](file:///d:/DinhDat/Me/vinfastminhnganphutho-3s.com.vn/docs/audit/screenshots/after_header_mobile_375.png) (Mobile 375px)
+     - [`docs/audit/screenshots/after_header_mobile_384.png`](file:///d:/DinhDat/Me/vinfastminhnganphutho-3s.com.vn/docs/audit/screenshots/after_header_mobile_384.png) (Galaxy S21 Plus 384px)
+     - [`docs/audit/screenshots/after_header_mobile_390.png`](file:///d:/DinhDat/Me/vinfastminhnganphutho-3s.com.vn/docs/audit/screenshots/after_header_mobile_390.png) (iPhone 12/13/14/15/16 Pro 390px)
+     - [`docs/audit/screenshots/after_header_tablet_768.png`](file:///d:/DinhDat/Me/vinfastminhnganphutho-3s.com.vn/docs/audit/screenshots/after_header_tablet_768.png) (Tablet 768px)
+     - [`docs/audit/screenshots/after_header_desktop_1440.png`](file:///d:/DinhDat/Me/vinfastminhnganphutho-3s.com.vn/docs/audit/screenshots/after_header_desktop_1440.png) (Desktop 1440px)
+- **Trạng thái hiện tại:** **HOÀN THÀNH HEADER-MOBILE-01 — DỪNG ĐỂ CHỦ DỰ ÁN NGHIỆM THU**.
+- **Slice tiếp theo được đề xuất:** **SLICE-03: Hoàn thiện Trang Chi Tiết Dòng Xe (PDP — Single Car Model) cho 2 mẫu tiêu điểm: VinFast VF 3 và VinFast VF 7**.
 
 ---
 
-## 2. Đã triển khai trong Slice này
+## 2. Đúng một Slice tiếp theo được đề xuất
 
-| Slice | File/Thư mục chính | Thay đổi nghiệp vụ / Kỹ thuật | Evidence | Duyệt bởi |
-|---|---|---|---|---|
-| **SLICE-01** | `wp-admin/`, `wp-includes/`, `index.php`, `.htaccess` | Thiết lập nền tảng WordPress Core hoàn chỉnh kế thừa từ cụm core ổn định | Khảo sát cấu trúc file, scan tính toàn vẹn | **CHỜ DUYỆT** |
-| **SLICE-01** | `wp-content/themes/flatsome` | Tích hợp Parent Theme Flatsome 3.20.2 chính hãng cho UX Builder | Thư mục theme đầy đủ | **CHỜ DUYỆT** |
-| **SLICE-01** | `wp-content/themes/flatsome-child-minhnganphutho` | Dựng Child Theme riêng biệt cho VinFast Minh Ngân Phú Thọ 3S; Đổi nhận diện thương hiệu trong `style.css` & `functions.php`; **Loại bỏ 100% (6/6 vị trí) lỗi P0 hardcoded paths máy dev cũ (`C:/Users/ngodi/...`)** | Python path scan & grep scan không còn match nào | **CHỜ DUYỆT** |
-| **SLICE-01** | `wp-content/plugins/*` | Tích hợp 10 plugin tiêu chuẩn (ACF, WooCommerce, Contact Form 7, Elementor, Popup Maker, Smart Slider 3, WP Mail SMTP...) + 3 custom plugins (`ai-writer`, `wp-insight`, `vinfast-template`) | 13 thư mục plugin được kiểm tra đầy đủ | **CHỜ DUYỆT** |
-| **SLICE-01** | `wp-config.php.example`, `.env.example`, `.gitignore` | Chuẩn hóa cấu hình môi trường, bảo vệ an toàn secret, ngăn rò rỉ file môi trường lên version control | Secret scanner xác nhận không có credential rò rỉ | **CHỜ DUYỆT** |
-
----
-
-## 3. Contracts và kiến trúc đang sử dụng
-
-- **Mô hình kiến trúc:** Full WordPress Project (Core + Themes + Plugins + Env Config).
-- **Parent Theme:** Flatsome 3.20.2 (`wp-content/themes/flatsome`).
-- **Child Theme:** Flatsome Child - VinFast Minh Ngân Phú Thọ 3S (`wp-content/themes/flatsome-child-minhnganphutho`).
-- **Custom Post Types:** `car_model` (Mẫu xe), taxonomy `car_category` (Xe cá nhân / Xe dịch vụ).
-- **Plugins tiêu chuẩn:** Advanced Custom Fields Pro, WooCommerce, Contact Form 7, Smart Slider 3, Popup Maker, WP Mail SMTP, WPCF7-Redirect, Elementor.
-- **Custom Plugins nội bộ:** `ai-writer` (tạo nội dung bài viết), `wp-insight` (phân tích chỉ số), `vinfast-template` (layout ô tô điện).
-- **Bảo mật Secrets:** Secret mật khẩu và API token đã được bóc tách khỏi theme, cấu hình đọc an toàn qua môi trường (`.env` / `wp-config.php`).
-
----
-
-## 4. Kiểm thử gần nhất (Quality Gates)
-
-| Quality Gate | Nội dung kiểm thử | Lệnh / Công cụ | Kết quả thực tế | Ghi chú / Hạn chế |
-|---|---|---|---|---|
-| **G0** | Git baseline & bảo toàn worktree | `git status --short` | **PASS** | Không can thiệp các file ngoài phạm vi thư mục dự án |
-| **G1** | Đúng Slice, không lan phạm vi | Review file list | **PASS** | Chỉ thiết lập khung thư mục WP và cấu hình child theme |
-| **G2** | Kiểm tra toàn vẹn mã nguồn PHP | Python basic integrity scan | **PASS** | 0 lỗi null byte hoặc lỗi mã hóa ký tự |
-| **G3** | Rà soát loại bỏ hardcoded paths (P0) | PowerShell `Select-String` | **PASS** | 0 chuỗi `C:/Users` tồn tại trong Child Theme mới |
-| **G4** | Quét an toàn bảo mật & Secrets | Python Regex Secret Scanner | **PASS** | Không có secret, credential thật nào bị lộ |
-| **G5** | Visual / Browser testing | Web server runner | **NOT RUN** | Slice 1 là Scaffolding/Backend cấu trúc, chưa khởi chạy web server cục bộ |
-| **G6** | Review diff và cập nhật Handoff | Cập nhật `AI_HANDOFF.md` | **PASS** | Đồng bộ đầy đủ snapshot và trạng thái |
-
----
-
-## 5. Bug và rủi ro mở trọng tâm cần xử lý ở các Slice kế tiếp
-
-| ID | Mức độ | Mô tả | Vị trí / Chi tiết | Kế hoạch xử lý |
-|---|---|---|---|---|
-| **UI-01** | P1 | Form tư vấn footer báo thành công giả khi AJAX lỗi | `footer.php:529-538` | Sửa khối `.catch()` báo lỗi trung thực ở Slice UI/Form |
-| **SEC-01** | P1 | Thiếu Nonce validation ở AJAX đăng ký tư vấn | `functions.php:3126-3135` | Bổ sung `wp_create_nonce` và `check_ajax_referer` |
-| **SEC-02** | P1 | Dữ liệu người dùng chưa escape khi gửi Telegram | `functions.php:3071, 3159` | Bọc `htmlspecialchars()` trước khi gửi tin Telegram |
-| **DB-01** | P1 | Chuẩn bị database mẫu cho Phú Thọ (tiền tố `wp_`) | CSDL | Chuẩn bị script import DB sạch ở Slice 2 |
-
----
-
-## 6. Không được tự ý làm trong lần tiếp theo
-
-- Không tự ý import DB thật nếu chưa được kiểm tra cấu hình tiền tố bảng.
-- Không tự ý commit hoặc deploy production khi chưa có phê duyệt.
-- Giữ nguyên trạng thái cấu hình an toàn, không hardcode mật khẩu vào source.
-
----
-
-## 7. Đúng một Slice đề xuất tiếp theo
-
-- **ID:** **SLICE-02**
-- **Mục tiêu duy nhất:** Thiết lập CSDL mẫu (Database Schema), kết nối `wp-config.php` và kích hoạt Child Theme `flatsome-child-minhnganphutho`.
-- **Bao gồm:** Chuẩn hóa file dump CSDL mẫu cho VinFast Minh Ngân Phú Thọ 3S với tiền tố bảng đồng bộ (`wp_`), kiểm tra active theme & plugins.
-- **Không bao gồm:** Chưa thay đổi nội dung trang con hoặc chỉnh sửa các component nâng cao.
-- **Acceptance criteria:** Kết nối thành công tới CSDL, website load được trang chủ với theme VinFast Minh Ngân Phú Thọ 3S.
-- **Trạng thái:** **DỪNG — CHỜ CHỦ DỰ ÁN DUYỆT.**
+- **ID:** **SLICE-03**
+- **Tên:** **Hoàn thiện Trang Chi Tiết Dòng Xe (PDP — Single Car Model) cho 2 mẫu tiêu điểm: VinFast VF 3 và VinFast VF 7**
+- **Mục tiêu duy nhất:** Xây dựng trang giới thiệu chi tiết sản phẩm ô tô điện chuẩn Showroom, tích hợp đầy đủ thông số kỹ thuật (ACF/Meta), bảng giá các phiên bản kèm pin / thuê pin, thư viện ảnh nội-ngoại thất và form đăng ký lái thử trực tiếp dòng xe đó.
+- **Bao gồm:**
+  1. Template `single-car_model.php` (hoặc `single-product.php`) tối ưu UX automotive theo chuẩn VinFast.
+  2. Hero xe chi tiết với bộ chọn màu sắc tương tác, bảng thông số pin, quãng đường, thời gian sạc nhanh.
+  3. Bảng giá niêm yết và nút tính dự toán lăn bánh chuyển tiếp sang trang tài chính có sẵn thông tin xe.
+  4. Form đăng ký lái thử nhanh tự động điền sẵn tên dòng xe đang xem.
+- **Không bao gồm:** Chưa kết nối API CRM bên ngoài, chưa xây dựng trang so sánh xe nâng cao.
+- **Tiêu chí nghiệm thu:**
+  - 2 dòng xe VF 3 và VF 7 hiển thị đầy đủ thông tin chuẩn catalogue VinFast chính hãng.
+  - Responsive mượt mà trên desktop và mobile, không tràn viền (0px overflow).
+  - Form lái thử trên trang xe ghi nhận đúng tên xe vào email thông báo.
+- **Trạng thái:** **DỪNG — CHỜ CHỦ DỰ ÁN PHÊ DUYỆT ĐỂ BẮT ĐẦU SLICE 3.**

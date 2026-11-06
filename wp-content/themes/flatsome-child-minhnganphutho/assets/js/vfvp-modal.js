@@ -29,21 +29,6 @@
     badges.forEach(function(badge) {
       badge.textContent = '⚡ ƯU ĐÃI THÁNG ' + monthYearStr;
     });
-
-    var modalLogos = document.querySelectorAll('.vf-modal-logo');
-    modalLogos.forEach(function(logo) {
-      if (logo.src.indexOf('logo-tan-a-chau-white-horizontal.png') === -1) {
-        var wpContentIdx = logo.src.indexOf('/wp-content/');
-        if (wpContentIdx !== -1) {
-          logo.src = logo.src.substring(0, wpContentIdx) + '/wp-content/themes/flatsome-child/assets/images/logo-tan-a-chau-white-horizontal.png';
-        }
-      }
-      logo.alt = 'VinFast Tân Á Châu';
-      logo.style.setProperty('background', 'transparent', 'important');
-      logo.style.setProperty('padding', '0', 'important');
-      logo.style.setProperty('border', 'none', 'important');
-      logo.style.setProperty('border-radius', '0', 'important');
-    });
   }
 
   window.vfOpenModal = function(id) {
@@ -138,14 +123,13 @@
     }
   });
 
-  // Auto Load Promo Popup Handler (15s auto-close if untouched)
+  // Bind interactive modal buttons
   function initAutoPopup() {
     var m = getModalElement();
     if (!m) return;
 
-    // Auto open popup when page loads
-    window.vfOpenModal();
-
+    // Không tự ý bung modal đè màn hình khi vừa mở web
+    // Chỉ kích hoạt listener cho các input khi modal được người dùng chủ động mở
     function markInteracted() {
       if (!userInteracted) {
         userInteracted = true;
@@ -164,13 +148,6 @@
       input.addEventListener('keydown', markInteracted);
       input.addEventListener('click', markInteracted);
     });
-
-    // 15s auto close if untouched by user
-    autoCloseTimer = setTimeout(function() {
-      if (!userInteracted) {
-        window.vfCloseModal();
-      }
-    }, 15000);
   }
 
   // Execute immediately upon script parse

@@ -1,1716 +1,834 @@
 <?php
 /**
- * Template Name: Trang chủ VinFast Vĩnh Phúc
- * Homepage với Hero Swiper + Danh sách xe
+ * Template Name: Trang chủ VinFast Minh Ngân
+ * Description: Giao diện Premium Showroom đạt chuẩn Concept A — VinFast Minh Ngân Phú Thọ 3S
+ * The car is the hero. The experience is premium.
  */
 defined('ABSPATH') || exit;
+
 get_header();
 
-// Lấy danh sách xe theo phân loại
-$xe_ca_nhan = get_posts([
-    'post_type'      => 'car_model',
-    'posts_per_page' => -1,
-    'tax_query'      => [[
-        'taxonomy' => 'car_category',
-        'field'    => 'slug',
-        'terms'    => 'xe-ca-nhan',
-    ]],
-    'orderby'    => 'menu_order',
-    'order'      => 'ASC',
+$theme_uri = get_stylesheet_directory_uri();
+$cars_uri  = $theme_uri . '/assets/images/vinfast-cars/';
+
+// Danh sách xe điện cá nhân chính hãng VinFast (dữ liệu hiển thị chuẩn showroom)
+$personal_cars = [
+    [
+        'name'     => 'VinFast VF 3',
+        'segment'  => 'Mini SUV Đô Thị',
+        'badge'    => 'BÁN CHẠY',
+        'badge_bg' => '#DC2626',
+        'image'    => $cars_uri . 'official_vf3.webp',
+        'range'    => '210 km',
+        'seats'    => '4 Chỗ',
+        'price'    => '240.000.000 đ',
+        'slug'     => 'vinfast-vf-3',
+    ],
+    [
+        'name'     => 'VinFast VF 5 Plus',
+        'segment'  => 'A-SUV Đa Dụng',
+        'badge'    => '',
+        'badge_bg' => '',
+        'image'    => $cars_uri . 'official_vf5.webp',
+        'range'    => '326 km',
+        'seats'    => '5 Chỗ',
+        'price'    => '468.000.000 đ',
+        'slug'     => 'vinfast-vf-5',
+    ],
+    [
+        'name'     => 'VinFast VF 6',
+        'segment'  => 'B-SUV Thời Thượng',
+        'badge'    => '',
+        'badge_bg' => '',
+        'image'    => $cars_uri . 'official_vf6.webp',
+        'range'    => '399 km',
+        'seats'    => '5 Chỗ',
+        'price'    => '675.000.000 đ',
+        'slug'     => 'vinfast-vf-6',
+    ],
+    [
+        'name'     => 'VinFast VF 7',
+        'segment'  => 'C-SUV Thể Thao Cao Cấp',
+        'badge'    => 'NỔI BẬT',
+        'badge_bg' => '#2563EB',
+        'image'    => $cars_uri . 'official_vf7.webp',
+        'range'    => '431 km',
+        'seats'    => '5 Chỗ',
+        'price'    => '850.000.000 đ',
+        'slug'     => 'vinfast-vf-7',
+    ],
+    [
+        'name'     => 'VinFast VF 8',
+        'segment'  => 'D-SUV Sang Trọng',
+        'badge'    => '',
+        'badge_bg' => '',
+        'image'    => $cars_uri . 'official_vf8_allnew.png',
+        'range'    => '471 km',
+        'seats'    => '5 Chỗ',
+        'price'    => '1.090.000.000 đ',
+        'slug'     => 'vinfast-vf-8',
+    ],
+    [
+        'name'     => 'VinFast VF 9',
+        'segment'  => 'E-SUV Flagship Đẳng Cấp',
+        'badge'    => 'FLAGSHIP',
+        'badge_bg' => '#111827',
+        'image'    => $cars_uri . 'official_vf9.webp',
+        'range'    => '602 km',
+        'seats'    => '6 - 7 Chỗ',
+        'price'    => '1.589.000.000 đ',
+        'slug'     => 'vinfast-vf-9',
+    ],
+];
+
+// Danh sách xe thương mại Green Series
+$commercial_cars = [
+    [
+        'name'     => 'Minio Green',
+        'segment'  => 'Đô Thị Vận Tải Nhỏ Gọn',
+        'image'    => $cars_uri . 'official_minio.webp',
+        'range'    => '220 km',
+        'seats'    => '2 - 4 Chỗ',
+        'price'    => 'Liên hệ nhận giá',
+        'slug'     => 'minio-green',
+    ],
+    [
+        'name'     => 'Herio Green',
+        'segment'  => 'Dịch Vụ Đón Tiễn Sang Trọng',
+        'image'    => $cars_uri . 'official_herio.png',
+        'range'    => '350 km',
+        'seats'    => '5 Chỗ',
+        'price'    => 'Liên hệ nhận giá',
+        'slug'     => 'herio-green',
+    ],
+    [
+        'name'     => 'Limo Green',
+        'segment'  => 'Đưa Đón Chuyên Cơ Mặt Đất',
+        'image'    => $cars_uri . 'official_limo.png',
+        'range'    => '450 km',
+        'seats'    => '7 Chỗ VIP',
+        'price'    => 'Liên hệ nhận giá',
+        'slug'     => 'limo-green',
+    ],
+    [
+        'name'     => 'EC Van',
+        'segment'  => 'Xe Tải Điện Vận Chuyển Hàng',
+        'image'    => $cars_uri . 'official_ecvan.webp',
+        'range'    => '280 km',
+        'seats'    => 'Tải trọng 950 kg',
+        'price'    => 'Liên hệ nhận giá',
+        'slug'     => 'ec-van',
+    ],
+];
+
+// Lấy 3 bài tin tức mới nhất từ WordPress (nếu có)
+$recent_posts = get_posts([
+    'numberposts' => 3,
     'post_status' => 'publish',
 ]);
 
-$xe_dich_vu = get_posts([
-    'post_type'      => 'car_model',
-    'posts_per_page' => -1,
-    'tax_query'      => [[
-        'taxonomy' => 'car_category',
-        'field'    => 'slug',
-        'terms'    => 'xe-dich-vu',
-    ]],
-    'orderby'    => 'menu_order',
-    'order'      => 'ASC',
-    'post_status' => 'publish',
-]);
+// Cấu hình Slide Hero Showcase (Hỗ trợ ACF Repeater hoặc Fallback mặc định chuẩn Showroom)
+$default_hero_slides = [
+    [
+        'eyebrow'      => 'VINFAST VF 7 • ALL-ELECTRIC SUV',
+        'badge'        => 'Tiêu điểm',
+        'badge_class'  => '',
+        'title'        => 'Bứt Phá Giới Hạn<br><span class="text-gradient">Công Nghệ Tương Lai</span>',
+        'desc'         => 'Thiết kế phi đối xứng định hình phong cách thời thượng, công suất 349 mã lực uy lực, dẫn động 2 cầu toàn thời gian AWD và quãng đường di chuyển 496 km.',
+        'btn_primary'  => ['text' => 'Khám phá VF 7', 'url' => '#collection'],
+        'btn_secondary'=> ['text' => 'Đăng ký lái thử', 'url' => home_url('/dang-ky-lai-thu/')],
+        'image'        => $cars_uri . 'official_vf7.webp',
+        'alt'          => 'VinFast VF 7 Plus — SUV điện thể thao thời thượng',
+        'specs'        => [
+            ['val' => '349 <small>HP</small>', 'lbl' => 'Công suất tối đa'],
+            ['val' => '496 <small>km</small>', 'lbl' => 'Tầm hoạt động'],
+            ['val' => '5.8 <small>giây</small>', 'lbl' => '0-100 km/h'],
+        ],
+        'is_service'   => false,
+    ],
+    [
+        'eyebrow'      => 'VINFAST VF 8 • D-SEGMENT LUXURY SUV',
+        'badge'        => 'Quốc tế',
+        'badge_class'  => 'badge-gold',
+        'title'        => 'Tiên Phong Đẳng Cấp<br><span class="text-gradient">Sang Trọng Toàn Cầu</span>',
+        'desc'         => 'Chuẩn an toàn 5 sao hàng đầu thế giới, hệ thống lái tự động thông minh ADAS cấp độ 2 và trợ lý ảo Vivi điều khiển giọng nói tiếng Việt đa vùng miền.',
+        'btn_primary'  => ['text' => 'Khám phá VF 8', 'url' => '#collection'],
+        'btn_secondary'=> ['text' => 'Dự toán lăn bánh', 'url' => home_url('/du-toan-chi-phi/')],
+        'image'        => $cars_uri . 'official_vf8.webp',
+        'alt'          => 'VinFast VF 8 — SUV điện hạng D thông minh toàn cầu',
+        'specs'        => [
+            ['val' => '402 <small>HP</small>', 'lbl' => 'Công suất (Plus)'],
+            ['val' => '471 <small>km</small>', 'lbl' => 'Quãng đường (WLTP)'],
+            ['val' => 'Level 2', 'lbl' => 'Trợ lái ADAS'],
+        ],
+        'is_service'   => false,
+    ],
+    [
+        'eyebrow'      => 'VINFAST MINH NGÂN • ĐẠI LÝ ỦY QUYỀN 3S',
+        'badge'        => 'Chính hãng',
+        'badge_class'  => 'badge-green',
+        'title'        => 'Xưởng Dịch Vụ 3S<br><span class="text-gradient">Tiêu Chuẩn Toàn Diện</span>',
+        'desc'         => 'Hệ thống máy chẩn đoán kỹ thuật hiện đại, kỹ thuật viên đào tạo chuyên sâu bởi VinFast Việt Nam, dịch vụ cứu hộ pin 24/7 và cam kết bảo hành tới 10 năm.',
+        'btn_primary'  => ['text' => 'Đặt lịch dịch vụ', 'url' => home_url('/dat-lich-dich-vu/')],
+        'btn_secondary'=> ['text' => 'Hotline 0981 33 55 22', 'url' => 'tel:0981335522'],
+        'image'        => 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=1200',
+        'alt'          => 'Xưởng dịch vụ kỹ thuật tiêu chuẩn VinFast Minh Ngân Phú Thọ',
+        'specs'        => [
+            ['val' => '10 <small>năm</small>', 'lbl' => 'Bảo hành xe điện'],
+            ['val' => '24/7', 'lbl' => 'Cứu hộ pin lưu động'],
+            ['val' => '100%', 'lbl' => 'Phụ tùng chính hãng'],
+        ],
+        'is_service'   => true,
+    ],
+];
+
+// Cho phép nạp từ ACF nếu quản trị viên đã cấu hình
+$hero_slides = $default_hero_slides;
+if (function_exists('get_field')) {
+    $acf_slides = get_field('hero_slides');
+    if (!empty($acf_slides) && is_array($acf_slides)) {
+        // Tùy biến mapping từ ACF repeater
+    }
+}
+$slide_duration = 8000;
 ?>
 
-<!-- ============================
-     HERO BANNER SLIDER
-     ============================ -->
-<div class="vf-hero">
-  <div class="swiper">
-    <div class="swiper-wrapper">
+<div class="homepage-premium-wrapper">
 
-      <!-- Slide 1: Lên đời 4 bánh xe điện -->
-      <div class="swiper-slide">
-        <picture>
-          <source media="(max-width: 768px)" srcset="https://static-cms-prod.vinfastauto.com/len-doi-4-banh-len-cap-trai-nghiem-mobile.webp">
-          <img src="https://static-cms-prod.vinfastauto.com/len-doi-4-banh-len-cap-trai-nghiem-desktop.webp"
-               alt="VinFast - Lên đời 4 bánh xe điện" class="vf-slide-img" fetchpriority="high">
-        </picture>
-        <div class="vf-slide-overlay"></div>
-        <div class="vf-slide-content">
-          <div class="vf-slide-inner">
-            <span class="vf-slide-tag">VinFast Tân Á Châu</span>
-            <h2 class="vf-slide-title">Mãnh Liệt<br>Vì Tương Lai Xanh</h2>
-            <p class="vf-slide-sub">Đại lý VinFast chính hãng Tân Á Châu — Tư vấn tận tâm, Ưu đãi tốt nhất</p>
-            <div class="vf-slide-btns">
-              <a href="<?php echo home_url('/#dong-xe-dien'); ?>" class="vf-btn vf-btn-primary">
-                XEM DÒNG XE ĐIỆN
-              </a>
-              <a href="<?php echo esc_url(home_url('/dang-ky-lai-thu/')); ?>" class="vf-btn vf-btn-outline">
-                ĐĂNG KÝ LÁI THỬ
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- ========================================================================
+       SECTION 01: CINEMATIC MOTION HERO & DYNAMIC CAR SLIDER
+       ======================================================================== -->
+  <section class="cinematic-hero" id="hero" role="region" aria-roledescription="carousel" aria-label="Showroom Ô Tô Điện VinFast Minh Ngân">
 
-      <!-- Slide 2: Voucher 80 triệu / Ưu đãi -->
-      <div class="swiper-slide">
-        <picture>
-          <source media="(max-width: 768px)" srcset="https://static-cms-prod.vinfastauto.com/vinfast-len-doi-xe-dien-voucher-80-trieu-mobile.jpg">
-          <img src="https://static-cms-prod.vinfastauto.com/vinfast-len-doi-xe-dien-voucher-80-trieu-desktop.jpg"
-               alt="VinFast - Voucher 80 triệu" class="vf-slide-img" loading="lazy">
-        </picture>
-        <div class="vf-slide-overlay"></div>
-        <div class="vf-slide-content">
-          <div class="vf-slide-inner">
-            <span class="vf-slide-tag">Ưu đãi độc quyền</span>
-            <h2 class="vf-slide-title">Tặng Voucher<br>Tới 80 Triệu Đồng*</h2>
-            <p class="vf-slide-sub">Hỗ trợ chuyển đổi từ xe xăng sang ô tô điện VinFast chính hãng</p>
-            <div class="vf-slide-btns">
-              <a href="<?php echo esc_url(home_url('/dat-coc-xe/')); ?>" class="vf-btn vf-btn-primary">ĐẶT CỌC ONLINE</a>
-              <a href="<?php echo esc_url(home_url('/dang-ky-lai-thu/')); ?>" class="vf-btn vf-btn-outline" style="color:#fff; border-color:#fff;">ĐĂNG KÝ LÁI THỬ</a>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- STAGE BACKGROUND & AMBIENT SPOTLIGHT -->
+    <div class="hero-stage-bg" id="heroStageBg">
+      <div class="stage-gradient"></div>
+      <div class="stage-spotlight"></div>
+      <div class="stage-grid"></div>
 
-      <!-- Slide 3: Thu nhập hiệu quả kinh doanh xe -->
-      <div class="swiper-slide">
-        <picture>
-          <source media="(max-width: 768px)" srcset="https://static-cms-prod.vinfastauto.com/thu-nhap-hieu-qua-du-ngay-hay-dem-mobile.webp">
-          <img src="https://static-cms-prod.vinfastauto.com/thu-nhap-hieu-qua-du-ngay-hay-dem-desktop.webp"
-               alt="VinFast Xe Dịch Vụ" class="vf-slide-img" loading="lazy">
-        </picture>
-        <div class="vf-slide-overlay"></div>
-        <div class="vf-slide-content">
-          <div class="vf-slide-inner">
-            <span class="vf-slide-tag">Giải pháp xe dịch vụ</span>
-            <h2 class="vf-slide-title">Kinh Doanh Xanh<br>Thu Nhập Hiệu Quả</h2>
-            <p class="vf-slide-sub">Giải pháp xe điện chuyên dụng cho taxi & dịch vụ vận chuyển</p>
-            <div class="vf-slide-btns">
-              <a href="<?php echo home_url('/#xe-dich-vu'); ?>" class="vf-btn vf-btn-primary">XEM XE DỊCH VỤ</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /swiper-wrapper -->
-
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
-  </div>
-</div><!-- /vf-hero -->
-
-<!-- ============================
-     OFFICIAL VINFAST CAR SHOWCASE SLIDER
-     ============================ -->
-<section class="vf-showcase-section" id="dong-xe-dien">
-  <div class="container">
-
-    <div class="vf-showcase-slider swiper">
-      <div class="swiper-wrapper">
-
-        <?php
-        // Lấy tất cả Mẫu xe từ CPT car_model
-        $cars_query = get_posts([
-            'post_type'      => 'car_model',
-            'posts_per_page' => -1,
-            'post_status'    => 'publish',
-            'orderby'        => 'menu_order',
-            'order'          => 'ASC',
-        ]);
-
-        // Nếu chưa nhập dữ liệu CPT, dùng danh sách mẫu xe mặc định đầy đủ VinFast
-        if (empty($cars_query)) {
-            $cars_data = [
-                [
-                    'slug'      => 'vf2',
-                    'name'      => 'VinFast VF 2',
-                    'wm'        => 'VF 2',
-                    'segment'   => 'MiniCar',
-                    'seats'     => '4 chỗ',
-                    'range'     => '210 km (NEDC)',
-                    'price'     => '188.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('vf2'),
-                    'link'      => vfvp_get_car_product_url('vf2'),
-                ],
-                [
-                    'slug'      => 'vf3',
-                    'name'      => 'VinFast VF 3',
-                    'wm'        => 'VF 3',
-                    'segment'   => 'Mini SUV',
-                    'seats'     => '5 chỗ',
-                    'range'     => '210 km',
-                    'price'     => '285.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('vf3'),
-                    'link'      => vfvp_get_car_product_url('vf3'),
-                ],
-                [
-                    'slug'      => 'vf5',
-                    'name'      => 'VinFast VF 5 Plus',
-                    'wm'        => 'VF 5',
-                    'segment'   => 'A-SUV',
-                    'seats'     => '5 chỗ',
-                    'range'     => '326 km (NEDC)',
-                    'price'     => '496.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('vf5'),
-                    'link'      => vfvp_get_car_product_url('vf5'),
-                ],
-                [
-                    'slug'      => 'vf6',
-                    'name'      => 'VinFast VF 6',
-                    'wm'        => 'VF 6',
-                    'segment'   => 'B-SUV',
-                    'seats'     => '5 chỗ',
-                    'range'     => '399 km (WLTP)',
-                    'price'     => '646.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('vf6'),
-                    'link'      => vfvp_get_car_product_url('vf6'),
-                ],
-                [
-                    'slug'      => 'vf7',
-                    'name'      => 'VinFast VF 7',
-                    'wm'        => 'VF 7',
-                    'segment'   => 'C-SUV',
-                    'seats'     => '5 chỗ',
-                    'range'     => '431 km (WLTP)',
-                    'price'     => '740.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('vf7'),
-                    'link'      => vfvp_get_car_product_url('vf7'),
-                ],
-                [
-                    'slug'      => 'vf8',
-                    'name'      => 'VinFast VF 8',
-                    'wm'        => 'VF 8',
-                    'segment'   => 'D-SUV',
-                    'seats'     => '5 chỗ',
-                    'range'     => '460 km (WLTP)',
-                    'price'     => '898.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('vf8'),
-                    'link'      => vfvp_get_car_product_url('vf8'),
-                ],
-                [
-                    'slug'      => 'vf8_allnew',
-                    'name'      => 'VinFast VF 8 All New',
-                    'wm'        => 'VF 8 ALL NEW',
-                    'segment'   => 'D-SUV Thể thao',
-                    'seats'     => '5 chỗ',
-                    'range'     => '471 km (WLTP)',
-                    'price'     => '899.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('vf8_allnew'),
-                    'link'      => vfvp_get_car_product_url('vf8_allnew'),
-                ],
-                [
-                    'slug'      => 'vf9',
-                    'name'      => 'VinFast VF 9',
-                    'wm'        => 'VF 9',
-                    'segment'   => 'E-SUV',
-                    'seats'     => '6 - 7 chỗ',
-                    'range'     => '626 km (WLTP)',
-                    'price'     => '1.348.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('vf9'),
-                    'link'      => vfvp_get_car_product_url('vf9'),
-                ],
-                [
-                    'slug'      => 'vfwild',
-                    'name'      => 'VinFast VF Wild',
-                    'wm'        => 'VF WILD',
-                    'segment'   => 'Bán Tải REEV',
-                    'seats'     => '5 chỗ',
-                    'range'     => '> 1.000 km (NEDC)',
-                    'price'     => '860.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('vfwild'),
-                    'link'      => vfvp_get_car_product_url('vfwild'),
-                ],
-                [
-                    'slug'      => 'mpv7',
-                    'name'      => 'VinFast VF MPV 7',
-                    'wm'        => 'VF MPV 7',
-                    'segment'   => 'Xe MPV 7 chỗ',
-                    'seats'     => '7 chỗ',
-                    'range'     => '450 km (WLTP)',
-                    'price'     => '750.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('mpv7'),
-                    'link'      => vfvp_get_car_product_url('mpv7'),
-                ],
-                [
-                    'slug'      => 'ecvan',
-                    'name'      => 'EC Van',
-                    'wm'        => 'EC VAN',
-                    'segment'   => 'Xe tải thương mại',
-                    'seats'     => '2 chỗ',
-                    'range'     => '180 km (NEDC)',
-                    'price'     => '286.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('ecvan'),
-                    'link'      => vfvp_get_car_product_url('ecvan'),
-                ],
-                [
-                    'slug'      => 'minio',
-                    'name'      => 'Minio Green',
-                    'wm'        => 'MINIO GREEN',
-                    'segment'   => 'Xe dịch vụ đô thị',
-                    'seats'     => '4 chỗ',
-                    'range'     => '210 km (NEDC)',
-                    'price'     => 'Liên hệ báo giá',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('minio'),
-                    'link'      => vfvp_get_car_product_url('minio'),
-                ],
-                [
-                    'slug'      => 'herio',
-                    'name'      => 'Herio Green',
-                    'wm'        => 'HERIO GREEN',
-                    'segment'   => 'Xe dịch vụ đô thị',
-                    'seats'     => '5 chỗ',
-                    'range'     => '326 km (NEDC)',
-                    'price'     => 'Liên hệ báo giá',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('herio'),
-                    'link'      => vfvp_get_car_product_url('herio'),
-                ],
-                [
-                    'slug'      => 'nerio',
-                    'name'      => 'Nerio Green',
-                    'wm'        => 'NERIO GREEN',
-                    'segment'   => 'Xe dịch vụ C-SUV',
-                    'seats'     => '5 chỗ',
-                    'range'     => '318.6 km (NEDC)',
-                    'price'     => 'Liên hệ báo giá',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('nerio'),
-                    'link'      => vfvp_get_car_product_url('nerio'),
-                ],
-                [
-                    'slug'      => 'limo',
-                    'name'      => 'Limo Green',
-                    'wm'        => 'LIMO GREEN',
-                    'segment'   => 'Xe dịch vụ cao cấp',
-                    'seats'     => '7 chỗ',
-                    'range'     => '450 km (WLTP)',
-                    'price'     => '699.000.000 VNĐ*',
-                    'price_old' => '',
-                    'img'       => vfvp_get_car_image_url('limo'),
-                    'link'      => vfvp_get_car_product_url('limo'),
-                ],
-            ];
-        } else {
-            $cars_data = [];
-            foreach ($cars_query as $c) {
-                $versions = get_field('car_versions', $c->ID) ?: [];
-                $min_p = 0; $old_p = '';
-                if (!empty($versions)) {
-                    $min_p = $versions[0]['version_price'] ?? 0;
-                    $old_p = !empty($versions[0]['version_price_old']) ? vfvp_format_price($versions[0]['version_price_old']) : '';
-                }
-                $thumb = get_the_post_thumbnail_url($c->ID, 'full');
-                if (!$thumb) {
-                    $colors = get_field('car_colors', $c->ID) ?: [];
-                    $thumb = !empty($colors) ? ($colors[0]['color_image'] ?? '') : '';
-                }
-                $segment = get_field('car_segment', $c->ID) ?: 'Ô tô điện';
-                $slug = sanitize_title($c->post_title);
-                $cars_data[] = [
-                    'slug'      => $slug,
-                    'name'      => $c->post_title,
-                    'wm'        => strtoupper(str_replace(['VinFast ', 'vinfast '], '', $c->post_title)),
-                    'segment'   => $segment,
-                    'seats'     => (get_field('car_seats', $c->ID) ?: '5') . ' chỗ',
-                    'range'     => get_field('car_range', $c->ID) ?: 'Đang cập nhật',
-                    'price'     => $min_p > 0 ? vfvp_format_price($min_p) . '*' : 'Liên hệ báo giá',
-                    'price_old' => $old_p,
-                    'img'       => vfvp_get_car_image_url(str_replace(['vf-', 'vf_'], 'vf', strtolower($slug))),
-                    'link'      => vfvp_get_car_product_url($slug),
-                ];
-            }
-        }
-
-        foreach ($cars_data as $car):
-        ?>
-        <div class="swiper-slide vf-showcase-item">
-          <!-- HÌNH XE CHÍNH HÃNG VINFAST CMS -->
-          <a href="<?php echo esc_url($car['link']); ?>" class="vf-showcase-stage">
-            <img src="<?php echo esc_url($car['img']); ?>"
-                 alt="<?php echo esc_attr($car['name']); ?>"
-                 class="vf-showcase-img"
-                 loading="lazy">
-          </a>
-
-          <!-- BẢNG THÔNG SỐ CHUẨN 4 CỘT -->
-          <div class="vf-showcase-bar">
-            <div class="vf-showcase-col">
-              <span class="vf-sc-label">Dòng xe</span>
-              <strong class="vf-sc-val"><?php echo esc_html($car['name']); ?></strong>
-            </div>
-            <div class="vf-showcase-col">
-              <span class="vf-sc-label">Số chỗ ngồi</span>
-              <strong class="vf-sc-val"><?php echo esc_html($car['seats']); ?></strong>
-            </div>
-            <div class="vf-showcase-col">
-              <span class="vf-sc-label">Quãng đường lên tới</span>
-              <strong class="vf-sc-val"><?php echo esc_html($car['range']); ?></strong>
-            </div>
-            <div class="vf-showcase-col">
-              <span class="vf-sc-label">Giá bán từ</span>
-              <strong class="vf-sc-val vf-sc-price"><?php echo esc_html($car['price']); ?></strong>
-              <?php if (!empty($car['price_old'])): ?>
-                <span class="vf-sc-price-old"><?php echo esc_html($car['price_old']); ?></span>
-              <?php endif; ?>
-            </div>
-          </div>
-
-          <!-- 2 NÚT THAO TÁC: ĐẶT CỌC & XEM CHI TIẾT -->
-          <div class="vf-showcase-actions">
-            <a href="<?php echo esc_url(home_url('/dat-coc-xe/?car=' . $car['slug'])); ?>" class="vf-btn vf-btn-primary">
-              ĐẶT CỌC NGAY
-            </a>
-            <a href="<?php echo esc_url($car['link']); ?>" class="vf-btn vf-btn-outline vf-sc-btn-detail">
-              XEM CHI TIẾT
-            </a>
-          </div>
-        </div>
-        <?php endforeach; ?>
-
-      </div><!-- /swiper-wrapper -->
-
-      <!-- NÚT ĐIỀU HƯỚNG TRÁI / PHẢI CHUẨN TRÒN -->
-      <div class="vf-sc-button-prev swiper-button-prev"></div>
-      <div class="vf-sc-button-next swiper-button-next"></div>
-
-      <!-- CHẤM TRÒN PHÂN TRANG (PAGINATION DOTS) -->
-      <div class="vf-sc-pagination swiper-pagination"></div>
-    </div><!-- /vf-showcase-slider -->
-
-    <div class="vf-showcase-disclaimer">
-      (*) Mức giá ưu đãi mang tính chất tham khảo. Chương trình áp dụng theo điều khoản & điều kiện.
-    </div>
-
-  </div>
-</section>
-
-<!-- ============================
-     ƯU ĐÃI & CHÍNH SÁCH ĐẶC QUYỀN THÁNG
-     ============================ -->
-<section class="vf-promo-section" id="uu-dai-thang" style="padding: 60px 0 20px; background: #FFFFFF;">
-  <style>
-    .vf-promo-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 22px;
-      margin-bottom: 32px;
-    }
-    .vf-promo-card {
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      border-radius: 16px;
-      padding: 26px 22px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
-      overflow: hidden;
-    }
-    .vf-promo-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--card-accent, #2563EB);
-      transition: height 0.3s ease;
-    }
-    .vf-promo-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
-      border-color: #CBD5E1;
-    }
-    .vf-promo-card:hover::before {
-      height: 6px;
-    }
-    .vf-promo-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      width: fit-content;
-      margin-bottom: 16px;
-    }
-    .vf-promo-icon-box {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 18px;
-    }
-    .vf-promo-icon-box svg {
-      width: 24px;
-      height: 24px;
-    }
-    .vf-promo-card-title {
-      font-size: 17px;
-      font-weight: 800;
-      color: #0F172A;
-      margin: 0 0 10px;
-      line-height: 1.35;
-    }
-    .vf-promo-card-desc {
-      font-size: 13.5px;
-      color: #64748B;
-      line-height: 1.6;
-      margin: 0 0 18px;
-      flex: 1;
-    }
-    .vf-promo-card-perks {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .vf-promo-card-perks li {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: #1E293B;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .vf-promo-card-perks li svg {
-      width: 15px;
-      height: 15px;
-      flex-shrink: 0;
-    }
-    .vf-promo-card-action {
-      margin-top: auto;
-      padding-top: 16px;
-      border-top: 1px dashed #E2E8F0;
-    }
-    .vf-promo-card-action a {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 800;
-      color: #2563EB;
-      transition: color 0.2s ease, transform 0.2s ease;
-    }
-    .vf-promo-card-action a:hover {
-      color: #1D4ED8;
-      transform: translateX(3px);
-    }
-
-    /* MINI CTA BAR BELOW CARDS */
-    .vf-promo-cta-bar {
-      background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
-      border: 1px solid #BFDBFE;
-      border-radius: 14px;
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .vf-promo-cta-text {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: #1E293B;
-      font-size: 14.5px;
-      font-weight: 600;
-    }
-    .vf-promo-cta-text strong {
-      color: #0F172A;
-      font-weight: 800;
-    }
-    .vf-promo-cta-btns {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: 1080px) {
-      .vf-promo-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    @media (max-width: 640px) {
-      .vf-promo-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-      .vf-promo-cta-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 18px;
-      }
-      .vf-promo-cta-btns {
-        width: 100%;
-      }
-      .vf-promo-cta-btns .vf-btn {
-        width: 100%;
-        text-align: center;
-        justify-content: center;
-      }
-    }
-  </style>
-
-  <div class="container">
-    <div class="vf-promo-header" style="text-align: center; max-width: 780px; margin: 0 auto 40px;">
-      <span style="display:inline-flex; align-items:center; gap:8px; background:#FEF2F2; color:#DC2626; font-size:12px; font-weight:800; padding:6px 18px; border-radius:30px; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:14px; border:1px solid #FECACA;">
-        <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#DC2626;"></span>
-        CHÍNH SÁCH BÁN HÀNG ĐẶC BIỆT THÁNG <?php echo date('m/Y'); ?>
-      </span>
-      <h2 style="font-size:clamp(1.8rem, 3.2vw, 2.4rem); font-weight:900; color:#0F172A; margin:0 0 12px 0; text-transform:uppercase; letter-spacing:-0.5px; line-height:1.25;">
-        Ưu Đãi & Đặc Quyền Tháng Này
-      </h2>
-      <p style="color:#64748B; font-size:15px; margin:0 auto; line-height:1.6; max-width:620px;">
-        Chính sách trợ giá và quà tặng tốt nhất từ VinFast Tân Á Châu giúp quý khách dễ dàng sở hữu ô tô điện thông minh với chi phí tối ưu nhất.
-      </p>
-    </div>
-
-    <div class="vf-promo-grid">
-      <!-- Card 1: Miễn phí sạc pin V-GREEN -->
-      <div class="vf-promo-card" style="--card-accent: #059669;">
-        <div class="vf-promo-badge" style="background:#ECFDF5; color:#059669; border:1px solid #A7F3D0;">
-          ⚡ TIẾT KIỆM TỐI ĐA
-        </div>
-        <div class="vf-promo-icon-box" style="background:#ECFDF5; color:#059669;">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        </div>
-        <h3 class="vf-promo-card-title">Miễn Phí Sạc Pin V-GREEN</h3>
-        <p class="vf-promo-card-desc">
-          Miễn phí sạc pin tại mạng lưới trạm sạc công cộng V-GREEN toàn quốc tới 2 năm. Tiết kiệm hàng chục triệu chi phí vận hành hàng tháng.
-        </p>
-        <ul class="vf-promo-card-perks">
-          <li>
-            <svg fill="#059669" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            0đ chi phí nhiên liệu mỗi tháng
-          </li>
-          <li>
-            <svg fill="#059669" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            Hệ thống sạc phủ sóng 63 tỉnh thành
-          </li>
-        </ul>
-        <div class="vf-promo-card-action">
-          <a href="<?php echo esc_url(home_url('/dich-vu-pin-oto-dien/')); ?>">
-            <span>Tìm hiểu trạm sạc V-GREEN</span>
-            <span>→</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Card 2: Hỗ trợ chuyển đổi xanh tới 80 triệu -->
-      <div class="vf-promo-card" style="--card-accent: #DC2626;">
-        <div class="vf-promo-badge" style="background:#FEF2F2; color:#DC2626; border:1px solid #FECACA;">
-          🎁 ƯU ĐÃI KHỦNG
-        </div>
-        <div class="vf-promo-icon-box" style="background:#FEF2F2; color:#DC2626;">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        </div>
-        <h3 class="vf-promo-card-title">Chuyển Đổi Xanh Tới 80 Triệu</h3>
-        <p class="vf-promo-card-desc">
-          Chiến dịch "Mãnh liệt Tinh thần Việt Nam": Hỗ trợ thu mua xe xăng cũ đổi sang xe điện VinFast, trừ trực tiếp hoặc tặng voucher tới 80 triệu đồng.
-        </p>
-        <ul class="vf-promo-card-perks">
-          <li>
-            <svg fill="#DC2626" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            Thu cũ xe xăng mọi hãng giá tốt
-          </li>
-          <li>
-            <svg fill="#DC2626" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            Trừ thẳng vào giá thanh toán xe
-          </li>
-        </ul>
-        <div class="vf-promo-card-action">
-          <a href="<?php echo esc_url(home_url('/dat-coc-xe/')); ?>">
-            <span>Áp dụng ưu đãi ngay</span>
-            <span>→</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Card 3: Gói vay trả góp 5% -->
-      <div class="vf-promo-card" style="--card-accent: #2563EB;">
-        <div class="vf-promo-badge" style="background:#EFF6FF; color:#2563EB; border:1px solid #BFDBFE;">
-          🏦 TÀI CHÍNH DỄ DÀNG
-        </div>
-        <div class="vf-promo-icon-box" style="background:#EFF6FF; color:#2563EB;">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-        </div>
-        <h3 class="vf-promo-card-title">Vay 80% — Lãi Suất Cố Định</h3>
-        <p class="vf-promo-card-desc">
-          Gói vay ngân hàng ưu đãi lãi suất cố định chỉ từ 5%/năm. Hỗ trợ vay tối đa 80% giá trị xe, thời gian vay linh hoạt lên tới 8 năm, duyệt hồ sơ 24h.
-        </p>
-        <ul class="vf-promo-card-perks">
-          <li>
-            <svg fill="#2563EB" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            Trả góp chỉ từ 3 – 5 triệu/tháng
-          </li>
-          <li>
-            <svg fill="#2563EB" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            Duyệt online, không giữ giấy tờ gốc
-          </li>
-        </ul>
-        <div class="vf-promo-card-action">
-          <a href="<?php echo esc_url(home_url('/mua-xe-tra-gop/')); ?>">
-            <span>Tính bảng trả góp chi tiết</span>
-            <span>→</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Card 4: Bảo hành 10 năm & Phụ kiện -->
-      <div class="vf-promo-card" style="--card-accent: #7C3AED;">
-        <div class="vf-promo-badge" style="background:#F5F3FF; color:#7C3AED; border:1px solid #DDD6FE;">
-          🛡️ AN TÂM TUYỆT ĐỐI
-        </div>
-        <div class="vf-promo-icon-box" style="background:#F5F3FF; color:#7C3AED;">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-        </div>
-        <h3 class="vf-promo-card-title">Bảo Hành 10 Năm & Quà Tặng</h3>
-        <p class="vf-promo-card-desc">
-          Cam kết bảo hành chính hãng lên đến 10 năm hoặc 200.000 km cùng dịch vụ cứu hộ 24/7. Tặng kèm gói phụ kiện cao cấp khi nhận xe tại Tân Á Châu.
-        </p>
-        <ul class="vf-promo-card-perks">
-          <li>
-            <svg fill="#7C3AED" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            Bảo hành pin & thân vỏ dài nhất
-          </li>
-          <li>
-            <svg fill="#7C3AED" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            Tặng combo thảm sàn & film cách nhiệt
-          </li>
-        </ul>
-        <div class="vf-promo-card-action">
-          <a href="<?php echo esc_url(home_url('/chinh-sach-bao-hanh/')); ?>">
-            <span>Xem chính sách bảo hành</span>
-            <span>→</span>
-          </a>
-        </div>
+      <!-- OPTIONAL VIDEO HERO CONTAINER (Hỗ trợ cấu hình từ Admin) -->
+      <div class="hero-video-wrap" id="heroVideoWrap" aria-hidden="true">
+        <video class="hero-bg-video" id="heroBgVideo" muted loop playsinline poster="<?php echo esc_url($cars_uri . 'official_vf7.webp'); ?>">
+          <source src="" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
       </div>
     </div>
 
-    <!-- INLINE CTA BAR -->
-    <div class="vf-promo-cta-bar">
-      <div class="vf-promo-cta-text">
-        <span style="font-size:24px;">💡</span>
-        <div>
-          <strong>Bạn cần bảng tính chi phí lăn bánh chính xác và tư vấn phiên bản phù hợp?</strong>
-          <div style="font-size:13px; color:#64748B; margin-top:2px;">Chuyên viên tư vấn VinFast Tân Á Châu sẽ gửi bảng chiết tính chi tiết chỉ sau 5 phút.</div>
-        </div>
-      </div>
-      <div class="vf-promo-cta-btns">
-        <a href="<?php echo esc_url(home_url('/du-toan-chi-phi/')); ?>" class="vf-btn vf-btn-primary" style="padding:10px 22px; font-size:13px;">
-          TÍNH GIÁ LĂN BÁNH →
-        </a>
-        <a href="tel:0562256256" class="vf-btn vf-btn-outline" style="padding:10px 20px; font-size:13px; background:#fff;">
-          📞 056 225 6256
-        </a>
-      </div>
-    </div>
+    <!-- SLIDES WRAPPER -->
+    <div class="hero-slider-track" id="heroTrack">
+      <?php foreach ($hero_slides as $index => $slide) : ?>
+        <article class="hero-slide <?php echo $index === 0 ? 'active' : ''; ?>"
+                 data-index="<?php echo esc_attr($index); ?>"
+                 aria-label="<?php echo esc_attr(wp_strip_all_tags($slide['eyebrow'])); ?>">
+          <div class="slide-container">
 
-  </div>
-</section>
+            <!-- Cột chữ (Eyebrow -> Heading H1 -> Description -> 2 CTAs) -->
+            <div class="slide-content">
+              <div class="slide-eyebrow animate-child">
+                <span class="eyebrow-dot"></span>
+                <span class="eyebrow-text"><?php echo esc_html($slide['eyebrow']); ?></span>
+                <?php if (!empty($slide['badge'])) : ?>
+                  <span class="badge-featured <?php echo esc_attr($slide['badge_class']); ?>"><?php echo esc_html($slide['badge']); ?></span>
+                <?php endif; ?>
+              </div>
 
-<!-- ============================
-     BANNER KÊU GỌI ĐẶT CỌC XE TRỰC TUYẾN (DẠNG CARD GỌN GÀNG)
-     ============================ -->
-<section class="vf-deposit-card-section" style="padding: 16px 0 32px 0; background: transparent;">
-  <style>
-  @media (max-width: 900px) {
-    .vf-deposit-banner-card {
-      flex-direction: column !important;
-      align-items: flex-start !important;
-      padding: 24px 20px !important;
-      gap: 18px !important;
-      border-radius: 16px !important;
-    }
-    .vf-dep-card-btns {
-      width: 100% !important;
-    }
-    .vf-dep-card-btns .vf-btn {
-      flex: 1 1 100% !important;
-      text-align: center !important;
-      justify-content: center !important;
-      display: flex !important;
-      align-items: center !important;
-    }
-  }
-  </style>
-  <div class="container">
-    <div class="vf-deposit-banner-card" style="
-      background: linear-gradient(135deg, #070F26 0%, #102A71 60%, #1E40AF 100%);
-      border-radius: 20px;
-      padding: 34px 40px;
-      color: #ffffff;
-      box-shadow: 0 12px 35px rgba(16, 42, 117, 0.16);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 28px;
-    ">
-      <!-- Glow ambient light -->
-      <div style="position: absolute; right: -40px; top: -40px; width: 260px; height: 260px; background: radial-gradient(circle, rgba(96, 165, 250, 0.18) 0%, transparent 70%); pointer-events: none;"></div>
+              <h1 class="slide-title animate-child">
+                <?php echo wp_kses_post($slide['title']); ?>
+              </h1>
 
-      <div style="max-width: 640px; position: relative; z-index: 2;">
-        <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); color: #93C5FD; font-size: 11px; font-weight: 800; padding: 4px 14px; border-radius: 20px; letter-spacing: 0.8px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px);">
-          ⚡ CHÍNH SÁCH ĐẶT CỌC TRỰC TUYẾN
-        </span>
-        <h3 style="font-size: clamp(1.25rem, 2.2vw, 1.65rem); font-weight: 900; color: #ffffff; margin: 0 0 8px 0; text-transform: uppercase; line-height: 1.35; letter-spacing: -0.2px;">
-          Đặt cọc online — Giữ trọn ưu đãi & Giao xe sớm nhất
-        </h3>
-        <p style="font-size: 13.5px; color: #CBD5E1; margin: 0; line-height: 1.55;">
-          Bảo toàn 100% quà tặng voucher tháng, ưu đãi lệ phí trước bạ và thanh toán an toàn qua mã VietQR đại lý ủy quyền VinFast Tân Á Châu.
-        </p>
-      </div>
+              <p class="slide-desc animate-child">
+                <?php echo esc_html($slide['desc']); ?>
+              </p>
 
-      <div class="vf-dep-card-btns" style="display: flex; gap: 12px; flex-wrap: wrap; flex-shrink: 0; position: relative; z-index: 2;">
-        <a href="<?php echo esc_url(home_url('/dat-coc-xe/')); ?>" class="vf-btn vf-btn-primary" style="background: linear-gradient(135deg, #2563EB, #1D4ED8); box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45); white-space: nowrap; height: 46px; line-height: 46px; padding: 0 26px; font-weight: 800; font-size: 13px; border-radius: 10px; text-decoration: none; border: none;">
-          ✓ ĐẶT CỌC NGAY
-        </a>
-        <a href="<?php echo esc_url(home_url('/dang-ky-lai-thu/')); ?>" class="vf-btn vf-btn-outline" style="color: #ffffff; border-color: rgba(255,255,255,0.4); white-space: nowrap; height: 46px; line-height: 46px; padding: 0 22px; font-weight: 700; font-size: 13px; border-radius: 10px; text-decoration: none;">
-          LÁI THỬ XE
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================
-     PHỤ KIỆN XE VINFAST CHÍNH HÃNG
-     ============================ -->
-<?php
-$accessories = vfvp_get_accessories();
-if (!empty($accessories)):
-?>
-<section class="vf-accessory-section" id="phu-kien-xe">
-  <div class="container">
-    <div class="vf-acc-head">
-      <div>
-        <h2 class="vf-acc-title">Phụ kiện xe</h2>
-        <p class="vf-acc-subtitle">Phụ kiện & thiết bị sạc chính hãng VinFast</p>
-      </div>
-      <a href="<?php echo home_url('/phu-kien/'); ?>" class="vf-btn vf-btn-primary vf-acc-more">
-        XEM THÊM <span>→</span>
-      </a>
-    </div>
-
-    <div class="vf-acc-grid">
-      <?php 
-      $display_acc = array_slice($accessories, 0, 8);
-      foreach ($display_acc as $acc): 
-      ?>
-      <div class="vf-acc-card">
-        <div class="vf-acc-img-wrapper">
-          <img src="<?php echo esc_url($acc['image']); ?>" 
-               alt="<?php echo esc_attr($acc['name']); ?>" 
-               loading="lazy" 
-               class="vf-acc-img">
-        </div>
-        <div class="vf-acc-info">
-          <div class="vf-acc-cat"><?php echo esc_html($acc['category'] ?? 'Phụ kiện chính hãng'); ?></div>
-          <h3 class="vf-acc-name"><?php echo esc_html($acc['name']); ?></h3>
-          <div class="vf-acc-price"><?php echo esc_html($acc['price']); ?></div>
-          <a href="<?php echo home_url('/phu-kien/'); ?>" class="vf-btn vf-btn-outline vf-acc-btn">
-            XEM CHI TIẾT
-          </a>
-        </div>
-      </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-<?php endif; ?>
-
-<!-- ============================
-     PIN & TRẠM SẠC Ô TÔ ĐIỆN
-     ============================ -->
-<section class="vf-charging-section" id="pin-tram-sac">
-  <div class="container">
-    <div class="vf-charging-grid">
-      <!-- Left Column Cards -->
-      <div class="vf-charging-left">
-        <!-- Card 1: Trạm sạc ô tô điện -->
-        <a href="<?php echo esc_url(home_url('/dich-vu-pin-oto-dien/')); ?>" class="vf-charging-card" style="display:block; text-decoration:none; background: linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.85) 100%), url('<?php echo esc_url(vfvp_get_charging_image_url('charging_station_car.jpg')); ?>') center/cover no-repeat;">
-          <div class="vf-charging-card-overlay">
-            <h3 class="vf-charging-card-title">Pin & Trạm sạc ô tô điện</h3>
-          </div>
-        </a>
-        <!-- Card 2: Giải pháp năng lượng V-GREEN -->
-        <a href="<?php echo esc_url(home_url('/tim-kiem-showroom-tram-sac/')); ?>" class="vf-charging-card" style="display:block; text-decoration:none; background: linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.85) 100%), url('<?php echo esc_url(vfvp_get_charging_image_url('charging_station_vgreen.jpg')); ?>') center/cover no-repeat;">
-          <div class="vf-charging-card-overlay">
-            <h3 class="vf-charging-card-title">Hệ thống trạm sạc V-GREEN phủ rộng toàn quốc</h3>
-          </div>
-        </a>
-      </div>
-
-      <!-- Right Column Featured Card: Thiết bị sạc di động -->
-      <div class="vf-charging-right">
-        <a href="<?php echo esc_url(home_url('/pin-va-tram-sac/')); ?>" class="vf-charging-featured-card" style="display:flex; text-decoration:none; color:inherit;">
-          <div class="vf-charging-featured-content">
-            <h3 class="vf-charging-featured-title">Thiết bị sạc di động</h3>
-            <p class="vf-charging-featured-desc">
-              VinFast cung cấp đa dạng giải pháp sạc để đáp ứng nhu cầu sử dụng của khách hàng một cách thuận tiện nhất.
-            </p>
-            <span class="vf-charging-featured-link">
-              XEM CHI TIẾT <span style="font-size:1.1rem; vertical-align:middle; margin-left:4px;">→</span>
-            </span>
-          </div>
-          <div class="vf-charging-featured-img-wrap">
-            <img src="<?php echo esc_url(vfvp_get_charging_image_url('portable_charger.webp')); ?>" 
-                 alt="Thiết bị sạc di động VinFast" 
-                 class="vf-charging-featured-img"
-                 loading="lazy">
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================
-     BẢO HÀNH & DỊCH VỤ HẬU MÃI
-     ============================ -->
-<section class="vf-service-section" id="bao-hanh-dich-vu">
-<?php 
-$upload_dir = wp_upload_dir();
-$tunnel_bg  = $upload_dir['baseurl'] . '/official_cars/common/service_bg_tunnel.png';
-$vf9_clean  = $upload_dir['baseurl'] . '/official_cars/common/cutout_vf9_clean.png';
-?>
-    <div class="vf-service-banner" style="background: url('<?php echo esc_url($tunnel_bg); ?>') center right / cover no-repeat; background-color: #F8FAFC;">
-      <div class="vf-service-content">
-        <h2 class="vf-service-title">Bảo hành & Dịch vụ</h2>
-        <p class="vf-service-desc">
-          VinFast đã đầu tư nghiêm túc và bài bản để phát triển hệ thống Showroom, Nhà phân phối và xưởng dịch vụ rộng khắp, đáp ứng tối đa nhu cầu của Khách hàng.
-        </p>
-        <div class="vf-service-actions">
-          <a href="<?php echo home_url('/dat-lich-dich-vu/'); ?>" class="vf-btn vf-btn-primary">
-            ĐẶT LỊCH BẢO DƯỠNG
-          </a>
-          <a href="<?php echo home_url('/chinh-sach-bao-hanh/'); ?>" class="vf-btn vf-btn-outline">
-            CHÍNH SÁCH
-          </a>
-        </div>
-      </div>
-      <div class="vf-service-img-wrap">
-        <img src="<?php echo esc_url($vf9_clean); ?>" 
-             alt="VinFast VF 9 - Bảo hành & Dịch vụ" 
-             class="vf-service-img"
-             loading="lazy">
-      </div>
-    </div>
-</section>
-
-<!-- ============================
-     MÃNH LIỆT TINH THẦN VIỆT NAM - VÌ TƯƠNG LAI XANH
-     ============================ -->
-<?php
-$camp_posts = get_posts([
-    'post_type'      => 'post',
-    'title'          => 'Mãnh liệt Tinh thần Việt Nam - Vì Tương lai Xanh',
-    'posts_per_page' => 1,
-    'post_status'    => 'publish'
-]);
-$camp_url   = !empty($camp_posts) ? get_permalink($camp_posts[0]->ID) : home_url('/tin-tuc/');
-$camp_title = !empty($camp_posts) ? esc_html($camp_posts[0]->post_title) : 'Mãnh liệt Tinh thần Việt Nam - Vì Tương lai Xanh';
-$camp_desc  = !empty($camp_posts) ? esc_html(get_the_excerpt($camp_posts[0]->ID)) : 'Chiến dịch Mãnh liệt Tinh thần Việt Nam - Vì Tương lai Xanh là lời khẳng định mạnh mẽ của VinFast trong hành trình thúc đẩy cuộc cách mạng xe điện và kiến tạo một tương lai bền vững...';
-?>
-<section class="vf-campaign-section" id="manh-liet-tinh-than-viet-nam">
-  <div class="vf-campaign-banner" style="background-image: url('<?php echo esc_url(content_url('/uploads/official_cars/common/manh_liet_tinh_than_viet_nam.png')); ?>');">
-    <div class="vf-campaign-overlay"></div>
-    <div class="vf-campaign-content">
-      <h2 class="vf-campaign-title">
-        <?php echo $camp_title; ?>
-      </h2>
-      <p class="vf-campaign-desc">
-        <?php echo $camp_desc; ?>
-      </p>
-      <a href="<?php echo esc_url($camp_url); ?>" class="vf-btn vf-btn-primary vf-campaign-btn">
-        XEM CHI TIẾT
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ============================
-     XE DỊCH VỤ
-     ============================ -->
-<?php if (!empty($xe_dich_vu)): ?>
-<section class="vf-car-section vf-section-alt" id="xe-dich-vu">
-  <div class="container">
-    <div class="vf-section-header">
-      <div class="vf-section-label">Giải pháp kinh doanh xanh</div>
-      <h2 class="vf-section-title">Xe dịch vụ VinFast</h2>
-      <p class="vf-section-desc">Dòng xe chuyên dụng cho taxi, chia sẻ xe và dịch vụ vận chuyển</p>
-    </div>
-
-    <div class="vf-car-grid">
-      <?php foreach ($xe_dich_vu as $car):
-        $post_id  = $car->ID;
-        $versions = get_field('car_versions', $post_id) ?: [];
-        $min_price = 0;
-        foreach ($versions as $v) {
-            $p = floatval($v['version_price'] ?? 0);
-            if ($p > 0 && ($min_price === 0 || $p < $min_price)) $min_price = $p;
-        }
-        $range = get_field('car_range', $post_id);
-        $seats = get_field('car_seats', $post_id);
-        $thumb = get_the_post_thumbnail_url($post_id, 'large');
-        if (!$thumb) {
-            $colors = get_field('car_colors', $post_id) ?: [];
-            $thumb  = !empty($colors) ? ($colors[0]['color_image'] ?? '') : '';
-        }
-      ?>
-      <div class="vf-car-card">
-        <a href="<?php the_permalink($post_id); ?>" class="vf-car-card-img" style="text-decoration:none;">
-          <?php if ($thumb): ?>
-            <img src="<?php echo esc_url($thumb); ?>"
-                 alt="<?php echo esc_attr(get_the_title($post_id)); ?>"
-                 loading="lazy">
-          <?php else: ?>
-            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f5f5f5;">
-              <span style="font-size:2rem;font-weight:900;color:#ddd;"><?php echo esc_html(get_the_title($post_id)); ?></span>
-            </div>
-          <?php endif; ?>
-        </a>
-        <div class="vf-car-card-body">
-          <div class="vf-car-card-category">Xe dịch vụ</div>
-          <h3 class="vf-car-card-name">
-            <a href="<?php the_permalink($post_id); ?>" style="color:inherit; text-decoration:none;">
-              <?php echo esc_html(get_the_title($post_id)); ?>
-            </a>
-          </h3>
-          <div class="vf-car-card-price">
-            <?php if ($min_price > 0): ?>
-              Giá từ <strong><?php echo vfvp_format_price($min_price); ?></strong>
-            <?php else: ?>
-              <strong>Liên hệ để nhận giá</strong>
-            <?php endif; ?>
-          </div>
-          <ul class="vf-car-card-specs">
-            <?php if ($range): ?><li><?php echo esc_html($range); ?> tầm hoạt động</li><?php endif; ?>
-            <?php if ($seats): ?><li><?php echo esc_html($seats); ?> chỗ ngồi</li><?php endif; ?>
-          </ul>
-          <div class="vf-car-card-actions">
-            <a href="<?php the_permalink($post_id); ?>" class="vf-btn vf-btn-outline">Khám phá</a>
-            <button class="vf-btn vf-btn-primary" onclick="vfOpenModal('modal-laythu')">Đặt cọc</button>
-          </div>
-        </div>
-      </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-<?php endif; ?>
-
-
-
-<!-- ============================
-     CÔNG CỤ HỖ TRỢ MUA XE & ĐẶT CỌC
-     ============================ -->
-<section class="vf-finance-section" id="cong-cu-mua-xe" style="padding: 70px 0; background: #F8FAFC; border-top: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0;">
-  <div class="container">
-    <div style="text-align: center; margin-bottom: 44px;">
-      <span style="display:inline-block; background:#EFF6FF; color:#2563EB; font-size:12px; font-weight:800; padding:5px 16px; border-radius:20px; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; border:1px solid #BFDBFE;">LẬP KẾ HOẠCH TÀI CHÍNH</span>
-      <h2 style="font-size:clamp(1.7rem, 3.2vw, 2.3rem); font-weight:900; color:#0F172A; margin:0 0 12px 0; text-transform:uppercase; letter-spacing:-0.4px;">Công cụ hỗ trợ sở hữu xe</h2>
-      <p style="color:#64748B; font-size:14.5px; max-width:620px; margin:0 auto; line-height:1.6;">Dễ dàng ước tính toàn bộ chi phí lăn bánh chính xác, bảng tính trả góp linh hoạt và thủ tục đặt cọc trực tuyến bảo toàn quà tặng ưu đãi.</p>
-    </div>
-
-    <div class="vf-finance-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap:24px;">
-      
-      <!-- Thẻ 1: Dự toán chi phí lăn bánh -->
-      <a href="<?php echo esc_url(home_url('/du-toan-chi-phi/')); ?>" 
-         class="vf-fin-card" 
-         style="background: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%); border-radius: 18px; padding: 34px 28px; text-decoration: none; display: flex; flex-direction: column; color: #ffffff; box-shadow: 0 10px 28px rgba(37, 99, 235, 0.22); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255, 255, 255, 0.15); position: relative; overflow: hidden;"
-         onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 18px 40px rgba(37, 99, 235, 0.38)';"
-         onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 10px 28px rgba(37, 99, 235, 0.22)';">
-        <div style="width: 56px; height: 56px; border-radius: 14px; background: rgba(255, 255, 255, 0.16); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 20px;">
-          📊
-        </div>
-        <span style="font-size: 11.5px; font-weight: 800; color: #93C5FD; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">ƯỚC TÍNH CHI PHÍ</span>
-        <h3 style="font-size: 1.35rem; font-weight: 800; margin: 0 0 12px 0; color: #ffffff;">Dự toán chi phí lăn bánh</h3>
-        <p style="font-size: 13.5px; color: rgba(255, 255, 255, 0.85); line-height: 1.6; margin: 0 0 24px 0; flex: 1;">
-          Tính toán tổng chi phí sở hữu xe chi tiết theo từng tỉnh thành: miễn 100% lệ phí trước bạ, phí đăng ký biển số, bảo hiểm bắt buộc & quà tặng voucher tháng.
-        </p>
-        <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #ffffff; background: rgba(255, 255, 255, 0.2); padding: 10px 18px; border-radius: 8px; width: fit-content;">
-          TÍNH GIÁ LĂN BÁNH →
-        </span>
-      </a>
-
-      <!-- Thẻ 2: Bảng tính vay trả góp -->
-      <a href="<?php echo esc_url(home_url('/mua-xe-tra-gop/')); ?>" 
-         class="vf-fin-card" 
-         style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); border-radius: 18px; padding: 34px 28px; text-decoration: none; display: flex; flex-direction: column; color: #ffffff; box-shadow: 0 10px 28px rgba(15, 23, 42, 0.2); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255, 255, 255, 0.12); position: relative; overflow: hidden;"
-         onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 18px 40px rgba(15, 23, 42, 0.35)';"
-         onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 10px 28px rgba(15, 23, 42, 0.2)';">
-        <div style="width: 56px; height: 56px; border-radius: 14px; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 20px;">
-          💳
-        </div>
-        <span style="font-size: 11.5px; font-weight: 800; color: #60A5FA; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">HỖ TRỢ TÀI CHÍNH</span>
-        <h3 style="font-size: 1.35rem; font-weight: 800; margin: 0 0 12px 0; color: #ffffff;">Dự toán vay trả góp 80%</h3>
-        <p style="font-size: 13.5px; color: rgba(255, 255, 255, 0.85); line-height: 1.6; margin: 0 0 24px 0; flex: 1;">
-          Ước tính số tiền trả trước từ 20% và số tiền góp hàng tháng theo phương thức dư nợ giảm dần. Liên kết 10+ ngân hàng lớn, duyệt hồ sơ nhanh trong 24h.
-        </p>
-        <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #ffffff; background: rgba(255, 255, 255, 0.18); padding: 10px 18px; border-radius: 8px; width: fit-content;">
-          TÍNH GÓI TRẢ GÓP →
-        </span>
-      </a>
-
-      <!-- Thẻ 3: Đặt cọc trực tuyến giữ ưu đãi -->
-      <a href="<?php echo esc_url(home_url('/dat-coc-xe/')); ?>" 
-         class="vf-fin-card" 
-         style="background: linear-gradient(135deg, #064E3B 0%, #059669 100%); border-radius: 18px; padding: 34px 28px; text-decoration: none; display: flex; flex-direction: column; color: #ffffff; box-shadow: 0 10px 28px rgba(5, 150, 105, 0.22); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255, 255, 255, 0.15); position: relative; overflow: hidden;"
-         onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 18px 40px rgba(5, 150, 105, 0.38)';"
-         onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 10px 28px rgba(5, 150, 105, 0.22)';">
-        <div style="width: 56px; height: 56px; border-radius: 14px; background: rgba(255, 255, 255, 0.18); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 20px;">
-          ⚡
-        </div>
-        <span style="font-size: 11.5px; font-weight: 800; color: #A7F3D0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">ĐẶT CỌC CHÍNH HÃNG</span>
-        <h3 style="font-size: 1.35rem; font-weight: 800; margin: 0 0 12px 0; color: #ffffff;">Đặt cọc xe trực tuyến</h3>
-        <p style="font-size: 13.5px; color: rgba(255, 255, 255, 0.85); line-height: 1.6; margin: 0 0 24px 0; flex: 1;">
-          Ưu tiên xếp lịch nhận xe sớm nhất, bảo toàn 100% quà tặng ưu đãi trong tháng. Hỗ trợ quét mã VietQR tự động chính chủ VinFast Tân Á Châu.
-        </p>
-        <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #ffffff; background: rgba(255, 255, 255, 0.22); padding: 10px 18px; border-radius: 8px; width: fit-content;">
-          ĐẶT CỌC NGAY →
-        </span>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============================
-     TẠI SAO CHỌN VINFAST TÂN Á CHÂU & KHOẢNH KHẮC BÀN GIAO XE
-     ============================ -->
-<section class="vf-why-section" id="tai-sao-chon-tan-a-chau" style="padding: 70px 0; background: #0B132B; color: #FFFFFF; position: relative; overflow: hidden;">
-  <style>
-    .vf-why-section::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      right: -10%;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .vf-why-section::after {
-      content: '';
-      position: absolute;
-      bottom: -20%;
-      left: -10%;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(220, 38, 38, 0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .vf-why-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      margin-bottom: 50px;
-      position: relative;
-      z-index: 2;
-    }
-    .vf-why-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 30px 24px;
-      transition: all 0.35s ease;
-      backdrop-filter: blur(10px);
-    }
-    .vf-why-card:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(37, 99, 235, 0.5);
-      transform: translateY(-6px);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
-    }
-    .vf-why-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0.05) 100%);
-      border: 1px solid rgba(37, 99, 235, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      margin-bottom: 20px;
-      color: #60A5FA;
-    }
-    .vf-why-title {
-      font-size: 18px;
-      font-weight: 800;
-      color: #FFFFFF;
-      margin: 0 0 12px;
-      line-height: 1.35;
-    }
-    .vf-why-desc {
-      font-size: 13.5px;
-      color: #94A3B8;
-      line-height: 1.65;
-      margin: 0;
-    }
-
-    /* STATS STRIP */
-    .vf-why-stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 28px 24px;
-      margin-bottom: 64px;
-      position: relative;
-      z-index: 2;
-    }
-    .vf-stat-item {
-      text-align: center;
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 0 12px;
-    }
-    .vf-stat-item:last-child {
-      border-right: none;
-    }
-    .vf-stat-num {
-      font-size: clamp(2rem, 3.5vw, 2.5rem);
-      font-weight: 900;
-      color: #60A5FA;
-      line-height: 1;
-      margin-bottom: 6px;
-      letter-spacing: -0.5px;
-    }
-    .vf-stat-label {
-      font-size: 13px;
-      color: #94A3B8;
-      font-weight: 600;
-    }
-
-    /* HANDOVER SHOWCASE GRID */
-    .vf-handover-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 22px;
-      position: relative;
-      z-index: 2;
-    }
-    .vf-handover-card {
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: all 0.3s ease;
-    }
-    .vf-handover-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(37, 99, 235, 0.4);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
-    }
-    .vf-handover-car-preview {
-      height: 160px;
-      background: radial-gradient(circle, rgba(37,99,235,0.18) 0%, rgba(15,23,42,0.8) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 16px;
-    }
-    .vf-handover-car-preview img {
-      max-height: 120px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.4));
-      transition: transform 0.3s ease;
-    }
-    .vf-handover-card:hover .vf-handover-car-preview img {
-      transform: scale(1.06);
-    }
-    .vf-handover-badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #F8FAFC;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 6px;
-      backdrop-filter: blur(4px);
-    }
-    .vf-handover-body {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-    .vf-handover-customer {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .vf-handover-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2563EB, #1D4ED8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 13px;
-      color: #fff;
-    }
-    .vf-handover-cname {
-      font-size: 14px;
-      font-weight: 800;
-      color: #F8FAFC;
-    }
-    .vf-handover-loc {
-      font-size: 11.5px;
-      color: #94A3B8;
-    }
-    .vf-handover-quote {
-      font-size: 12.5px;
-      color: #CBD5E1;
-      line-height: 1.6;
-      font-style: italic;
-      margin: 0 0 16px;
-      flex: 1;
-    }
-    .vf-handover-stars {
-      color: #FBBF24;
-      font-size: 13px;
-      letter-spacing: 2px;
-    }
-
-    @media (max-width: 1080px) {
-      .vf-why-grid,
-      .vf-handover-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .vf-why-stats {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-      }
-      .vf-stat-item:nth-child(2) {
-        border-right: none;
-      }
-    }
-    @media (max-width: 640px) {
-      .vf-why-grid,
-      .vf-handover-grid {
-        grid-template-columns: 1fr;
-      }
-      .vf-why-stats {
-        grid-template-columns: 1fr 1fr;
-        padding: 20px 14px;
-      }
-    }
-  </style>
-
-  <div class="container" style="position:relative; z-index:2;">
-
-    <!-- TOP HEADER -->
-    <div style="text-align: center; max-width: 780px; margin: 0 auto 46px;">
-      <span style="display:inline-flex; align-items:center; gap:6px; background:rgba(37,99,235,0.18); color:#60A5FA; font-size:12px; font-weight:800; padding:6px 18px; border-radius:30px; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:14px; border:1px solid rgba(96,165,250,0.3);">
-        ⭐ ĐẠI LÝ ỦY QUYỀN CHÍNH THỨC
-      </span>
-      <h2 style="font-size:clamp(1.8rem, 3.2vw, 2.4rem); font-weight:900; color:#FFFFFF; margin:0 0 14px 0; text-transform:uppercase; letter-spacing:-0.5px; line-height:1.25;">
-        Tại Sao Nên Mua Xe Tại VinFast Tân Á Châu?
-      </h2>
-      <p style="color:#94A3B8; font-size:15px; margin:0 auto; line-height:1.6; max-width:620px;">
-        Đồng hành cùng hơn 5.000 khách hàng trên hành trình chuyển đổi xanh với sự chuyên nghiệp, tận tâm và uy tín hàng đầu.
-      </p>
-    </div>
-
-    <!-- 4 WHY CARDS -->
-    <div class="vf-why-grid">
-      <!-- 1 -->
-      <div class="vf-why-card">
-        <div class="vf-why-icon">🚗</div>
-        <h3 class="vf-why-title">Sẵn Xe Đủ Màu — Giao Ngay</h3>
-        <p class="vf-why-desc">
-          Kho xe lưu bãi quy mô lớn nhất khu vực, sẵn sàng các mẫu xe VF 3, VF 5, VF 6, VF 7, VF 8, VF 9. Hỗ trợ giao xe tận nhà theo giờ đẹp của khách hàng.
-        </p>
-      </div>
-
-      <!-- 2 -->
-      <div class="vf-why-card">
-        <div class="vf-why-icon">🔧</div>
-        <h3 class="vf-why-title">Xưởng Dịch Vụ 3S Chuẩn Hãng</h3>
-        <p class="vf-why-desc">
-          Hệ thống trang thiết bị chẩn đoán hiện đại, máy đo cân bằng động và phòng sơn sấy chuẩn quốc tế. Đội ngũ kỹ thuật viên được chứng nhận bởi VinFast.
-        </p>
-      </div>
-
-      <!-- 3 -->
-      <div class="vf-why-card">
-        <div class="vf-why-icon">🏠</div>
-        <h3 class="vf-why-title">Lái Thử Tận Nhà Miễn Phí</h3>
-        <p class="vf-why-desc">
-          Chỉ cần chọn mẫu xe yêu thích, đội ngũ tư vấn sẽ mang xe đến tận nhà hoặc cơ quan để quý khách trải nghiệm cảm giác lái thực tế hoàn toàn miễn phí.
-        </p>
-      </div>
-
-      <!-- 4 -->
-      <div class="vf-why-card">
-        <div class="vf-why-icon">📋</div>
-        <h3 class="vf-why-title">Hỗ Trợ Thủ Tục Lăn Bánh A-Z</h3>
-        <p class="vf-why-desc">
-          Hỗ trợ trọn gói đăng ký, đăng kiểm, bấm biển số đẹp. Gói vay trả góp duyệt nhanh trong 24h cả các hồ sơ khó, hỗ trợ cứu hộ 24/7 toàn quốc.
-        </p>
-      </div>
-    </div>
-
-    <!-- STATS STRIP -->
-    <div class="vf-why-stats">
-      <div class="vf-stat-item">
-        <div class="vf-stat-num">5.000+</div>
-        <div class="vf-stat-label">Khách hàng đồng hành</div>
-      </div>
-      <div class="vf-stat-item">
-        <div class="vf-stat-num">100%</div>
-        <div class="vf-stat-label">Xe mới & Phụ tùng chính hãng</div>
-      </div>
-      <div class="vf-stat-item">
-        <div class="vf-stat-num">24h</div>
-        <div class="vf-stat-label">Phê duyệt hồ sơ vay vốn</div>
-      </div>
-      <div class="vf-stat-item">
-        <div class="vf-stat-num">10 Năm</div>
-        <div class="vf-stat-label">Bảo hành chính hãng uy tín</div>
-      </div>
-    </div>
-
-    <!-- HANDOVER SHOWCASE HEADER -->
-    <div style="text-align: center; max-width: 780px; margin: 0 auto 36px;">
-      <span style="display:inline-flex; align-items:center; gap:6px; background:rgba(239,68,68,0.18); color:#F87171; font-size:12px; font-weight:800; padding:6px 18px; border-radius:30px; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:12px; border:1px solid rgba(248,113,113,0.3);">
-        🎉 NIỀM TIN KHÁCH HÀNG
-      </span>
-      <h3 style="font-size:clamp(1.6rem, 2.8vw, 2.1rem); font-weight:900; color:#FFFFFF; margin:0 0 10px 0; text-transform:uppercase; letter-spacing:-0.4px;">
-        Khoảnh Khắc Bàn Giao Xe Thực Tế
-      </h3>
-      <p style="color:#94A3B8; font-size:14.5px; margin:0 auto; line-height:1.6; max-width:600px;">
-        Hình ảnh và cảm nhận thực tế của các chủ nhân xe điện VinFast khi nhận xe tại showroom Tân Á Châu.
-      </p>
-    </div>
-
-    <!-- HANDOVER CARDS -->
-    <?php
-    $handover_posts = get_posts([
-        'post_type'      => 'post',
-        'category_name'  => 'ban-giao-xe',
-        'posts_per_page' => 4,
-        'post_status'    => 'publish'
-    ]);
-    ?>
-    <div class="vf-handover-grid">
-      <?php if (!empty($handover_posts)): ?>
-        <?php foreach ($handover_posts as $hp):
-          $hp_thumb = get_the_post_thumbnail_url($hp->ID, 'large');
-          if (!$hp_thumb) {
-              $hp_thumb = content_url('/uploads/official_cars/common/official_vf3.webp');
-          }
-          $customer_quote = get_the_excerpt($hp->ID);
-          if (empty($customer_quote)) {
-              $customer_quote = wp_trim_words($hp->post_content, 22, '...');
-          }
-        ?>
-        <div class="vf-handover-card">
-          <a href="<?php echo esc_url(get_permalink($hp->ID)); ?>" class="vf-handover-car-preview" style="text-decoration:none; display:flex; padding:0; overflow:hidden;">
-            <span class="vf-handover-badge">Bàn giao xe</span>
-            <img src="<?php echo esc_url($hp_thumb); ?>" alt="<?php echo esc_attr($hp->post_title); ?>" loading="lazy" style="max-height:100%; width:100%; height:100%; object-fit:cover;">
-          </a>
-          <div class="vf-handover-body">
-            <div class="vf-handover-customer">
-              <div class="vf-handover-avatar">VF</div>
-              <div>
-                <div class="vf-handover-cname">
-                  <a href="<?php echo esc_url(get_permalink($hp->ID)); ?>" style="color:inherit; text-decoration:none;">
-                    <?php echo esc_html(wp_trim_words($hp->post_title, 6)); ?>
-                  </a>
-                </div>
-                <div class="vf-handover-loc"><?php echo get_the_date('d/m/Y', $hp->ID); ?> • Tân Á Châu</div>
+              <div class="slide-actions animate-child">
+                <a href="<?php echo esc_url($slide['btn_primary']['url']); ?>" class="btn-hero btn-hero-primary" role="button">
+                  <span><?php echo esc_html($slide['btn_primary']['text']); ?></span>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+                <a href="<?php echo esc_url($slide['btn_secondary']['url']); ?>" class="btn-hero btn-hero-secondary" role="button">
+                  <?php if (strpos($slide['btn_secondary']['url'], 'tel:') !== false) : ?>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  <?php else : ?>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 10.9 2 11.2 2 11.5V16c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg>
+                  <?php endif; ?>
+                  <span><?php echo esc_html($slide['btn_secondary']['text']); ?></span>
+                </a>
               </div>
             </div>
-            <p class="vf-handover-quote">
-              "<?php echo esc_html($customer_quote); ?>"
-            </p>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto;">
-              <div class="vf-handover-stars">★★★★★</div>
-              <a href="<?php echo esc_url(get_permalink($hp->ID)); ?>" style="color:#60A5FA; font-size:12px; font-weight:700; text-decoration:none;">Xem bài viết →</a>
+
+            <!-- Cột hình ảnh (Ảnh xe lớn -> Bảng thông số kỹ thuật bên dưới) -->
+            <div class="slide-visual">
+              <div class="car-stage <?php echo $slide['is_service'] ? 'service-stage' : ''; ?> animate-car">
+                <img src="<?php echo esc_url($slide['image']); ?>"
+                     alt="<?php echo esc_attr($slide['alt']); ?>"
+                     class="car-image <?php echo $slide['is_service'] ? 'service-image' : ''; ?>"
+                     width="760"
+                     height="420"
+                     <?php echo $index === 0 ? 'fetchpriority="high" loading="eager"' : 'loading="lazy"'; ?>>
+                <?php if ($slide['is_service']) : ?>
+                  <div class="service-badge-verify">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <span>Chứng nhận Đại lý 3S Chính Thức</span>
+                  </div>
+                <?php else : ?>
+                  <div class="car-shadow"></div>
+                <?php endif; ?>
+              </div>
+
+              <!-- Spec Bar Gắn Liền Với Xe -->
+              <div class="hero-spec-strip animate-specs" aria-label="Thông số kỹ thuật nổi bật">
+                <?php foreach ($slide['specs'] as $s_idx => $spec) : ?>
+                  <?php if ($s_idx > 0) : ?>
+                    <div class="spec-divider" aria-hidden="true"></div>
+                  <?php endif; ?>
+                  <div class="spec-col">
+                    <span class="spec-num"><?php echo wp_kses_post($spec['val']); ?></span>
+                    <span class="spec-label"><?php echo esc_html($spec['lbl']); ?></span>
+                  </div>
+                <?php endforeach; ?>
+              </div>
             </div>
+
           </div>
-        </div>
-        <?php endforeach; ?>
-      <?php else: ?>
-      <!-- 1: VF 3 -->
-      <div class="vf-handover-card">
-        <div class="vf-handover-car-preview">
-          <span class="vf-handover-badge">VinFast VF 3</span>
-          <img src="<?php echo esc_url(content_url('/uploads/official_cars/common/official_vf3.webp')); ?>" alt="Bàn giao VinFast VF 3" loading="lazy">
-        </div>
-        <div class="vf-handover-body">
-          <div class="vf-handover-customer">
-            <div class="vf-handover-avatar">HT</div>
-            <div>
-              <div class="vf-handover-cname">Anh Hoàng Tuấn</div>
-              <div class="vf-handover-loc">Nhận xe tại Showroom Tân Á Châu</div>
-            </div>
-          </div>
-          <p class="vf-handover-quote">
-            "Xe nhỏ gọn đi phố siêu tiện, sạc pin rất tiết kiệm. Đội ngũ tư vấn Tân Á Châu hỗ trợ nhận xe sớm và tặng kèm bộ phụ kiện rất chu đáo!"
-          </p>
-          <div class="vf-handover-stars">★★★★★</div>
-        </div>
-      </div>
-
-      <!-- 2: VF 5 Plus -->
-      <div class="vf-handover-card">
-        <div class="vf-handover-car-preview">
-          <span class="vf-handover-badge">VinFast VF 5 Plus</span>
-          <img src="<?php echo esc_url(content_url('/uploads/official_cars/common/official_vf5.webp')); ?>" alt="Bàn giao VinFast VF 5" loading="lazy">
-        </div>
-        <div class="vf-handover-body">
-          <div class="vf-handover-customer">
-            <div class="vf-handover-avatar" style="background: linear-gradient(135deg, #059669, #10B981);">QH</div>
-            <div>
-              <div class="vf-handover-cname">Anh Quốc Huy</div>
-              <div class="vf-handover-loc">Kinh doanh dịch vụ vận chuyển</div>
-            </div>
-          </div>
-          <p class="vf-handover-quote">
-            "Chạy xe điện chi phí nhiên liệu rẻ hơn hẳn xe xăng, lại được miễn phí sạc pin V-GREEN. Thủ tục vay trả góp đại lý làm nhanh gọn trong 24 giờ."
-          </p>
-          <div class="vf-handover-stars">★★★★★</div>
-        </div>
-      </div>
-
-      <!-- 3: VF 7 -->
-      <div class="vf-handover-card">
-        <div class="vf-handover-car-preview">
-          <span class="vf-handover-badge">VinFast VF 7 Plus</span>
-          <img src="<?php echo esc_url(content_url('/uploads/official_cars/common/official_vf7.webp')); ?>" alt="Bàn giao VinFast VF 7" loading="lazy">
-        </div>
-        <div class="vf-handover-body">
-          <div class="vf-handover-customer">
-            <div class="vf-handover-avatar" style="background: linear-gradient(135deg, #DC2626, #EF4444);">MP</div>
-            <div>
-              <div class="vf-handover-cname">Chị Mai Phương</div>
-              <div class="vf-handover-loc">Doanh nhân / Khách cá nhân</div>
-            </div>
-          </div>
-          <p class="vf-handover-quote">
-            "Thiết kế VF 7 quá đẹp, cảm giác lái đầm chắc và bốc. Rất ấn tượng với quy trình bàn giao xe trang trọng và chu đáo của đại lý Tân Á Châu."
-          </p>
-          <div class="vf-handover-stars">★★★★★</div>
-        </div>
-      </div>
-
-      <!-- 4: VF 8 -->
-      <div class="vf-handover-card">
-        <div class="vf-handover-car-preview">
-          <span class="vf-handover-badge">VinFast VF 8</span>
-          <img src="<?php echo esc_url(content_url('/uploads/official_cars/common/official_vf8.webp')); ?>" alt="Bàn giao VinFast VF 8" loading="lazy">
-        </div>
-        <div class="vf-handover-body">
-          <div class="vf-handover-customer">
-            <div class="vf-handover-avatar" style="background: linear-gradient(135deg, #7C3AED, #8B5CF6);">ĐH</div>
-            <div>
-              <div class="vf-handover-cname">Bác Đức Hùng</div>
-              <div class="vf-handover-loc">Chủ nhân xe VF 8 Eco</div>
-            </div>
-          </div>
-          <p class="vf-handover-quote">
-            "Gia đình tôi rất hài lòng. Tính năng tự lái ADAS trên cao tốc đi rất nhàn và an tâm. Showroom hướng dẫn sử dụng xe chi tiết, 10 điểm cho dịch vụ!"
-          </p>
-          <div class="vf-handover-stars">★★★★★</div>
-        </div>
-      </div>
-      <?php endif; ?>
-    </div>
-
-    <!-- BOTTOM ACTION BAR -->
-    <div style="margin-top: 48px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px;">
-      <div style="font-size: 15px; color: #CBD5E1; font-weight: 600;">
-        Quý khách muốn trải nghiệm lái thử dòng xe yêu thích ngay hôm nay?
-      </div>
-      <div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
-        <a href="<?php echo esc_url(home_url('/dang-ky-lai-thu/')); ?>" class="vf-btn vf-btn-primary" style="padding: 12px 28px; font-size: 14px;">
-          ĐĂNG KÝ LÁI THỬ TẬN NHÀ →
-        </a>
-        <a href="<?php echo esc_url(home_url('/dat-coc-xe/')); ?>" class="vf-btn vf-btn-outline" style="padding: 12px 24px; font-size: 14px; border-color: rgba(255,255,255,0.4); color: #fff;">
-          ĐẶT CỌC GIỮ XE ONLINE
-        </a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============================
-     TIN TỨC & SỰ KIỆN VINFAST
-     ============================ -->
-<?php
-$latest_posts = get_posts([
-    'post_type'      => 'post',
-    'posts_per_page' => 4,
-    'post_status'    => 'publish',
-    'orderby'        => 'date',
-    'order'          => 'DESC'
-]);
-
-if (!empty($latest_posts)):
-?>
-<section class="vf-news-section" id="tin-tuc" style="background:#F8FAFC; padding: 60px 0; border-top:1px solid #E2E8F0;">
-  <div class="container">
-    <div class="vf-acc-head" style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 32px;">
-      <div>
-        <span style="display:inline-block; background:#EFF6FF; color:#2563EB; font-size:12px; font-weight:800; padding:4px 12px; border-radius:20px; text-transform:uppercase; margin-bottom:8px;">⚡ THÔNG TIN MỚI NHẤT</span>
-        <h2 style="font-size:clamp(1.6rem, 3vw, 2.2rem); font-weight:800; color:#0F172A; margin:0;">Tin tức & Sự kiện</h2>
-      </div>
-      <a href="<?php echo esc_url(home_url('/tin-tuc/')); ?>" class="vf-btn vf-btn-primary vf-acc-more">
-        XEM TẤT CẢ BÀI VIẾT <span>→</span>
-      </a>
-    </div>
-
-    <div class="vf-news-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap:24px;">
-      <?php foreach ($latest_posts as $post_item): 
-        $post_thumb = get_the_post_thumbnail_url($post_item->ID, 'medium_large');
-        if (!$post_thumb) {
-            $post_thumb = content_url('/uploads/official_cars/common/official_vf8.webp');
-        }
-      ?>
-      <article class="vf-news-card" style="background:#FFFFFF; border-radius:12px; overflow:hidden; border:1px solid #E2E8F0; box-shadow:0 4px 12px rgba(0,0,0,0.04); display:flex; flex-direction:column; transition:transform 0.3s ease, box-shadow 0.3s ease;">
-        <a href="<?php echo esc_url(get_permalink($post_item->ID)); ?>" style="display:block; height:180px; overflow:hidden; position:relative;">
-          <img src="<?php echo esc_url($post_thumb); ?>" alt="<?php echo esc_attr($post_item->post_title); ?>" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease;">
-        </a>
-        <div style="padding: 20px; display:flex; flex-direction:column; flex:1;">
-          <div style="font-size:12px; color:#64748B; margin-bottom:8px; font-weight:600;">
-            📅 <?php echo get_the_date('d/m/Y', $post_item->ID); ?>
-          </div>
-          <h3 style="font-size:15px; font-weight:800; color:#0F172A; line-height:1.4; margin:0 0 10px 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
-            <a href="<?php echo esc_url(get_permalink($post_item->ID)); ?>" style="color:inherit; text-decoration:none;">
-              <?php echo esc_html($post_item->post_title); ?>
-            </a>
-          </h3>
-          <p style="font-size:13px; color:#64748B; line-height:1.5; margin:0 0 16px 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; flex:1;">
-            <?php echo esc_html(get_the_excerpt($post_item->ID) ?: wp_trim_words($post_item->post_content, 20)); ?>
-          </p>
-          <a href="<?php echo esc_url(get_permalink($post_item->ID)); ?>" style="font-size:13px; font-weight:700; color:#2563EB; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
-            Đọc tiếp →
-          </a>
-        </div>
-      </article>
+        </article>
       <?php endforeach; ?>
     </div>
-  </div>
-</section>
-<?php endif; ?>
 
-<!-- ============================
-     SHOWROOM INFO
-     ============================ -->
-<section class="vf-section vf-section-alt" id="gioi-thieu">
-  <div class="container">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
-      <div>
-        <div class="vf-section-label">Về chúng tôi</div>
-        <h2 style="font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800; margin-bottom:20px; line-height:1.25;">
-          Đại lý VinFast Tân Á Châu
-        </h2>
-        <p style="color:var(--vf-text-muted); line-height:1.8; margin-bottom:24px;">
-          Chúng tôi là đại lý ủy quyền chính thức của VinFast Tân Á Châu, cam kết mang đến
-          trải nghiệm mua xe tốt nhất với đội ngũ tư vấn chuyên nghiệp, tận tâm.
-        </p>
+    <!-- SLIDER CONTROLS (Prev / Next & Pause) -->
+    <div class="hero-controls" aria-label="Điều khiển trình chiếu">
+      <button type="button" class="ctrl-btn ctrl-prev" id="btnPrev" aria-label="Slide trước">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
 
-        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:32px;">
-          <div style="display:flex; align-items:center; gap:12px; font-size:14px;">
-            <span style="color:var(--vf-blue); font-size:1.2rem;">📍</span>
-            <span>191 Đường Hùng Vương, Phường Vĩnh Yên, Tỉnh Phú Thọ , Vinh Yen, Vietnam</span>
-          </div>
-          <div style="display:flex; align-items:center; gap:12px; font-size:14px;">
-            <span style="color:var(--vf-blue); font-size:1.2rem;">📞</span>
-            <a href="tel:0562256256" style="color:var(--vf-text); font-weight:600;">056 225 6256</a>
-          </div>
-          <div style="display:flex; align-items:center; gap:12px; font-size:14px;">
-            <span style="color:var(--vf-blue); font-size:1.2rem;">✉️</span>
-            <a href="mailto:phuocvandangdilam@gmail.com" style="color:var(--vf-text); font-weight:600;">phuocvandangdilam@gmail.com</a>
-          </div>
-          <div style="display:flex; align-items:center; gap:12px; font-size:14px;">
-            <span style="color:var(--vf-blue); font-size:1.2rem;">🕐</span>
-            <span>Mở cửa: 8:00 – 21:00 (Thứ 2 – Chủ nhật)</span>
-          </div>
+      <button type="button" class="ctrl-btn ctrl-pause" id="btnPause" aria-label="Tạm dừng trình chiếu" title="Tạm dừng / Tiếp tục">
+        <svg class="icon-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+        <svg class="icon-play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+      </button>
+
+      <button type="button" class="ctrl-btn ctrl-next" id="btnNext" aria-label="Slide tiếp theo">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+
+    <!-- SLIDER INDICATORS & REAL-TIME PROGRESS TRACK -->
+    <nav class="hero-indicators" aria-label="Chỉ mục các slide">
+      <button type="button" class="ind-pill active" data-slide="0" aria-label="Đi đến slide 1: VinFast VF 7" aria-current="true">
+        <span class="ind-title"><span class="ind-full">01 • </span>VF 7</span>
+        <span class="ind-bar"><span class="ind-progress"></span></span>
+      </button>
+      <button type="button" class="ind-pill" data-slide="1" aria-label="Đi đến slide 2: VinFast VF 8">
+        <span class="ind-title"><span class="ind-full">02 • </span>VF 8</span>
+        <span class="ind-bar"><span class="ind-progress"></span></span>
+      </button>
+      <button type="button" class="ind-pill" data-slide="2" aria-label="Đi đến slide 3: Showroom 3S">
+        <span class="ind-title"><span class="ind-full">03 • </span>Showroom 3S</span>
+        <span class="ind-bar"><span class="ind-progress"></span></span>
+      </button>
+    </nav>
+
+  </section>
+
+  <!-- ========================================================================
+       SECTION 02: CAR COLLECTION (SHOWROOM GALLERY)
+       ======================================================================== -->
+  <section class="collection-section" id="collection">
+    <div class="container">
+      <div class="section-header-row">
+        <div class="section-header-text">
+          <span class="eyebrow">BỘ SƯU TẬP XE ĐIỆN VINFAST</span>
+          <h2 class="heading-section">Khám phá bộ sưu tập xe điện.</h2>
+          <p class="body-regular">Đa dạng lựa chọn từ mẫu xe đô thị nhỏ gọn đến SUV cao cấp hàng đầu.</p>
         </div>
-
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a href="<?php echo home_url('/tim-kiem-showroom-tram-sac/'); ?>" class="vf-btn vf-btn-primary">
-            XEM BẢN ĐỒ
-          </a>
-          <a href="tel:0562256256" class="vf-btn vf-btn-outline">
-            GỌI NGAY: 056 225 6256
-          </a>
+        <!-- Category Filter Tabs Responsive (Premium Pill Segmented Control) -->
+        <div class="collection-tabs-wrap">
+          <div class="collection-tabs" role="tablist" aria-label="Bộ lọc dòng xe">
+          <button class="tab-btn active" id="tabPersonal" role="tab" aria-selected="true">
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+                <circle cx="7" cy="17" r="2"/>
+                <path d="M9 17h6"/>
+                <circle cx="17" cy="17" r="2"/>
+              </svg>
+            </span>
+            <span class="tab-label">Xe Cá Nhân</span>
+            <span class="tab-count"><?php echo count($personal_cars); ?></span>
+          </button>
+          <button class="tab-btn" id="tabCommercial" role="tab" aria-selected="false">
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="3" width="15" height="13" rx="2"/>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+            </span>
+            <span class="tab-label">Xe Thương Mại</span>
+            <span class="tab-count"><?php echo count($commercial_cars); ?></span>
+          </button>
+          </div>
         </div>
       </div>
 
-      <!-- Google Maps placeholder -->
-      <div style="border-radius:12px; overflow:hidden; height:320px; background:var(--vf-bg-gray); position:relative;">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59636.23!2d105.59!3d21.32!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134f79a0cdc24f9%3A0x7e4ef9b4ee9bf6b3!2sVĩnh%20Yên%2C%20Vĩnh%20Phúc!5e0!3m2!1svi!2s!4v1634567890123!5m2!1svi!2s"
-          width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+      <!-- Personal Cars Grid -->
+      <div class="car-grid" id="gridPersonal">
+        <?php foreach ($personal_cars as $car) : ?>
+        <article class="car-card">
+          <div class="card-top">
+            <div class="card-title-wrap">
+              <h3 class="card-car-name"><?php echo esc_html($car['name']); ?></h3>
+              <span class="card-car-segment"><?php echo esc_html($car['segment']); ?></span>
+            </div>
+            <?php if (!empty($car['badge'])) : ?>
+              <span class="demo-tag" style="<?php echo !empty($car['badge_bg']) ? 'background:' . esc_attr($car['badge_bg']) . '; color:#fff;' : ''; ?>">
+                <?php echo esc_html($car['badge']); ?>
+              </span>
+            <?php endif; ?>
+          </div>
+          <div class="card-image-wrap">
+            <img src="<?php echo esc_url($car['image']); ?>" alt="<?php echo esc_attr($car['name']); ?>" loading="lazy">
+          </div>
+          <div class="card-specs-row">
+            <div class="card-spec-item">
+              <span class="card-spec-val"><?php echo esc_html($car['range']); ?></span>
+              <span class="card-spec-lbl">Tầm di chuyển</span>
+            </div>
+            <div class="card-spec-item" style="text-align: right;">
+              <span class="card-spec-val"><?php echo esc_html($car['seats']); ?></span>
+              <span class="card-spec-lbl">Số chỗ ngồi</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="card-price-group">
+              <span class="card-price-lbl">Giá niêm yết (DEMO)</span>
+              <span class="card-price-val"><?php echo esc_html($car['price']); ?></span>
+            </div>
+            <a href="<?php echo esc_url(home_url('/product/' . $car['slug'] . '/')); ?>" class="btn btn-secondary card-btn">Khám phá</a>
+          </div>
+        </article>
+        <?php endforeach; ?>
+      </div>
+
+      <!-- Commercial Cars Grid (Green Series Tab) -->
+      <div class="car-grid" id="gridCommercial" style="display: none;">
+        <?php foreach ($commercial_cars as $car) : ?>
+        <article class="car-card">
+          <div class="card-top">
+            <div class="card-title-wrap">
+              <h3 class="card-car-name"><?php echo esc_html($car['name']); ?></h3>
+              <span class="card-car-segment"><?php echo esc_html($car['segment']); ?></span>
+            </div>
+          </div>
+          <div class="card-image-wrap">
+            <img src="<?php echo esc_url($car['image']); ?>" alt="<?php echo esc_attr($car['name']); ?>" loading="lazy">
+          </div>
+          <div class="card-specs-row">
+            <div class="card-spec-item">
+              <span class="card-spec-val"><?php echo esc_html($car['range']); ?></span>
+              <span class="card-spec-lbl">Tầm di chuyển</span>
+            </div>
+            <div class="card-spec-item" style="text-align: right;">
+              <span class="card-spec-val"><?php echo esc_html($car['seats']); ?></span>
+              <span class="card-spec-lbl">Cấu hình</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="card-price-group">
+              <span class="card-price-lbl">Giá dự kiến (DEMO)</span>
+              <span class="card-price-val"><?php echo esc_html($car['price']); ?></span>
+            </div>
+            <a href="tel:0981335522" class="btn btn-secondary card-btn">Báo giá</a>
+          </div>
+        </article>
+        <?php endforeach; ?>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<?php get_footer(); ?>
+  <!-- ========================================================================
+       SECTION 03: AFTER-SALES EXPERIENCE (3S SERVICE — CORRECTED VISUAL)
+       ======================================================================== -->
+  <section class="service-section" id="service">
+    <div class="container">
+      <div class="service-grid">
+        <!-- Service Visual Left: Ảnh xưởng kỹ thuật sửa chữa bảo dưỡng xe hơi cao cấp -->
+        <div class="service-visual">
+          <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=1000"
+               alt="Xưởng dịch vụ kỹ thuật tiêu chuẩn VinFast Minh Ngân Phú Thọ"
+               loading="lazy">
+          <div class="service-badge">
+            ✓ XƯỞNG DỊCH VỤ 3S TIÊU CHUẨN TOÀN CẦU
+          </div>
+        </div>
+
+        <!-- Service Content Right -->
+        <div class="service-content">
+          <span class="eyebrow">CHÍNH SÁCH HẬU MÃI DẪN ĐẦU</span>
+          <h2 class="heading-section">Đồng hành trên mọi hành trình.</h2>
+          <p class="body-regular">
+            VinFast Minh Ngân Phú Thọ cam kết mang lại sự an tâm tuyệt đối với chính sách bảo hành chính hãng lên đến 10 năm hoặc 200.000 km*, cùng mạng lưới phụ tùng sẵn sàng và đội ngũ kỹ thuật viên tay nghề cao.
+          </p>
+
+          <div class="service-highlights">
+            <div class="highlight-box">
+              <h4 class="highlight-title">Bảo hành 10 Năm*</h4>
+              <p class="highlight-desc">Thời hạn bảo hành lâu nhất thị trường cho xe và pin cao áp (theo chính sách VinFast công bố).</p>
+            </div>
+            <div class="highlight-box">
+              <h4 class="highlight-title">Cứu hộ 24/7 Miễn phí*</h4>
+              <p class="highlight-desc">Hỗ trợ kỹ thuật và cứu hộ khẩn cấp theo hotline 1900 23 23 89 suốt thời gian bảo hành.</p>
+            </div>
+            <div class="highlight-box">
+              <h4 class="highlight-title">Phụ tùng chính hãng</h4>
+              <p class="highlight-desc">100% linh kiện thay thế chuẩn nhà máy sản xuất VinFast Hải Phòng.</p>
+            </div>
+            <div class="highlight-box">
+              <h4 class="highlight-title">Đặt hẹn thông minh</h4>
+              <p class="highlight-desc">Quy trình đặt lịch 4 bước trực tuyến, chủ động khung giờ, không phải chờ đợi.</p>
+            </div>
+          </div>
+
+          <div class="service-cta-wrap">
+            <a href="<?php echo esc_url(home_url('/dat-lich-dich-vu/')); ?>" class="btn btn-primary">Đặt lịch bảo dưỡng trực tuyến</a>
+            <span class="service-note-small">* Thông tin bảo hành và cứu hộ áp dụng theo quy định của VinFast Việt Nam tại thời điểm bàn giao xe.</span>
+          </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 04: GREEN FUTURE (CINEMATIC DARK BREAK)
+       ======================================================================== -->
+  <section class="future-section" id="future">
+    <div class="container">
+      <div class="future-inner">
+        <span class="eyebrow future-eyebrow">MÃNH LIỆT TINH THẦN VIỆT NAM</span>
+        <h2 class="heading-section future-title">Vì một tương lai giao thông xanh bền vững.</h2>
+        <p class="future-desc">
+          Mỗi chiếc ô tô điện VinFast lăn bánh tại Phú Thọ không chỉ là sự tiện nghi, thông minh và an toàn hàng đầu, mà còn là cam kết giảm phát thải CO2, chung tay bảo vệ môi trường sống trong lành cho thế hệ tương lai.
+        </p>
+
+        <div class="future-metrics">
+          <div class="metric-item">
+            <span class="metric-val">150.000+</span>
+            <span class="metric-lbl">Cổng sạc phủ khắp 63 tỉnh thành*</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">0%</span>
+            <span class="metric-lbl">Lệ phí trước bạ ưu đãi Chính phủ*</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">1/3</span>
+            <span class="metric-lbl">Chi phí vận hành tiết kiệm so với xe xăng</span>
+          </div>
+        </div>
+        <p class="future-disclaimer-small">* Số lượng cổng sạc theo quy hoạch mạng lưới V-GREEN; ưu đãi lệ phí trước bạ áp dụng theo Nghị định Chính phủ hiện hành.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 05: GREEN SERIES (COMMERCIAL MOBILITY)
+       ======================================================================== -->
+  <section class="green-series-section" id="green-series">
+    <div class="container">
+      <div class="section-header-row">
+        <div class="section-header-text">
+          <span class="eyebrow">DÒNG XE KINH DOANH VẬN TẢI</span>
+          <h2 class="heading-section">Giải pháp di chuyển cho kinh doanh.</h2>
+          <p class="body-regular">Tối ưu hóa bài toán kinh tế, độ bền bỉ vượt trội và chi phí vận hành siêu tiết kiệm.</p>
+        </div>
+        <a href="tel:0981335522" class="btn btn-secondary section-header-btn">Tư vấn kinh doanh vận tải</a>
+      </div>
+
+      <div class="commercial-grid">
+        <div class="commercial-card">
+          <span class="eyebrow" style="margin-bottom: 6px;">VẬN TẢI ĐÔ THỊ</span>
+          <h3 class="heading-card">Minio Green</h3>
+          <p class="caption" style="margin-bottom: 16px;">Lựa chọn thông minh cho di chuyển nội đô linh hoạt.</p>
+          <div class="card-image-wrap" style="height: 180px;">
+            <img src="<?php echo esc_url($cars_uri . 'official_minio.webp'); ?>" alt="Minio Green" loading="lazy">
+          </div>
+          <a href="tel:0981335522" class="btn btn-secondary" style="margin-top: auto; width: 100%;">Nhận tư vấn doanh nghiệp</a>
+        </div>
+
+        <div class="commercial-card">
+          <span class="eyebrow" style="margin-bottom: 6px;">DỊCH VỤ ĐÓN TIỄN</span>
+          <h3 class="heading-card">Herio Green</h3>
+          <p class="caption" style="margin-bottom: 16px;">Vận hành êm ái, khoang hành khách rộng rãi lịch sự.</p>
+          <div class="card-image-wrap" style="height: 180px;">
+            <img src="<?php echo esc_url($cars_uri . 'official_herio.png'); ?>" alt="Herio Green" loading="lazy">
+          </div>
+          <a href="tel:0981335522" class="btn btn-secondary" style="margin-top: auto; width: 100%;">Nhận tư vấn doanh nghiệp</a>
+        </div>
+
+        <div class="commercial-card">
+          <span class="eyebrow" style="margin-bottom: 6px;">CHỞ HÀNG LOGISTICS</span>
+          <h3 class="heading-card">EC Van</h3>
+          <p class="caption" style="margin-bottom: 16px;">Thùng hàng dung tích lớn, chuyên chở 24/7 không cấm giờ.</p>
+          <div class="card-image-wrap" style="height: 180px;">
+            <img src="<?php echo esc_url($cars_uri . 'official_ecvan.webp'); ?>" alt="EC Van" loading="lazy">
+          </div>
+          <a href="tel:0981335522" class="btn btn-secondary" style="margin-top: auto; width: 100%;">Nhận tư vấn doanh nghiệp</a>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 06: FINANCIAL TOOLS (EDITORIAL PANELS)
+       ======================================================================== -->
+  <section class="finance-section" id="finance">
+    <div class="container">
+      <div class="section-header-row">
+        <div class="section-header-text">
+          <span class="eyebrow">CÔNG CỤ HỖ TRỢ BÁN HÀNG</span>
+          <h2 class="heading-section">Chủ động kế hoạch sở hữu xe</h2>
+          <p class="body-regular">Minh bạch toàn bộ chi phí lăn bánh và kế hoạch tài chính trả góp chỉ trong vài giây.</p>
+        </div>
+      </div>
+
+      <div class="finance-grid">
+        <!-- Panel A: Dự toán lăn bánh -->
+        <div class="finance-panel">
+          <div class="finance-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <h3 class="heading-card finance-title">Dự toán chi phí lăn bánh</h3>
+          <p class="body-regular finance-desc">
+            Tính toán chính xác tổng chi phí sở hữu xe tại Phú Thọ và các tỉnh thành, tự động áp dụng ưu đãi thuế trước bạ 0% và hỗ trợ xuất bản in PDF 1-click.
+          </p>
+          <div>
+            <a href="<?php echo esc_url(home_url('/du-toan-chi-phi/')); ?>" class="btn btn-primary finance-btn">Tính giá lăn bánh ngay &rarr;</a>
+          </div>
+          <div class="finance-tags">
+            <span class="tag-pill">Thuế trước bạ 0%</span>
+            <span class="tag-pill">Phí biển số tỉnh</span>
+            <span class="tag-pill">Xuất PDF 1-Click</span>
+          </div>
+        </div>
+
+        <!-- Panel B: Tính trả góp ngân hàng -->
+        <div class="finance-panel">
+          <div class="finance-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
+          </div>
+          <h3 class="heading-card finance-title">Tính kế hoạch vay trả góp</h3>
+          <p class="body-regular finance-desc">
+            Lập bảng dự toán trả góp ngân hàng theo phương thức dư nợ giảm dần, số tiền trả trước từ 20%, chi tiết số tiền gốc và lãi phải trả từng tháng.
+          </p>
+          <div>
+            <a href="<?php echo esc_url(home_url('/du-toan-tra-gop/')); ?>" class="btn btn-secondary finance-btn">Tính lịch trả góp &rarr;</a>
+          </div>
+          <div class="finance-tags">
+            <span class="tag-pill">Dư nợ giảm dần</span>
+            <span class="tag-pill">Vay đến 8 năm</span>
+            <span class="tag-pill">Bảng chi tiết từng kỳ</span>
+          </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 07: NEWS & EVENTS (EDITORIAL)
+       ======================================================================== -->
+  <section class="news-section" id="news">
+    <div class="container">
+      <div class="section-header-row">
+        <div class="section-header-text">
+          <span class="eyebrow">TIN TỨC & CHƯƠNG TRÌNH ĐẠI LÝ</span>
+          <h2 class="heading-section">Tin tức & Sự kiện.</h2>
+          <p class="body-regular">Cập nhật ưu đãi giá bán, sự kiện trải nghiệm xe và đánh giá công nghệ.</p>
+        </div>
+        <a href="<?php echo esc_url(home_url('/tin-tuc/')); ?>" class="btn-link section-header-link">Xem tất cả bài viết &rarr;</a>
+      </div>
+
+      <div class="news-grid">
+        <?php if (!empty($recent_posts)) : ?>
+          <?php
+            $first_post = array_shift($recent_posts);
+            $first_thumb = get_the_post_thumbnail_url($first_post->ID, 'large') ?: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=800&q=80';
+          ?>
+          <!-- Featured Big News Item -->
+          <article class="news-featured">
+            <img src="<?php echo esc_url($first_thumb); ?>" alt="<?php echo esc_attr(get_the_title($first_post->ID)); ?>" class="news-featured-img">
+            <div class="news-featured-body">
+              <span class="caption" style="margin-bottom: 8px;">
+                <?php echo get_the_date('d \T\h\á\n\g m, Y', $first_post->ID); ?> · TIN NỔI BẬT
+              </span>
+              <h3 class="heading-card" style="margin-bottom: 12px;">
+                <a href="<?php echo esc_url(get_permalink($first_post->ID)); ?>" style="color: inherit; text-decoration: none;">
+                  <?php echo esc_html(get_the_title($first_post->ID)); ?>
+                </a>
+              </h3>
+              <p class="body-regular" style="margin-bottom: 20px;">
+                <?php echo wp_trim_words(get_the_excerpt($first_post->ID), 26); ?>
+              </p>
+              <a href="<?php echo esc_url(get_permalink($first_post->ID)); ?>" class="btn-link">Đọc chi tiết bài viết &rarr;</a>
+            </div>
+          </article>
+
+          <!-- Small News List -->
+          <div class="news-list">
+            <?php foreach ($recent_posts as $post_item) : ?>
+              <?php
+                $thumb = get_the_post_thumbnail_url($post_item->ID, 'medium') ?: 'https://images.unsplash.com/photo-1558441719-f0a996841893?auto=format&fit=crop&w=200&q=80';
+              ?>
+              <article class="news-item">
+                <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr(get_the_title($post_item->ID)); ?>" class="news-item-thumb">
+                <div class="news-item-info">
+                  <span class="caption"><?php echo get_the_date('d \T\h\á\n\g m, Y', $post_item->ID); ?></span>
+                  <h4 style="font-size: 15px; font-weight: 600; margin: 4px 0 6px; line-height: 1.35;">
+                    <a href="<?php echo esc_url(get_permalink($post_item->ID)); ?>" style="color: inherit; text-decoration: none;">
+                      <?php echo esc_html(get_the_title($post_item->ID)); ?>
+                    </a>
+                  </h4>
+                  <a href="<?php echo esc_url(get_permalink($post_item->ID)); ?>" class="btn-link" style="font-size: 13px;">Xem thêm</a>
+                </div>
+              </article>
+            <?php endforeach; ?>
+          </div>
+        <?php else : ?>
+          <!-- Fallback khi website chưa có bài viết đăng tải -->
+          <article class="news-featured">
+            <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=800&q=80" alt="Chương trình ưu đãi tháng" class="news-featured-img">
+            <div class="news-featured-body">
+              <span class="caption" style="margin-bottom: 8px;">ƯU ĐÃI ĐẶC QUYỀN TRONG THÁNG</span>
+              <h3 class="heading-card" style="margin-bottom: 12px;">Đại tiệc tri ân: Ưu đãi đặc quyền dành cho khách hàng sở hữu xe điện tại Phú Thọ</h3>
+              <p class="body-regular" style="margin-bottom: 20px;">
+                VinFast Minh Ngân công bố gói hỗ trợ phụ kiện cao cấp, miễn phí sạc pin tại trạm công cộng cùng lãi suất vay ngân hàng đặc biệt trong tháng.
+              </p>
+              <a href="<?php echo esc_url(home_url('/dang-ky-lai-thu/')); ?>" class="btn-link">Đăng ký nhận báo giá ưu đãi &rarr;</a>
+            </div>
+          </article>
+
+          <div class="news-list">
+            <article class="news-item">
+              <img src="https://images.unsplash.com/photo-1558441719-f0a996841893?auto=format&fit=crop&w=200&q=80" alt="Sự kiện lái thử" class="news-item-thumb">
+              <div class="news-item-info">
+                <span class="caption">SỰ KIỆN TRẢI NGHIỆM</span>
+                <h4 style="font-size: 15px; font-weight: 600; margin: 4px 0 6px; line-height: 1.35;">Mời tham gia ngày hội trải nghiệm VinFast VF 7 tại TP. Việt Trì</h4>
+                <a href="<?php echo esc_url(home_url('/dang-ky-lai-thu/')); ?>" class="btn-link" style="font-size: 13px;">Đăng ký ngay</a>
+              </div>
+            </article>
+
+            <article class="news-item">
+              <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=200&q=80" alt="Công nghệ pin" class="news-item-thumb">
+              <div class="news-item-info">
+                <span class="caption">CÔNG NGHỆ PIN V-GREEN</span>
+                <h4 style="font-size: 15px; font-weight: 600; margin: 4px 0 6px; line-height: 1.35;">Tìm hiểu chính sách bảo hành pin 10 năm của VinFast có gì đặc biệt?</h4>
+                <a href="<?php echo esc_url(home_url('/chinh-sach-bao-hanh/')); ?>" class="btn-link" style="font-size: 13px;">Xem chính sách</a>
+              </div>
+            </article>
+
+            <article class="news-item">
+              <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=200&q=80" alt="Kinh nghiệm lái xe điện" class="news-item-thumb">
+              <div class="news-item-info">
+                <span class="caption">HƯỚNG DẪN SỬ DỤNG</span>
+                <h4 style="font-size: 15px; font-weight: 600; margin: 4px 0 6px; line-height: 1.35;">Kinh nghiệm tối ưu quãng đường di chuyển cho xe điện mùa lạnh</h4>
+                <a href="<?php echo esc_url(home_url('/tin-tuc/')); ?>" class="btn-link" style="font-size: 13px;">Xem hướng dẫn</a>
+              </div>
+            </article>
+          </div>
+        <?php endif; ?>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 08: SHOWROOM & CONTACT
+       ======================================================================== -->
+  <section class="showroom-section" id="showroom">
+    <div class="container">
+      <div class="showroom-grid">
+        <!-- Map Left -->
+        <div class="showroom-map-wrap">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119066.41709424682!2d105.3216856!3d21.3227387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134914c62f83191%3A0x6b7724a87c10b77e!2zVmluaEZhc3QgTWluaCBOZ8OibiBQaMO6IFRo4buN!5e0!3m2!1svi!2svn!4v1714000000000"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Bản đồ chỉ đường đến Showroom VinFast Minh Ngân Phú Thọ">
+          </iframe>
+        </div>
+
+        <!-- Info Right -->
+        <div class="showroom-info">
+          <span class="eyebrow">ĐẠI LÝ ỦY QUYỀN CHÍNH THỨC</span>
+          <h2 class="heading-section" style="margin-bottom: 20px;">Trải nghiệm VinFast tại Minh Ngân</h2>
+          <p class="body-regular" style="margin-bottom: 28px;">
+            Chào mừng Quý khách đến với Showroom 3S VinFast Minh Ngân Phú Thọ để trực tiếp lái thử và nhận tư vấn chuyên nghiệp từ các chuyên viên của chúng tôi.
+          </p>
+
+          <div class="info-item">
+            <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div>
+              <strong style="font-size: 15px; color: var(--text-primary);">Địa chỉ Showroom 3S:</strong>
+              <p class="caption" style="margin-top: 2px;">Đường Nguyễn Tất Thành, Phường Thanh Miếu, TP. Việt Trì, Tỉnh Phú Thọ (Sẵn sàng cổng sạc nhanh V-GREEN 250kW)</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <div>
+              <strong style="font-size: 15px; color: var(--text-primary);">Hotline tư vấn & Lái thử:</strong>
+              <p class="caption" style="margin-top: 2px;"><a href="tel:0981335522" style="color: var(--accent-blue); font-weight: 700; font-size: 15px;">0981.335.522</a> (Phục vụ 24/7)</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <div>
+              <strong style="font-size: 15px; color: var(--text-primary);">Giờ làm việc:</strong>
+              <p class="caption" style="margin-top: 2px;">Thứ Hai – Chủ Nhật: 08:00 – 18:00 (Mở cửa tất cả các ngày trong tuần)</p>
+            </div>
+          </div>
+
+          <div class="showroom-cta-group">
+            <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn btn-primary">Chỉ đường tới Showroom</a>
+            <a href="tel:0981335522" class="btn btn-secondary">Gọi Hotline tư vấn</a>
+          </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- ========================================================================
+       POPUP ƯU ĐÃI TỰ ĐÓNG (PROMO POPUP)
+       ======================================================================== -->
+  <div class="promo-popup-backdrop" id="promoPopup" role="dialog" aria-modal="true" aria-labelledby="promoTitle">
+    <div class="promo-popup-card">
+      <button class="popup-close-x" id="closePopupBtn" aria-label="Đóng popup ưu đãi">&times;</button>
+      <span class="eyebrow">ƯU ĐÃI ĐẶC QUYỀN TRONG THÁNG</span>
+      <h3 class="heading-card" id="promoTitle" style="margin-bottom: 12px;">Nhận Báo Giá Lăn Bánh & Ưu Đãi Phụ Kiện Chính Hãng</h3>
+      <p class="body-regular" style="margin-bottom: 24px; font-size: 14px;">
+        Đăng ký nhận bảng dự toán lăn bánh miễn phí cùng gói quà tặng sạc pin độc quyền tại <strong>VinFast Minh Ngân Phú Thọ</strong>.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <a href="<?php echo esc_url(home_url('/dang-ky-lai-thu/')); ?>" class="btn btn-primary" id="dismissPopupBtn">Nhận ưu đãi ngay</a>
+        <button class="btn btn-secondary" onclick="document.getElementById('promoPopup').classList.remove('active')" style="min-height: 40px; font-size: 13px;">Để sau</button>
+      </div>
+      <p class="caption" style="text-align: center; margin-top: 14px; font-size: 11px;">Thông báo sẽ tự động đóng sau 15 giây</p>
+    </div>
+  </div>
+
+</div><!-- .homepage-premium-wrapper -->
+
+<?php
+get_footer();

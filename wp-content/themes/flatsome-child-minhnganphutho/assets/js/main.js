@@ -234,9 +234,102 @@
   }
 
   // =============================================
+  // 10. FOOTER QUICK CONSULTATION FORM (FOOTER-02)
+  // =============================================
+  function initFooterConsultationForm() {
+    var form = document.getElementById('vfFooterConsultForm');
+    if (!form) return;
+
+    var phoneInput = document.getElementById('vfFooterPhone');
+    var submitBtn = document.getElementById('vfFooterSubmitBtn');
+    var statusBox = document.getElementById('vfFooterStatus');
+    var btnText = submitBtn ? submitBtn.querySelector('.btn-text') : null;
+    var btnSpinner = submitBtn ? submitBtn.querySelector('.btn-spinner') : null;
+
+    function showStatus(message, isSuccess) {
+      if (!statusBox) return;
+      statusBox.textContent = message;
+      statusBox.className = 'footer-form-status ' + (isSuccess ? 'is-success' : 'is-error');
+      statusBox.style.display = 'block';
+    }
+
+    function clearStatus() {
+      if (!statusBox) return;
+      statusBox.textContent = '';
+      statusBox.className = 'footer-form-status';
+      statusBox.style.display = 'none';
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      clearStatus();
+
+      var phone = phoneInput ? phoneInput.value.trim() : '';
+      var cleanPhone = phone.replace(/[^0-9]/g, '');
+
+      // Frontend validation: Vietnam phone format (10 digits starting with 0)
+      var phoneRegex = /^0[1-9][0-9]{8}$/;
+      if (!cleanPhone) {
+        showStatus('Vui lòng nhập số điện thoại của Quý khách.', false);
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+      if (!phoneRegex.test(cleanPhone)) {
+        showStatus('Số điện thoại không hợp lệ (cần 10 chữ số, bắt đầu bằng số 0).', false);
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+
+      // Check honeypot field
+      var hpField = form.querySelector('[name="vf_hp_check"]');
+      if (hpField && hpField.value) {
+        showStatus('Yêu cầu không hợp lệ.', false);
+        return;
+      }
+
+      // Set loading state
+      if (submitBtn) submitBtn.disabled = true;
+      if (btnText) btnText.textContent = 'ĐANG GỬI...';
+      if (btnSpinner) btnSpinner.style.display = 'inline-block';
+
+      var formData = new FormData(form);
+      formData.set('phone', cleanPhone);
+
+      var ajaxUrl = (window.vfvp_vars && window.vfvp_vars.ajax_url) ||
+                    (window.vfvpAjax && window.vfvpAjax.url) ||
+                    form.getAttribute('action') ||
+                    '/wp-admin/admin-ajax.php';
+
+      fetch(ajaxUrl, {
+        method: 'POST',
+        body: formData
+      })
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(res) {
+        if (res.success) {
+          showStatus(res.data && res.data.message ? res.data.message : 'Đăng ký thành công! Chuyên viên sẽ liên hệ Quý khách trong ít phút.', true);
+          form.reset();
+        } else {
+          showStatus(res.data && res.data.message ? res.data.message : 'Có lỗi xảy ra. Quý khách vui lòng gọi Hotline 0981 33 55 22.', false);
+        }
+      })
+      .catch(function(err) {
+        showStatus('Không thể kết nối đến máy chủ. Quý khách vui lòng thử lại hoặc gọi Hotline 0981 33 55 22.', false);
+      })
+      .finally(function() {
+        if (submitBtn) submitBtn.disabled = false;
+        if (btnText) btnText.textContent = 'ĐĂNG KÝ';
+        if (btnSpinner) btnSpinner.style.display = 'none';
+      });
+    });
+  }
+
+  // =============================================
   // INIT ALL
   // =============================================
-  document.addEventListener('DOMContentLoaded', function() {
+  function initAll() {
     initHeroSwiper();
     initShowcaseSwiper();
     initFloatSidebar();
@@ -246,6 +339,13 @@
     initCardAnimations();
     initSectionReveal();
     initProductSubnavToggle();
-  });
+    initFooterConsultationForm();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
 
 })(jQuery);

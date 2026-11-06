@@ -15,14 +15,19 @@ $uploads_url = content_url('/uploads/official_cars/common');
       </button>
     </div>
 
-    <!-- LOGO CHÍNH CHỦ VINFAST TÂN Á CHÂU -->
+    <!-- LOGO CHÍNH THỨC VINFAST MINH NGÂN PHÚ THỌ 3S -->
     <div id="logo" class="flex-col">
-      <a href="<?php echo esc_url(home_url('/')); ?>" title="VinFast Tân Á Châu" class="vf-official-img-logo-link">
-        <?php 
-          $theme_logo = get_stylesheet_directory_uri() . '/assets/images/logo-tac-trang.png';
-        ?>
-        <img src="<?php echo esc_url($theme_logo); ?>" alt="VinFast Tân Á Châu"
-          class="vf-official-vinhphuc-logo-img">
+      <a href="<?php echo esc_url(home_url('/')); ?>" title="VinFast Minh Ngân Phú Thọ 3S" class="vf-official-img-logo-link brand-logo" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+        <div class="brand-icon" style="width:36px; height:36px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg viewBox="0 0 40 40" fill="none" width="36" height="36">
+            <path d="M20 4L4 12V28L20 36L36 28V12L20 4Z" stroke="#2563EB" stroke-width="2.5" fill="rgba(37,99,235,0.06)"/>
+            <path d="M12 16L20 28L28 16L20 21L12 16Z" fill="#2563EB"/>
+          </svg>
+        </div>
+        <div class="brand-text" style="display:flex; flex-direction:column; line-height:1.15; justify-content:center;">
+          <span class="brand-title" style="font-size:16px; font-weight:800; letter-spacing:0.04em; color:#111827;">VINFAST</span>
+          <span class="brand-subtitle" style="font-size:9.5px; font-weight:600; color:#64748B; letter-spacing:0.05em; white-space:nowrap;">MINH NGÂN PHÚ THỌ • 3S</span>
+        </div>
       </a>
     </div>
 
@@ -277,24 +282,14 @@ $uploads_url = content_url('/uploads/official_cars/common');
         display: none;
       }
 
-      /* Mobile/Tablet: hiện text ngắn gọn, button nhỏ cân đối với logo */
-      @media (max-width: 768px) {
+      /* Mobile/Tablet: hiện text ngắn gọn, button chuẩn touch target */
+      @media (max-width: 849px) {
         .vf-header-btn-text-desktop {
-          display: none;
+          display: none !important;
         }
 
         .vf-header-btn-text-mobile {
-          display: inline;
-        }
-
-        .vf-header-btn {
-          height: 32px !important;
-          line-height: 32px !important;
-          padding: 0 12px !important;
-          font-size: 11px !important;
-          letter-spacing: 0.3px !important;
-          border-radius: 4px !important;
-          white-space: nowrap !important;
+          display: inline !important;
         }
       }
     </style>
@@ -306,7 +301,7 @@ $uploads_url = content_url('/uploads/official_cars/common');
 <div class="vf-mobile-drawer" id="vf-mobile-drawer">
   <!-- Dimmed Backdrop with top-right Floating Close '✕' Button -->
   <div class="vf-mobile-drawer-overlay" onclick="vfToggleMobileMenu()">
-    <button class="vf-mobile-drawer-close-floating" onclick="vfToggleMobileMenu()" aria-label="Đóng menu">✕</button>
+    <button class="vf-mobile-drawer-close-floating" onclick="event.stopPropagation(); vfToggleMobileMenu();" aria-label="Đóng menu">✕</button>
   </div>
 
   <div class="vf-mobile-drawer-content">

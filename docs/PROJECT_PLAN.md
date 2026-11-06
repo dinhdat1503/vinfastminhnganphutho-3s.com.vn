@@ -1,60 +1,65 @@
-# PROJECT PLAN — VINFAST MINH NGÂN PHÚ THỌ 3S
+# PROJECT PLAN — VINFAST MINH NGÂN
 
-> **Kế hoạch dự án:** Dựng và chuẩn hóa hệ thống website đại lý ô tô điện VinFast Minh Ngân Phú Thọ (chuẩn 3S).
-> **Ngôn ngữ:** Tiếng Việt | **Tiêu chuẩn tuân thủ:** `AGENTS.md`, `docs/QUALITY_GATES.md`, `docs/SECURITY_STANDARDS.md`.
+> **Tài liệu chiến lược & Kế hoạch triển khai chính thức**
+> Cập nhật theo Đặc tả chi tiết & Báo giá được phê duyệt bởi Chủ dự án (2026-11-06).
+> Tuân thủ nghiêm ngặt `AGENTS.md`, `docs/QUALITY_GATES.md`, `docs/SECURITY_STANDARDS.md`.
 
-## 1. Thông tin dự án
+---
 
-- **Tên dự án:** Website Đại Lý VinFast Minh Ngân Phú Thọ — 3S (`vinfastminhnganphutho-3s.com.vn`)
-- **Phiên bản mục tiêu:** MVP 1.0 (Bộ khung cấu trúc, Theme 3S, Trang chủ, Trang sản phẩm xe, Dự toán chi phí, Đăng ký lái thử, Báo giá)
-- **Chủ dự án / người phê duyệt:** Anh Đạt
-- **Mục tiêu cốt lõi:** Xây dựng website đại lý bán lẻ ô tô điện VinFast chuẩn 3S (Sales - Service - Spare parts) tại Phú Thọ: giới thiệu mẫu xe điện, tính giá lăn bánh, dự toán trả góp ngân hàng, đặt cọc giữ chỗ và quản lý thu thập khách hàng tiềm năng (Leads).
-- **Nhóm người dùng:**
-  - Khách hàng quan tâm và mua xe ô tô điện VinFast tại Phú Thọ & khu vực lân cận.
-  - Tư vấn bán hàng & quản trị viên đại lý (nhận Lead qua Telegram/Email/Admin).
-- **Môi trường phát triển & vận hành:**
-  - Local / Staging: Windows / Web server (LiteSpeed/Nginx/Apache hoặc Docker).
-  - Production: Hosting cPanel/DirectAdmin LiteSpeed WordPress.
-- **Nguồn tài nguyên kế thừa đã xác minh:**
-  - Giao diện & tính năng chuyên sâu: Kế thừa từ `D:\DinhDat\Me\vinfasttanachill` (Child Theme Flatsome + Custom Plugins cho xe VinFast).
-  - Cụm WordPress Core & Plugins chuẩn: `D:\DinhDat\Me\vinhphucvinfast.com.vn\vinhphucvinfast.com.vn` (WordPress 6.x/7.x, Parent Theme Flatsome 3.20.2, ACF, WooCommerce, Contact Form 7, Smart Slider 3, Popup Maker).
-  - Cơ chế nhận chuyến & bot Zalo/Telegram (nếu cần mở rộng): `D:\DinhDat\Me\vinfasttanachau`.
+## 1. Thông tin chung & Mục tiêu dự án
 
-## 2. Phạm vi sản phẩm (Scope)
+- **Tên dự án:** Website Đại Lý Ô Tô Điện VinFast Minh Ngân (`vinfastminhnganphutho-3s.com.vn`)
+- **Chủ dự án / Người phê duyệt:** Anh Đạt
+- **Màu sắc chủ đạo (Brand Identity):** Xanh VinFast `#2563EB`
+- **Sứ mệnh:**
+  1. Số hóa toàn bộ hành trình mua xe ô tô điện VinFast (từ tìm hiểu, dự toán lăn bánh đến đăng ký lái thử tận nhà 24/7).
+  2. Minh bạch hóa chi phí: Tự động tính giá lăn bánh theo tỉnh thành (ưu đãi trước bạ 0%), bảng tính lãi suất trả góp dư nợ giảm dần, in báo giá PDF 1-click.
+  3. Tối ưu tỷ lệ chuyển đổi khách hàng (Lead Conversion): Chuẩn Mobile-First 100%, tích hợp Dual-Recipient SMTP gửi đồng thời 2 email chính thức và thông báo đa kênh.
 
-| Mức độ | Tính năng | Tiêu chí chấp nhận | Trạng thái |
-|---|---|---|---|
-| **MUST (MVP)** | Khung cấu trúc dự án & Theme sạch cho Minh Ngân Phú Thọ | Tách bạch Theme/Plugins, loại bỏ triệt để hardcode path Windows cũ (`C:/Users/ngodi/...`), chuẩn hóa brand Minh Ngân Phú Thọ 3S | IN PROGRESS (Slice 1) |
-| **MUST (MVP)** | Trang chủ đại lý chuẩn 3S | Banner Swiper, danh mục xe điện (VF 3, VF 5, VF 6, VF 7, VF 8, VF 9...), khối dịch vụ 3S, form tư vấn | BACKLOG |
-| **MUST (MVP)** | Trang chi tiết mẫu xe (`single-car_model`) | Sticky subnav, đổi màu xe realtime, bảng thông số kỹ thuật, CTA lái thử/báo giá | BACKLOG |
-| **MUST (MVP)** | Bộ công cụ tài chính (Dự toán lăn bánh & Trả góp) | Tính đúng biểu phí trước bạ, bảo hiểm, biển số theo khu vực Phú Thọ; bảng trả góp ngân hàng | BACKLOG |
-| **MUST (MVP)** | Form thu thập Lead & Thông báo | Xác thực Nonce CSRF, bọc HTML an toàn gửi Telegram bot, báo trạng thái lỗi/thành công trung thực | BACKLOG |
-| **SHOULD** | Trang Đặt cọc trực tuyến (VietQR động) | Tạo mã VietQR tự động kèm nội dung đơn cọc, kiểm tra trạng thái thanh toán | BACKLOG |
-| **SHOULD** | Trang Tìm kiếm Showroom & Trạm sạc Phú Thọ | Bản đồ tích hợp các trạm sạc VinFast tại tỉnh Phú Thọ | BACKLOG |
-| **LATER** | Đồng bộ Lead đa kênh (Zalo Mini App / CRM) | Kết nối API webhook với hệ thống quản lý tập trung | BACKLOG |
+---
 
-**Ngoài phạm vi MVP 1.0:** Không tích hợp cổng thanh toán trực tiếp qua thẻ quốc tế (chỉ dùng VietQR và chuyển khoản ngân hàng); không sửa đổi core WordPress.
+## 2. Phạm vi sản phẩm & Bảng tính năng hợp đồng (Gói Cơ Bản - 4.000.000 VNĐ)
 
-## 3. Kiến trúc và công nghệ
+| STT | Phân hệ / Hạng mục | Template / Quy chuẩn | Nội dung đặc tả chi tiết | Trạng thái |
+|---|---|---|---|---|
+| **1** | **Nền tảng & Theme** | Flatsome Child Theme | Tối ưu tốc độ, chuẩn hóa cấu trúc sạch, tích hợp CI/CD tự động deploy qua GitHub Webhook lên VPS | **HOÀN THÀNH (Slice 1)** |
+| **2** | **Trang Chủ** | `page-home.php` | Đầy đủ 8 mục: Hero Slider banner, Car Showcase (VF 2 - VF 9 tóm tắt 4 thông số), Xưởng dịch vụ & Bảo hành 10 năm, Chiến dịch tương lai xanh, Green Series xe dịch vụ, 2 khối công cụ tài chính, Tin tức tự đẩy mới lên đầu, Bản đồ Google Maps Showroom | **SLICE 3** |
+| **3** | **Trang Chi Tiết Xe** | `single-car_model.php` / `single-product-vinfast.php` | Thông số kỹ thuật (quãng đường NEDC/WLTP, pin, sạc nhanh), công nghệ ADAS, trợ lý Vivu, CTA Lăn bánh / Lái thử / Tải Brochure PDF (triển khai mẫu 2 dòng xe trước) | **SLICE 4** |
+| **4** | **Dự toán lăn bánh & In PDF** | `page-du-toan.php` (Tab A) | Tự động tính lăn bánh theo tỉnh thành, áp dụng Lệ phí trước bạ 0%, bóc tách phí biển số, đăng kiểm, đường bộ, TNDS; Nút `TẢI PDF` 1-click xuất bản in chuẩn mẫu | **SLICE 5** |
+| **5** | **Tính vay trả góp ngân hàng** | `page-du-toan.php` (Tab B) | Tính dư nợ giảm dần (trả trước 20-80%, vay 1-8 năm), xuất bảng chi tiết từng tháng (kỳ hạn, gốc, lãi, tổng trả, dư nợ) | **SLICE 5** |
+| **6** | **Đăng ký lái thử** | `page-lai-thu.php` | Form chọn xe (VF 3 đến VF 9), tùy chọn tại Showroom hoặc tại nhà; gửi AJAX không reload trang, bắn thông báo về 2 email chính | **SLICE 6** |
+| **7** | **Đặt lịch bảo dưỡng 4 bước** | `page-dat-lich-dich-vu.php` | Quy trình đặt lịch dịch vụ online 4 bước, cam kết bảo hành chính hãng 10 năm hoặc 200.000 km | **SLICE 6** |
+| **8** | **Thu thập Lead & Điều hướng Mobile** | Header, Footer, Sticky Bar | Sticky Quick Action Bar 3 nút đáy màn hình Mobile (📞 Gọi ngay, 🧮 Dự toán, 🚗 Lái thử); Nút nổi Hotline/Zalo + Popup ưu đãi tự đóng | **SLICE 2** |
 
-| Lớp | Công nghệ | Ghi chú |
-|---|---|---|
-| **CMS Platform** | WordPress (6.x / 7.x) | PHP 7.4+ / PHP 8.1+, MariaDB / MySQL 5.7+ |
-| **Parent Theme** | Flatsome Theme (UX Builder) | Framework responsive, tối ưu thương mại điện tử |
-| **Child Theme** | `flatsome-child-minhnganphutho` | Kế thừa và tùy biến toàn bộ UI/UX VinFast Phú Thọ |
-| **Custom Post Types** | `car_model` (Mẫu xe), `car_category` | Quản lý danh mục xe cá nhân, xe dịch vụ |
-| **Plugins tiêu chuẩn** | ACF Pro, WooCommerce, Contact Form 7, Smart Slider 3, Popup Maker | Bộ plugin vận hành cơ bản |
-| **Custom Plugins** | `ai-writer`, `wp-insight`, `vinfast-template` | Tiện ích hỗ trợ nội dung & layout xe |
-| **Thông báo Lead** | Telegram Bot API + WP Mail SMTP | Gửi tức thời về nhóm sale Phú Thọ |
+---
 
-## 4. Định hướng lộ trình theo Slice
+## 3. Kiến trúc kỹ thuật & Dữ liệu cốt lõi
 
-- **SLICE-01 (Hiện tại):** Khởi tạo bộ khung dự án (Scaffolding) sạch cho VinFast Minh Ngân Phú Thọ 3S:
-  - Thiết lập cấu trúc thư mục chuẩn.
-  - Dựng bộ khung Theme `flatsome-child-minhnganphutho` chuẩn hóa nhận diện thương hiệu Minh Ngân Phú Thọ - 3S.
-  - Fix dứt điểm các lỗi đường dẫn cứng P0 và cấu hình mẫu `.env.example` / `wp-config-sample.php`.
-- **SLICE-02:** Cấu hình Core & Tích hợp Plugins tiêu chuẩn, cấu hình Custom Post Types (`car_model`) và ACF fields.
-- **SLICE-03:** Hoàn thiện giao diện Trang chủ & Trang dịch vụ chuẩn 3S.
-- **SLICE-04:** Công cụ Dự toán chi phí lăn bánh Phú Thọ & Trả góp ngân hàng.
-- **SLICE-05:** Module Đặt cọc VietQR, Form bảo mật Nonce & Telegram Bot notification.
-- **SLICE-06:** Audit nghiệm thu, tối ưu tốc độ và bàn giao release.
+### 3.1. Dải sản phẩm xe điện hỗ trợ
+- **Xe cá nhân:** VF 2, VF 3, VF 5 Plus, VF 6, VF 7, VF 8, VF 8 The All New, VF 9, VF MPV 7, VF Wild.
+- **Xe thương mại & dịch vụ (Green Series):** Minio Green, Herio Green, Nerio Green, Limo Green, EC Van, eBus.
+
+### 3.2. Cấu trúc Navigation & Nhận diện
+- **Header:** Logo VinFast Minh Ngân sắc nét vector (height: 64px, căn giữa); Mega Menu phân tầng; Nút CTA ĐĂNG KÝ LÁI THỬ màu `#2563EB`.
+- **Mobile Navigation:** Off-canvas Drawer kèm tìm kiếm thông minh; Thanh điều hướng cố định 3 nút (Gọi / Dự toán / Lái thử).
+- **Hệ thống gửi thư Dual-Recipient SMTP:**
+  - Gửi đồng thời tới 2 email nhận chính thức (`To:`) qua máy chủ `smtp.gmail.com:587` (STARTTLS).
+  - Tên người gửi định danh: **VinFast Minh Ngân**.
+  - Áp dụng tự động cho toàn bộ biểu mẫu Contact Form 7 và `wp_mail()`.
+
+### 3.3. Tự động hóa nội dung & CI/CD
+- Tin tức hiển thị giảm dần theo ngày đăng (`ORDER BY post_date DESC`), bài mới nhất tự động chiếm vị trí số 1.
+- Quản lý mã nguồn trên GitHub repository `dinhdat1503/vinfastminhnganphutho-3s.com.vn`.
+- Tự động deploy qua Webhook aaPanel VPS khi push nhánh `main`.
+
+---
+
+## 4. Lộ trình thực hiện chi tiết theo từng Slice
+
+- [x] **SLICE-01: Khởi tạo bộ khung Full WordPress & Dọn sạch lỗi P0** (Hoàn thành & đã push GitHub).
+- [ ] **SLICE-02: Chuẩn hóa Header, Logo, Sticky Mobile Bar & Dual-Recipient SMTP VinFast Minh Ngân**.
+- [ ] **SLICE-03: Xây dựng hoàn chỉnh Trang chủ `page-home.php` theo 8 phân khu đặc tả**.
+- [ ] **SLICE-04: Xây dựng Template Trang chi tiết xe `single-car_model.php` (2 mẫu xe chuẩn)**.
+- [ ] **SLICE-05: Hoàn thiện Công cụ Dự toán lăn bánh (Thuế 0%), Bảng tính trả góp & Xuất PDF 1-Click**.
+- [ ] **SLICE-06: Hoàn thiện Form Đăng ký lái thử, Đặt lịch bảo dưỡng 4 bước, Nút nổi Hotline/Zalo & Popup ưu đãi**.
+- [ ] **SLICE-07: Kiểm thử tổng thể Quality Gates, tối ưu Mobile PageSpeed và bàn giao nghiệm thu**.

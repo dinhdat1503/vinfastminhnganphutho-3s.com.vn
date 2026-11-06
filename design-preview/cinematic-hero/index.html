@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VinFast Minh Ngân Phú Thọ 3S — Cinematic Motion Hero Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ADMIN / DESIGNER SIMULATOR TOOLBAR (Dành riêng cho Chủ dự án duyệt hiệu ứng) -->
+  <aside class="sim-toolbar" id="simToolbar" aria-label="Bảng điều khiển thử nghiệm thiết kế">
+    <div class="sim-inner">
+      <div class="sim-brand">
+        <span class="sim-badge">TASK HOME-02.2</span>
+        <span class="sim-title">Cinematic Hero Preview</span>
+      </div>
+
+      <div class="sim-group">
+        <label for="viewportSelect">Khung nhìn:</label>
+        <select id="viewportSelect">
+          <option value="100%">100% Fullscreen</option>
+          <option value="1440px">Desktop (1440px)</option>
+          <option value="1024px">Small Desktop (1024px)</option>
+          <option value="768px">Tablet (768px)</option>
+          <option value="390px">Mobile Pro (390px)</option>
+          <option value="320px">Small Mobile (320px)</option>
+        </select>
+      </div>
+
+      <div class="sim-group">
+        <label for="speedSelect">Thời gian slide:</label>
+        <select id="speedSelect">
+          <option value="5000">5 Giây (Nhanh)</option>
+          <option value="8000" selected>8 Giây (Tiêu chuẩn)</option>
+          <option value="12000">12 Giây (Thong thả)</option>
+        </select>
+      </div>
+
+      <div class="sim-actions">
+        <button type="button" class="sim-btn" id="btnReplayEntrance" title="Chạy lại hiệu ứng xuất hiện mở đầu 1.8s">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+          Replay Entrance
+        </button>
+        <button type="button" class="sim-btn" id="btnToggleMotion" title="Bật/Tắt hiệu ứng giảm chuyển động">
+          Reduced Motion: <span id="lblMotionState">OFF</span>
+        </button>
+        <button type="button" class="sim-btn" id="btnToggleVideo" title="Mô phỏng kiến trúc Video Hero nền">
+          Video Mode: <span id="lblVideoState">OFF</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- VIEWPORT FRAME CONTAINER (Cho phép co giãn thử nghiệm trong iframe/container) -->
+  <div class="viewport-canvas" id="viewportCanvas">
+
+    <!-- MINI BRAND HEADER (Mô phỏng định vị thương hiệu phía trên) -->
+    <header class="mini-header">
+      <div class="mini-header-inner">
+        <div class="brand-box">
+          <svg viewBox="0 0 40 40" fill="none" width="32" height="32" aria-hidden="true">
+            <path d="M20 4L4 12V28L20 36L36 28V12L20 4Z" stroke="#2563EB" stroke-width="2.5" fill="rgba(37,99,235,0.08)"/>
+            <path d="M12 16L20 28L28 16L20 21L12 16Z" fill="#2563EB"/>
+          </svg>
+          <div class="brand-text">
+            <span class="brand-name">VINFAST</span>
+            <span class="brand-dealer">MINH NGÂN PHÚ THỌ • ĐẠI LÝ 3S</span>
+          </div>
+        </div>
+        <div class="header-contact">
+          <span class="hotline-pill">Hotline: <strong>0981 33 55 22</strong></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CINEMATIC MOTION HERO SECTION -->
+    <section class="cinematic-hero" id="cinematicHero" role="region" aria-roledescription="carousel" aria-label="Showroom Ô Tô Điện VinFast Minh Ngân">
+      
+      <!-- STAGE BACKGROUND & AMBIENT GLOW -->
+      <div class="hero-stage-bg" id="heroStageBg">
+        <div class="stage-gradient"></div>
+        <div class="stage-spotlight"></div>
+        <div class="stage-grid"></div>
+
+        <!-- OPTIONAL VIDEO HERO CONTAINER (Kiến trúc sẵn sàng kích hoạt) -->
+        <div class="hero-video-wrap" id="heroVideoWrap" aria-hidden="true">
+          <video class="hero-bg-video" id="heroBgVideo" muted loop playsinline poster="assets/images/official_vf7.webp">
+            <!-- Source video thực tế có thể cấu hình từ WordPress Admin qua ACF/Options -->
+            <source src="" type="video/mp4">
+          </video>
+          <div class="video-overlay"></div>
+        </div>
+      </div>
+
+      <!-- SLIDES WRAPPER -->
+      <div class="hero-slider-track" id="heroTrack">
+
+        <!-- SLIDE 1: VINFAST VF 7 — ĐẲNG CẤP SUV ĐIỆN THỜI THƯỢNG -->
+        <article class="hero-slide active" data-index="0" data-theme="vf7" aria-label="VinFast VF 7 — Đẳng cấp SUV điện thể thao">
+          <div class="slide-container">
+            <div class="slide-content">
+              <div class="slide-eyebrow animate-child">
+                <span class="eyebrow-dot"></span>
+                <span class="eyebrow-text">VINFAST VF 7 • ALL-ELECTRIC SUV</span>
+                <span class="badge-featured">Tiêu điểm</span>
+              </div>
+              <h1 class="slide-title animate-child">
+                Bứt Phá Giới Hạn<br>
+                <span class="text-gradient">Công Nghệ Tương Lai</span>
+              </h1>
+              <p class="slide-desc animate-child">
+                Thiết kế phi đối xứng định hình phong cách thời thượng, công suất 349 mã lực uy lực, dẫn động 2 cầu toàn thời gian AWD và quãng đường di chuyển 496 km.
+              </p>
+              <div class="slide-actions animate-child">
+                <a href="#kham-pha-vf7" class="btn-hero btn-hero-primary" role="button">
+                  <span>Khám phá VF 7</span>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+                <a href="#dang-ky-lai-thu" class="btn-hero btn-hero-secondary" role="button">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 10.9 2 11.2 2 11.5V16c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg>
+                  <span>Đăng ký lái thử</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="slide-visual">
+              <div class="car-stage animate-car">
+                <img src="assets/images/official_vf7.webp" 
+                     alt="VinFast VF 7 Plus — SUV điện thể thao cao cấp" 
+                     class="car-image"
+                     width="760" 
+                     height="420"
+                     loading="eager"
+                     fetchpriority="high">
+                <div class="car-shadow"></div>
+                <div class="car-reflection"></div>
+              </div>
+
+              <!-- SPEC BAR GẮN LIỀN VỚI XE -->
+              <div class="hero-spec-strip animate-specs" aria-label="Thông số kỹ thuật nổi bật VF 7">
+                <div class="spec-col">
+                  <span class="spec-num">349 <small>HP</small></span>
+                  <span class="spec-label">Công suất tối đa</span>
+                </div>
+                <div class="spec-divider" aria-hidden="true"></div>
+                <div class="spec-col">
+                  <span class="spec-num">496 <small>km</small></span>
+                  <span class="spec-label">Tầm hoạt động</span>
+                </div>
+                <div class="spec-divider" aria-hidden="true"></div>
+                <div class="spec-col">
+                  <span class="spec-num">5.8 <small>giây</small></span>
+                  <span class="spec-label">0-100 km/h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- SLIDE 2: VINFAST VF 8 — TIÊN PHONG SANG TRỌNG ĐẲNG CẤP TOÀN CẦU -->
+        <article class="hero-slide" data-index="1" data-theme="vf8" aria-label="VinFast VF 8 — Tiên phong đẳng cấp sang trọng">
+          <div class="slide-container">
+            <div class="slide-content">
+              <div class="slide-eyebrow animate-child">
+                <span class="eyebrow-dot"></span>
+                <span class="eyebrow-text">VINFAST VF 8 • D-SEGMENT LUXURY SUV</span>
+                <span class="badge-featured badge-gold">Quốc tế</span>
+              </div>
+              <h1 class="slide-title animate-child">
+                Tiên Phong Đẳng Cấp<br>
+                <span class="text-gradient">Sang Trọng Toàn Cầu</span>
+              </h1>
+              <p class="slide-desc animate-child">
+                Chuẩn an toàn 5 sao hàng đầu thế giới, hệ thống lái tự động thông minh ADAS cấp độ 2 và trợ lý ảo Vivi điều khiển giọng nói tiếng Việt đa vùng miền.
+              </p>
+              <div class="slide-actions animate-child">
+                <a href="#kham-pha-vf8" class="btn-hero btn-hero-primary" role="button">
+                  <span>Khám phá VF 8</span>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+                <a href="#du-toan-chi-phi" class="btn-hero btn-hero-secondary" role="button">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="16" y2="10"></line><line x1="8" y1="14" x2="12" y2="14"></line></svg>
+                  <span>Dự toán lăn bánh</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="slide-visual">
+              <div class="car-stage animate-car">
+                <img src="assets/images/official_vf8.webp" 
+                     alt="VinFast VF 8 — SUV điện hạng D thông minh" 
+                     class="car-image"
+                     width="760" 
+                     height="420"
+                     loading="lazy">
+                <div class="car-shadow"></div>
+                <div class="car-reflection"></div>
+              </div>
+
+              <!-- SPEC BAR GẮN LIỀN VỚI XE -->
+              <div class="hero-spec-strip animate-specs" aria-label="Thông số kỹ thuật nổi bật VF 8">
+                <div class="spec-col">
+                  <span class="spec-num">402 <small>HP</small></span>
+                  <span class="spec-label">Công suất (Plus)</span>
+                </div>
+                <div class="spec-divider" aria-hidden="true"></div>
+                <div class="spec-col">
+                  <span class="spec-num">471 <small>km</small></span>
+                  <span class="spec-label">Quãng đường (WLTP)</span>
+                </div>
+                <div class="spec-divider" aria-hidden="true"></div>
+                <div class="spec-col">
+                  <span class="spec-num">Level 2</span>
+                  <span class="spec-label">Trợ lái ADAS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- SLIDE 3: SHOWROOM & XƯỞNG DỊCH VỤ 3S MINH NGÂN PHÚ THỌ -->
+        <article class="hero-slide" data-index="2" data-theme="showroom" aria-label="Xưởng dịch vụ 3S VinFast Minh Ngân Phú Thọ">
+          <div class="slide-container">
+            <div class="slide-content">
+              <div class="slide-eyebrow animate-child">
+                <span class="eyebrow-dot"></span>
+                <span class="eyebrow-text">VINFAST MINH NGÂN • ĐẠI LÝ ỦY QUYỀN 3S</span>
+                <span class="badge-featured badge-green">Chính hãng</span>
+              </div>
+              <h1 class="slide-title animate-child">
+                Xưởng Dịch Vụ 3S<br>
+                <span class="text-gradient">Tiêu Chuẩn Toàn Diện</span>
+              </h1>
+              <p class="slide-desc animate-child">
+                Hệ thống máy chẩn đoán kỹ thuật hiện đại, kỹ thuật viên đào tạo chuyên sâu bởi VinFast Việt Nam, dịch vụ cứu hộ pin 24/7 và cam kết bảo hành tới 10 năm.
+              </p>
+              <div class="slide-actions animate-child">
+                <a href="#dat-lich-dich-vu" class="btn-hero btn-hero-primary" role="button">
+                  <span>Đặt lịch dịch vụ</span>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+                <a href="tel:0981335522" class="btn-hero btn-hero-secondary" role="button">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  <span>Hotline 0981 33 55 22</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="slide-visual">
+              <div class="car-stage service-stage animate-car">
+                <img src="assets/images/service_3s.jpg" 
+                     alt="Xưởng dịch vụ kỹ thuật tiêu chuẩn VinFast Minh Ngân Phú Thọ" 
+                     class="car-image service-image"
+                     width="760" 
+                     height="420"
+                     loading="lazy">
+                <div class="service-badge-verify">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                  <span>Chứng nhận Đại lý 3S Chính Thức</span>
+                </div>
+              </div>
+
+              <!-- SPEC BAR DỊCH VỤ -->
+              <div class="hero-spec-strip animate-specs" aria-label="Cam kết dịch vụ 3S">
+                <div class="spec-col">
+                  <span class="spec-num">10 <small>năm</small></span>
+                  <span class="spec-label">Bảo hành xe điện</span>
+                </div>
+                <div class="spec-divider" aria-hidden="true"></div>
+                <div class="spec-col">
+                  <span class="spec-num">24/7</span>
+                  <span class="spec-label">Cứu hộ pin lưu động</span>
+                </div>
+                <div class="spec-divider" aria-hidden="true"></div>
+                <div class="spec-col">
+                  <span class="spec-num">100%</span>
+                  <span class="spec-label">Phụ tùng chính hãng</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- SLIDER CONTROLS (Prev / Next & Pause) -->
+      <div class="hero-controls" aria-label="Điều khiển trình chiếu">
+        <button type="button" class="ctrl-btn ctrl-prev" id="btnPrev" aria-label="Slide trước">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+
+        <button type="button" class="ctrl-btn ctrl-pause" id="btnPause" aria-label="Tạm dừng trình chiếu" title="Tạm dừng / Tiếp tục">
+          <svg class="icon-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+          <svg class="icon-play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        </button>
+
+        <button type="button" class="ctrl-btn ctrl-next" id="btnNext" aria-label="Slide tiếp theo">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- SLIDER INDICATORS & PROGRESS TRACK -->
+      <nav class="hero-indicators" aria-label="Chỉ mục các slide">
+        <button type="button" class="ind-pill active" data-slide="0" aria-label="Đi đến slide 1: VinFast VF 7" aria-current="true">
+          <span class="ind-title"><span class="ind-full">01 • </span>VF 7</span>
+          <span class="ind-bar"><span class="ind-progress"></span></span>
+        </button>
+        <button type="button" class="ind-pill" data-slide="1" aria-label="Đi đến slide 2: VinFast VF 8">
+          <span class="ind-title"><span class="ind-full">02 • </span>VF 8</span>
+          <span class="ind-bar"><span class="ind-progress"></span></span>
+        </button>
+        <button type="button" class="ind-pill" data-slide="2" aria-label="Đi đến slide 3: Showroom & Xưởng dịch vụ 3S">
+          <span class="ind-title"><span class="ind-full">03 • </span>Showroom 3S</span>
+          <span class="ind-bar"><span class="ind-progress"></span></span>
+        </button>
+      </nav>
+
+    </section>
+
+    <!-- SECTION 2 TEASER (Để chứng minh không bị che khuất và chuyển tiếp mượt mà) -->
+    <div class="preview-footer-teaser">
+      <div class="teaser-inner">
+        <span>↓ Cuộn xuống để xem toàn bộ 8 dòng xe điện VinFast chính hãng tại Showroom Minh Ngân Phú Thọ</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
