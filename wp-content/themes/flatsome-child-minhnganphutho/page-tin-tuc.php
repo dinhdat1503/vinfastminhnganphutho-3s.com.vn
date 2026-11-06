@@ -231,6 +231,7 @@ $uploads_url = content_url('/uploads/official_cars/common/');
   margin: 0 0 10px 0 !important;
   display: -webkit-box !important;
   -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
   -webkit-box-orient: vertical !important;
   overflow: hidden !important;
 }
@@ -251,6 +252,7 @@ $uploads_url = content_url('/uploads/official_cars/common/');
   margin: 0 0 18px 0 !important;
   display: -webkit-box !important;
   -webkit-line-clamp: 3 !important;
+  line-clamp: 3 !important;
   -webkit-box-orient: vertical !important;
   overflow: hidden !important;
   flex: 1 !important;

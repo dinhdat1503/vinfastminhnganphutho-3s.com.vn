@@ -9,15 +9,19 @@
 - **Ngày cập nhật:** 2026-11-06, Asia/Ho_Chi_Minh
 - **Branch / HEAD:** `main` (Remote: `https://github.com/dinhdat1503/vinfastminhnganphutho-3s.com.vn.git`)
 - **Môi trường Local:** LocalWP site `vinfastminhnganphutho-3s` đang chạy tại `http://localhost:10004` (PHP 8.2.29, Nginx, MySQL 8.4).
-- **Nhiệm vụ vừa hoàn thành:** **TASK ID: HEADER-MOBILE-05 — FIX VERTICAL CENTER ALIGNMENT**.
+- **Nhiệm vụ vừa hoàn thành:** **TASK ID: HEADER-MOBILE-05 & CLEANUP-CSS — FIX CSS SYNTAX & COMPATIBILITY ERRORS**.
 - **Kết quả nghiệm thu:**
-  1. **Căn giữa tuyệt đối trục dọc (Vertical Center) chuẩn xác 100% (verticalDeviation = 0.00px):**
-     - **Nguyên nhân gốc rễ (Root Cause):** Flatsome kế thừa quy tắc clearfix `.container:after` (`content: " "; display: table;`). Trong CSS Grid 3 cột của mobile header, pseudo-element `::after` này vô tình bị browser nhận diện thành item thứ 4, tự động rớt xuống tạo Implicit Grid Row 2 (cao 7px) kèm grid-gap 8px, chiếm mất 15px khoảng trống chết ở đáy header. Do đó, cả 3 thành phần ở Row 1 bị nén lên trên với độ lệch đúng `-7.5px` (Nút CTA: top 5.5px, bottom 20.5px; Hamburger: top 3.5px, bottom 18.5px; Logo: top 8.5px, bottom 23.5px).
-     - **Giải pháp triệt để:**
-       - Triệt tiêu hoàn toàn pseudo-element clearfix thừa trên mobile header: `.header-main .header-inner::before, .header-main .header-inner::after { display: none !important; content: none !important; width: 0 !important; height: 0 !important; }`.
-       - Khóa cứng Grid đúng 1 hàng duy nhất: `grid-template-rows: 1fr !important; align-content: center !important; column-gap: 8px !important; row-gap: 0 !important;`.
-       - Di chuyển thẻ `<style>` inline trong `header-main.php` ra ngoài thẻ `.header-inner` để bảo toàn cấu trúc DOM sạch.
-  2. **Bảng số liệu đo thực tế qua CDP DOM `getBoundingClientRect()` tại Viewport 384px (Samsung Galaxy S21 Plus):**
+  1. **Khắc phục toàn bộ 5 lỗi cú pháp CSS (CSS Syntax Errors) trong Problems Tab:**
+     - Sửa lỗi thiếu selector tại `style.css:3411-3413` (`.vf-campaign-btn:hover { background: #1D4ED8 !important; ... }`).
+     - Xóa dấu ngoặc nhọn đóng dư thừa tại `style.css:4987` (`.vf-footer`).
+     - Bổ sung dấu ngoặc nhọn đóng bị thiếu cho `.vf-acc-card-badge` tại `style.css:10977`, qua đó giải phóng toàn bộ khối CSS bị mắc kẹt bên trong `@media (max-width: 768px)` và xóa triệt để lỗi `} expected` ở cuối file `style.css:12602`.
+  2. **Khắc phục toàn bộ các cảnh báo tương thích vendor prefix (Warnings):**
+     - Bổ sung thuộc tính chuẩn `line-clamp: 2;` đi kèm `-webkit-line-clamp: 2;` tại `style.css:2934` và `style.css:10371`.
+     - Bổ sung thuộc tính chuẩn `background-clip: text;` đi kèm `-webkit-background-clip: text;` tại `homepage-premium.css:424`.
+     - Cập nhật tương tự trong `page-tin-tuc.php`.
+  3. **Căn giữa tuyệt đối trục dọc (Vertical Center) chuẩn xác 100% (verticalDeviation = 0.00px):**
+     - Đã kiểm tra và bảo đảm giữ nguyên toàn bộ kết quả căn giữa 0.00px trên 320px, 375px, 384px, 390px, 414px, 768px, 1440px.
+  4. **Bảng số liệu đo thực tế qua CDP DOM `getBoundingClientRect()` tại Viewport 384px (Samsung Galaxy S21 Plus):**
      - Header: `top: 0px`, `bottom: 66px`, `height: 66px`, `centerY: 33.00px`.
      - **Hamburger Button (Trái):** `top: 11px`, `bottom: 55px`, `height: 44px`, `topGap: 11px`, `bottomGap: 11px`, `centerY: 33.00px`, `verticalDeviation: 0.00px` (Trước sửa: `topGap: 3.5px`, `bottomGap: 18.5px`, `verticalDeviation: -7.50px`).
      - **Brand Logo (Giữa):** `top: 16px`, `bottom: 50px`, `height: 34px`, `topGap: 16px`, `bottomGap: 16px`, `centerY: 33.00px`, `verticalDeviation: 0.00px`, `horizontalDeviation: 0.00px` (Trước sửa: `topGap: 8.5px`, `bottomGap: 23.5px`, `verticalDeviation: -7.50px`).
