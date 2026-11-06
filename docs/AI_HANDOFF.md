@@ -6,8 +6,8 @@
 
 - **Dự án:** Website Đại Lý VinFast Minh Ngân Phú Thọ 3S (`vinfastminhnganphutho-3s.com.vn`)
 - **Ngày cập nhật:** 2026-11-06, Asia/Ho_Chi_Minh
-- **Branch / HEAD:** Git root `D:/DinhDat`
-- **Worktree:** Dựng bộ khung Full WordPress Project, cấu trúc sạch không chứa secret, sẵn sàng triển khai.
+- **Branch / HEAD:** `main @ 24b3373b` (Remote: `https://github.com/dinhdat1503/vinfastminhnganphutho-3s.com.vn.git`)
+- **Worktree:** Clean (`nothing to commit, working tree clean`). Đã khởi tạo Git repo độc lập và push thành công lên GitHub.
 - **Slice vừa hoàn thành:** **SLICE-01: Khởi tạo bộ khung Full WordPress cho VinFast Minh Ngân Phú Thọ 3S**
 - **Trạng thái:** **HOÀN THÀNH SLICE 1 — CHỜ PHÊ DUYỆT ĐỂ BƯỚC VÀO SLICE 2**
 - **Slice tiếp theo được đề xuất:** **SLICE-02: Khởi tạo CSDL, kích hoạt Child Theme & kiểm tra hiển thị Trang chủ** (Đúng một Slice duy nhất; CHƯA THỰC HIỆN).
