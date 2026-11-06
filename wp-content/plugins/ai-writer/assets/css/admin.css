@@ -1,0 +1,328 @@
+/* =========================================================
+   AI Writer Plugin — Admin & Editor Styles
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Variables ─────────────────────────────────────────── */
+:root {
+    --aiw-primary:    #6366f1;
+    --aiw-primary-h:  #4f46e5;
+    --aiw-success:    #10b981;
+    --aiw-danger:     #ef4444;
+    --aiw-bg:         #0f172a;
+    --aiw-surface:    #1e293b;
+    --aiw-border:     #334155;
+    --aiw-text:       #f1f5f9;
+    --aiw-text-muted: #94a3b8;
+    --aiw-radius:     10px;
+    --aiw-shadow:     0 4px 24px rgba(0,0,0,.4);
+}
+
+/* ── Settings Page ──────────────────────────────────────── */
+.aiw-settings-wrap {
+    font-family: 'Inter', sans-serif;
+    max-width: 720px;
+    margin: 32px auto;
+    padding: 0 16px;
+}
+
+.aiw-settings-header {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(99,102,241,.4);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.aiw-settings-header .aiw-icon {
+    font-size: 48px;
+    line-height: 1;
+}
+
+.aiw-settings-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: #fff;
+}
+
+.aiw-settings-header p {
+    margin: 0;
+    opacity: .85;
+    font-size: 15px;
+}
+
+.aiw-card {
+    background: #fff;
+    border-radius: var(--aiw-radius);
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    padding: 28px;
+    margin-bottom: 24px;
+    border: 1px solid #e5e7eb;
+}
+
+.aiw-card h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f3f4f6;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.aiw-form-group {
+    margin-bottom: 20px;
+}
+
+.aiw-form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #374151;
+    font-size: 14px;
+}
+
+.aiw-form-group input[type="text"],
+.aiw-form-group input[type="password"],
+.aiw-form-group select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    transition: border-color .2s;
+    background: #f9fafb;
+    color: #111827;
+}
+
+.aiw-form-group input:focus,
+.aiw-form-group select:focus {
+    outline: none;
+    border-color: var(--aiw-primary);
+    background: #fff;
+}
+
+.aiw-form-group .aiw-hint-text {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 6px;
+}
+
+.aiw-api-key-row {
+    display: flex;
+    gap: 10px;
+}
+
+.aiw-api-key-row input {
+    flex: 1;
+}
+
+.aiw-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    transition: all .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.aiw-btn-primary {
+    background: var(--aiw-primary) !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    justify-content: center !important;
+    margin-top: 8px !important;
+    transition: background .2s !important;
+}
+
+.aiw-btn-primary:hover:not(:disabled) {
+    background: var(--aiw-primary-h) !important;
+    color: #fff !important;
+}
+
+.aiw-btn-primary:disabled {
+    opacity: .6 !important;
+    cursor: not-allowed !important;
+}
+
+.aiw-btn-save {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    padding: 12px 28px;
+    font-size: 15px;
+}
+
+.aiw-btn-save:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(99,102,241,.4); }
+
+.aiw-btn-test {
+    background: #f3f4f6;
+    color: #374151;
+    border: 2px solid #e5e7eb;
+    white-space: nowrap;
+    min-width: 120px;
+}
+
+.aiw-btn-test:hover { background: #e5e7eb; }
+
+.aiw-test-result {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.aiw-test-result.success { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+.aiw-test-result.error   { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+.aiw-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.aiw-badge-free { background: #d1fae5; color: #065f46; }
+
+/* ── Gutenberg Sidebar ──────────────────────────────────── */
+.aiw-tab-content {
+    padding: 12px;
+}
+
+.aiw-hint {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.aiw-results {
+    margin-top: 12px;
+}
+
+.aiw-results-label,
+.aiw-result-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.aiw-result-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 10px;
+    background: #f9fafb;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    border: 1px solid #e5e7eb;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.aiw-copy-btn {
+    flex-shrink: 0;
+    font-size: 11px !important;
+}
+
+.aiw-result-box {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 12px;
+}
+
+.aiw-result-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #111827;
+    margin: 0 0 8px;
+}
+
+.aiw-char-count {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.aiw-keyword-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.aiw-keyword-tag {
+    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    color: #5b21b6;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform .15s;
+}
+
+.aiw-keyword-tag:hover { transform: scale(1.05); }
+
+.aiw-no-key {
+    padding: 20px;
+    text-align: center;
+}
+
+.aiw-no-key p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 12px;
+}
+
+.aiw-settings-link {
+    display: inline-block;
+    background: var(--aiw-primary);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .2s;
+}
+
+.aiw-settings-link:hover { background: var(--aiw-primary-h); color: #fff; }
+
+.aiw-tabs .components-tab-panel__tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.aiw-tab {
+    font-size: 11px !important;
+    padding: 8px 4px !important;
+    text-align: center !important;
+}

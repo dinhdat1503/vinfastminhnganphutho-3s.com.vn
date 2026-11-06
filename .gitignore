@@ -1,0 +1,36 @@
+# WordPress Ignore Rules
+wp-config.php
+.env
+.env.local
+.env.*.local
+
+# Uploads
+wp-content/uploads/*
+!wp-content/uploads/index.php
+
+# Core upgrade & backups
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/backups/
+*.sql
+*.sql.gz
+*.tar.gz
+*.zip
+
+# Logs
+*.log
+error_log
+debug.log
+wp-content/debug.log
+
+# OS & IDE metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+

@@ -1,0 +1,107 @@
+/* ==========================================================
+   VinFast Product Template — CSS
+   ========================================================== */
+
+.vf-product { --vf-primary: #0a2540; --vf-accent: #00a651; --vf-bg-light: #f7f8fa; }
+.vf-product * { box-sizing: border-box; }
+
+.vf-container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+.vf-narrow { max-width: 760px; }
+
+.vf-section { padding: 60px 0; }
+.vf-section h2 { font-size: 28px; margin-bottom: 20px; color: var(--vf-primary); text-align: center; }
+
+/* --- Hero --- */
+.vf-hero {
+    background-size: cover; background-position: center;
+    background-color: var(--vf-primary);
+    min-height: 480px; display: flex; align-items: center; justify-content: center;
+    text-align: center; color: #fff; position: relative;
+}
+.vf-hero::before { content: ''; position: absolute; inset: 0; background: rgba(10,37,64,.35); }
+.vf-hero-inner { position: relative; z-index: 1; }
+.vf-hero h1 { font-size: 40px; margin: 0 0 12px; }
+.vf-hero-price { font-size: 20px; margin-bottom: 20px; }
+
+/* --- Buttons --- */
+.vf-btn { display: inline-block; padding: 14px 32px; border-radius: 4px; text-decoration: none; font-weight: 600; border: none; cursor: pointer; }
+.vf-btn-primary { background: var(--vf-accent); color: #fff; }
+.vf-btn-primary:hover { background: #008c44; color: #fff; }
+
+/* --- Overview --- */
+.vf-rich-text { font-size: 16px; line-height: 1.8; color: #333; }
+
+/* --- Hero Specs Grid --- */
+.vf-hero-specs { background: var(--vf-bg-light); }
+.vf-specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px; text-align: center; }
+.vf-spec-item { display: flex; flex-direction: column; }
+.vf-spec-value { font-size: 22px; font-weight: 700; color: var(--vf-primary); }
+.vf-spec-label { font-size: 13px; color: #666; margin-top: 6px; }
+
+/* --- Colors --- */
+.vf-colors { text-align: center; }
+.vf-color-preview img { max-width: 100%; height: auto; margin-bottom: 24px; }
+.vf-color-swatches { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.vf-swatch {
+    width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ddd; cursor: pointer;
+    transition: transform .15s;
+}
+.vf-swatch.is-active, .vf-swatch:hover { border-color: var(--vf-primary); transform: scale(1.15); }
+.vf-color-name { margin-top: 12px; font-weight: 600; color: var(--vf-primary); }
+
+/* --- Split sections (exterior/interior) --- */
+.vf-split { display: flex; gap: 40px; align-items: center; flex-wrap: wrap; }
+.vf-split-reverse { flex-direction: row-reverse; }
+.vf-split-media, .vf-split-text { flex: 1 1 380px; }
+.vf-split-media img { width: 100%; border-radius: 8px; }
+.vf-split-text h2 { text-align: left; }
+
+.vf-thumb-row { display: flex; gap: 12px; margin-top: 24px; overflow-x: auto; }
+.vf-thumb-row img { width: 160px; height: 100px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+
+/* --- Cards (performance/safety) --- */
+.vf-cards { background: var(--vf-bg-light); }
+.vf-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+.vf-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.vf-card img { width: 100%; height: 160px; object-fit: cover; }
+.vf-card h3 { font-size: 18px; margin: 16px 16px 8px; color: var(--vf-primary); }
+.vf-card p { font-size: 14px; color: #555; margin: 0 16px 16px; line-height: 1.6; }
+
+/* --- Compare tool --- */
+.vf-compare-form { background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 30px; }
+.vf-form-row { margin-bottom: 16px; }
+.vf-form-row label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+.vf-form-row select, .vf-form-row input {
+    width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px;
+}
+.vf-compare-result { margin-top: 24px; border-top: 1px solid #eee; padding-top: 20px; }
+.vf-result-item { display: flex; justify-content: space-between; padding: 8px 0; font-size: 15px; }
+.vf-result-highlight { font-weight: 700; color: var(--vf-accent); border-top: 1px dashed #ddd; margin-top: 8px; padding-top: 12px; }
+.vf-compare-note { font-size: 12px; color: #888; margin-top: 16px; }
+
+/* --- Spec tabs --- */
+.vf-tab-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; justify-content: center; }
+.vf-tab-btn {
+    padding: 10px 18px; border: 1px solid #ddd; background: #fff; border-radius: 20px;
+    cursor: pointer; font-size: 14px;
+}
+.vf-tab-btn.is-active { background: var(--vf-primary); color: #fff; border-color: var(--vf-primary); }
+.vf-tab-panel { display: none; }
+.vf-tab-panel.is-active { display: block; }
+.vf-spec-table { width: 100%; border-collapse: collapse; }
+.vf-spec-table td { padding: 12px 8px; border-bottom: 1px solid #eee; font-size: 14px; }
+.vf-spec-table td:first-child { color: #777; width: 50%; }
+.vf-spec-table td:last-child { font-weight: 600; color: var(--vf-primary); }
+
+/* --- Gallery --- */
+.vf-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.vf-gallery-grid img { width: 100%; height: 160px; object-fit: cover; border-radius: 6px; }
+
+/* --- Lead form --- */
+.vf-lead-form { background: var(--vf-primary); color: #fff; text-align: center; }
+.vf-lead-form h2 { color: #fff; }
+
+@media (max-width: 640px) {
+    .vf-hero h1 { font-size: 28px; }
+    .vf-split, .vf-split-reverse { flex-direction: column; }
+}

@@ -1,0 +1,161 @@
+<!-- ===== BLOCK 1: HERO BANNER SLIDER ===== -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<style>
+/* === FULL-WIDTH BREAKOUT (thoát khỏi container Elementor/UX Builder) === */
+.vf-hero-wrap {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+  overflow: hidden;
+}
+.vf-hero-wrap .swiper { width:100%; height:580px; }
+.vf-hero-wrap .swiper-slide {
+  position:relative; background-size:cover; background-position:center;
+  display:flex; align-items:center;
+}
+.vf-slide-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(90deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.05) 65%);
+}
+.vf-slide-content {
+  position:relative; z-index:2;
+  max-width:560px; padding:0 60px; color:#fff;
+}
+.vf-slide-tag {
+  display:inline-block; background:#c02428; color:#fff;
+  font-size:11px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; padding:4px 14px;
+  border-radius:2px; margin-bottom:14px;
+}
+.vf-slide-title {
+  font-size:2.8rem; font-weight:800; line-height:1.2;
+  margin:0 0 14px; text-shadow:0 2px 8px rgba(0,0,0,0.4);
+}
+.vf-slide-sub { font-size:1.05rem; margin-bottom:26px; opacity:.9; }
+.vf-slide-btns { display:flex; gap:14px; flex-wrap:wrap; }
+.vf-slide-btns a {
+  padding:12px 30px; border-radius:4px; font-weight:700;
+  font-size:.9rem; text-decoration:none; transition:all .3s;
+  display:inline-block; cursor:pointer;
+}
+.vf-btn-red { background:#c02428; color:#fff; border:2px solid #c02428; }
+.vf-btn-red:hover { background:#9b1b1e; border-color:#9b1b1e; color:#fff; }
+.vf-btn-wh { background:transparent; color:#fff; border:2px solid #fff; }
+.vf-btn-wh:hover { background:#fff; color:#c02428; }
+.vf-hero-wrap .swiper-pagination-bullet { background:#fff; opacity:.6; }
+.vf-hero-wrap .swiper-pagination-bullet-active {
+  opacity:1; background:#c02428; width:22px; border-radius:3px;
+}
+.vf-hero-wrap .swiper-button-prev,
+.vf-hero-wrap .swiper-button-next {
+  color:#fff; background:rgba(0,0,0,.3);
+  width:42px; height:42px; border-radius:50%;
+}
+.vf-hero-wrap .swiper-button-prev::after,
+.vf-hero-wrap .swiper-button-next::after { font-size:16px; }
+/* === RESPONSIVE === */
+@media(max-width:1024px){
+  .vf-hero-wrap .swiper{height:480px;}
+  .vf-slide-title{font-size:2.2rem;}
+}
+@media(max-width:768px){
+  .vf-hero-wrap .swiper{height:360px;}
+  .vf-slide-title{font-size:1.6rem;}
+  .vf-slide-content{padding:0 20px; max-width:100%;}
+  .vf-slide-sub{font-size:.9rem; margin-bottom:18px;}
+  .vf-slide-btns a{padding:10px 20px; font-size:.82rem;}
+  .vf-hero-wrap .swiper-button-prev,
+  .vf-hero-wrap .swiper-button-next{display:none;}
+}
+@media(max-width:480px){
+  .vf-hero-wrap .swiper{height:300px;}
+  .vf-slide-title{font-size:1.3rem;}
+  .vf-slide-tag{font-size:9px;}
+  .vf-slide-btns{gap:8px;}
+  .vf-slide-btns a{padding:9px 16px; font-size:.78rem;}
+}
+</style>
+
+<div class="vf-hero-wrap">
+  <div class="swiper vf-hero-swiper">
+    <div class="swiper-wrapper">
+
+      <!-- Slide 1 -->
+      <div class="swiper-slide" style="background-image:url('https://vinfasttanuyen.vn/wp-content/uploads/2024/01/banner-vf9.jpg');">
+        <div class="vf-slide-overlay"></div>
+        <div class="vf-slide-content">
+          <span class="vf-slide-tag">Xe điện hạng sang</span>
+          <h2 class="vf-slide-title">VINFAST VF 9<br>Đẳng cấp không giới hạn</h2>
+          <p class="vf-slide-sub">Công suất 300kW · Phạm vi 505km · AWD toàn thời gian</p>
+          <div class="vf-slide-btns">
+            <a href="/dong-xe/dong-co-dien/vinfast-vf-9/" class="vf-btn-red">KHÁM PHÁ NGAY</a>
+            <a href="/dang-ky-lai-thu/" class="vf-btn-wh">ĐĂNG KÝ LÁI THỬ</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="swiper-slide" style="background-image:url('https://vinfasttanuyen.vn/wp-content/uploads/2024/01/banner-vf8.jpg');">
+        <div class="vf-slide-overlay"></div>
+        <div class="vf-slide-content">
+          <span class="vf-slide-tag">Bán chạy số 1</span>
+          <h2 class="vf-slide-title">VINFAST VF 8<br>Công nghệ tương lai</h2>
+          <p class="vf-slide-sub">Công suất 260–300kW · AWD · Phạm vi 457–471km WLTP</p>
+          <div class="vf-slide-btns">
+            <a href="/dong-xe/dong-co-dien/vinfast-vf-8/" class="vf-btn-red">KHÁM PHÁ NGAY</a>
+            <a href="/dang-ky-lai-thu/" class="vf-btn-wh">ĐĂNG KÝ LÁI THỬ</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="swiper-slide" style="background-image:url('https://vinfasttanuyen.vn/wp-content/uploads/2024/01/banner-vf6.jpg');">
+        <div class="vf-slide-overlay"></div>
+        <div class="vf-slide-content">
+          <span class="vf-slide-tag">Lựa chọn thông minh</span>
+          <h2 class="vf-slide-title">VINFAST VF 6<br>Phong cách hiện đại</h2>
+          <p class="vf-slide-sub">Giá từ 689.000.000 VNĐ · Ưu đãi hấp dẫn tháng này</p>
+          <div class="vf-slide-btns">
+            <a href="/dong-xe/dong-co-dien/vinfast-vf-6/" class="vf-btn-red">KHÁM PHÁ NGAY</a>
+            <a href="/dang-ky-lai-thu/" class="vf-btn-wh">ĐĂNG KÝ LÁI THỬ</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="swiper-slide" style="background-image:url('https://vinfasttanuyen.vn/wp-content/uploads/2024/01/banner-vf3.jpg');">
+        <div class="vf-slide-overlay"></div>
+        <div class="vf-slide-content">
+          <span class="vf-slide-tag">Nhỏ gọn · Đô thị</span>
+          <h2 class="vf-slide-title">VINFAST VF 3<br>Nhỏ gọn, lớn trải nghiệm</h2>
+          <p class="vf-slide-sub">Giá chỉ từ 299.000.000 VNĐ · Xe điện mini đô thị</p>
+          <div class="vf-slide-btns">
+            <a href="/dong-xe/dong-co-dien/vinfast-vf-3/" class="vf-btn-red">KHÁM PHÁ NGAY</a>
+            <a href="/dang-ky-lai-thu/" class="vf-btn-wh">ĐĂNG KÝ LÁI THỬ</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+(function(){
+  var swiper = new Swiper('.vf-hero-swiper', {
+    loop: true,
+    autoplay: { delay: 5000, disableOnInteraction: false },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+    speed: 800
+  });
+})();
+</script>
+<!-- ===== END BLOCK 1 ===== -->

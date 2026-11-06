@@ -1,0 +1,118 @@
+/*
+Theme Name:           Flatsome
+Theme URI:            http://flatsome.uxthemes.com
+Author:               UX-Themes
+Author URI:           https://uxthemes.com
+Description:          Multi-Purpose Responsive WooCommerce Theme
+Version:              3.20.2
+Requires at least:    6.4
+Requires PHP:         7.4
+WC requires at least: 8.3
+Text Domain:          flatsome
+License:              https://themeforest.net/licenses
+License URI:          https://themeforest.net/licenses
+*/
+
+
+/***************
+All custom CSS should be added to Flatsome > Advanced > Custom CSS,
+or in the style.css of a Child Theme.
+***************/
+
+
+
+@media (max-width: 768px) {
+    /* 1. Fix lỗi Popup Maker bị tràn viền */
+    .pum-container.popmake {
+        min-width: 0px !important;
+        width: 95% !important;
+        max-width: 95% !important;
+        left: 2.5% !important;
+        transform: none !important;
+    }
+
+    /* 2. Đổi màu chữ menu sidebar trên điện thoại thành màu đen và làm sáng menu con */
+    .mobile-sidebar .nav-sidebar > li > a {
+        color: #000000 !important;
+        font-weight: bold;
+    }
+    .mobile-sidebar .nav-sidebar li.menu-item-has-children > a:after,
+    .mobile-sidebar .nav-sidebar li.nav-dropdown-toggle > a:after {
+        border-color: #000000 !important;
+    }
+    .mobile-sidebar .nav-sidebar {
+        color: #000000 !important;
+    }
+    
+    /* Thiết kế lại Menu Con (Sub-menu) di động cực kỳ sang trọng */
+    .mobile-sidebar .nav-sidebar ul.children,
+    .mobile-sidebar .nav-sidebar ul.sub-menu {
+        background-color: #f7f8fa !important; /* Nền xám nhạt cao cấp */
+        border-top: 1px solid #eaeaea;
+        border-bottom: 1px solid #eaeaea;
+        padding: 5px 0 !important;
+    }
+    .mobile-sidebar .nav-sidebar ul.children li a,
+    .mobile-sidebar .nav-sidebar ul.sub-menu li a {
+        color: #444444 !important; /* Chữ xám đậm dễ nhìn */
+        font-weight: 500 !important;
+        font-size: 0.92rem !important;
+        padding-left: 30px !important; /* Thụt lề thụ cấp rõ ràng */
+        border-bottom: none !important;
+    }
+    /* Hiệu ứng hover và active cho menu con */
+    .mobile-sidebar .nav-sidebar ul.children li a:hover,
+    .mobile-sidebar .nav-sidebar ul.sub-menu li a:hover {
+        color: #da251d !important; /* Chữ chuyển đỏ Vinfast khi bấm/hover */
+        background-color: #f1f2f5 !important;
+    }
+
+    /* 3. Fix lỗi phần sản phẩm xe đè lên chữ và nút bấm bị khổng lồ */
+    .page-id-133 .banner-layers {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 30px 0 0 0 !important;
+    }
+    .page-id-133 .banner-layers .text-box {
+        position: relative !important;
+        transform: none !important;
+        width: 100% !important;
+        left: auto !important;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+    }
+    .page-id-133 .text-box .text-inner {
+        padding: 0 15px 20px 15px !important;
+        text-align: center !important;
+    }
+    .page-id-133 .banner-text-animate .button {
+        width: auto !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 10px 25px !important;
+        border-radius: 50px !important;
+        height: auto !important;
+        min-height: 42px !important;
+        margin-top: 10px !important;
+    }
+
+    /* 4. Thu nhỏ logo trên di động để tránh đè vào nội dung/banner */
+    .header-main .logo,
+    #logo {
+        max-width: 110px !important; /* Giảm chiều rộng container logo trên di động */
+        transition: all 0.3s ease;
+    }
+    .header-main .logo img,
+    #logo img,
+    .header-logo img {
+        max-height: 45px !important; /* Giới hạn chiều cao tối đa của ảnh logo */
+        height: auto !important;
+        object-fit: contain !important;
+    }
+    .logo a {
+        padding: 5px 10px !important; /* Giảm khoảng đệm xung quanh logo */
+    }
+}

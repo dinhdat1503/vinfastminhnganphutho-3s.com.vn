@@ -1,0 +1,226 @@
+<!-- ===== BLOCK 2: KHÁM PHÁ CÁC DÒNG XE VINFAST ===== -->
+<style>
+/* === FULL-WIDTH BREAKOUT === */
+.vf-cars-section {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+  background: #f8f8f8;
+  padding: 60px 0;
+}
+.vf-cars-inner { max-width:1200px; margin:0 auto; padding:0 24px; }
+.vf-cars-head { text-align:center; margin-bottom:40px; }
+.vf-cars-head h2 {
+  font-size:1.8rem; font-weight:800; color:#c02428;
+  text-transform:uppercase; letter-spacing:1px; margin:0 0 12px;
+}
+.vf-cars-head p { color:#555; font-size:.95rem; line-height:1.7; max-width:680px; margin:0 auto; }
+.vf-cars-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+}
+.vf-car-card {
+  background:#fff; border-radius:10px; overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+  transition:transform .3s, box-shadow .3s;
+  border:1px solid #f0f0f0;
+}
+.vf-car-card:hover {
+  transform:translateY(-6px);
+  box-shadow:0 12px 32px rgba(0,0,0,.14);
+}
+.vf-car-card .car-img {
+  position:relative; overflow:hidden;
+  background:#f7f7f7; aspect-ratio:16/9;
+}
+.vf-car-card .car-img img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform .5s ease;
+}
+.vf-car-card:hover .car-img img { transform:scale(1.06); }
+.vf-car-card .car-badge {
+  position:absolute; top:10px; left:10px;
+  background:#c02428; color:#fff;
+  font-size:10px; font-weight:700; letter-spacing:1px;
+  padding:3px 10px; border-radius:2px; text-transform:uppercase;
+}
+.vf-car-card .car-body { padding:18px 20px; }
+.vf-car-card .car-name {
+  font-size:1.1rem; font-weight:800;
+  text-transform:uppercase; color:#1a1a2e; margin:0 0 4px;
+}
+.vf-car-card .car-price {
+  color:#c02428; font-weight:700; font-size:.95rem; margin-bottom:14px;
+}
+.vf-car-card .car-actions { display:flex; gap:10px; }
+.vf-car-card .car-actions a {
+  flex:1; text-align:center; padding:9px 6px;
+  border-radius:4px; font-size:.82rem; font-weight:700;
+  text-decoration:none; transition:all .3s; display:block;
+}
+.car-btn-fill { background:#c02428; color:#fff !important; }
+.car-btn-fill:hover { background:#9b1b1e !important; }
+.car-btn-line { border:2px solid #c02428; color:#c02428 !important; }
+.car-btn-line:hover { background:#c02428 !important; color:#fff !important; }
+.vf-view-all-wrap { text-align:center; margin-top:36px; }
+.vf-view-all-wrap a {
+  display:inline-block; background:#c02428; color:#fff !important;
+  padding:13px 44px; border-radius:4px; font-weight:700;
+  text-decoration:none; letter-spacing:.5px; transition:background .3s;
+}
+.vf-view-all-wrap a:hover { background:#9b1b1e !important; }
+/* === RESPONSIVE === */
+/* Tablet (768px - 1024px): 2 cột */
+@media(max-width:1024px){
+  .vf-cars-grid { grid-template-columns:repeat(2,1fr); gap:20px; }
+  .vf-cars-section { padding:48px 0; }
+}
+/* Mobile lớn (480px - 768px): 2 cột nhỏ */
+@media(max-width:768px){
+  .vf-cars-grid { grid-template-columns:repeat(2,1fr); gap:16px; }
+  .vf-cars-head h2 { font-size:1.4rem; }
+  .vf-cars-section { padding:40px 0; }
+  .vf-car-card .car-actions { flex-direction:column; gap:8px; }
+  .vf-car-card .car-actions a { flex:none; }
+}
+/* Mobile nhỏ (< 480px): 1 cột */
+@media(max-width:480px){
+  .vf-cars-grid { grid-template-columns:1fr; gap:16px; }
+  .vf-cars-inner { padding:0 16px; }
+  .vf-cars-head h2 { font-size:1.25rem; }
+  .vf-car-card .car-actions { flex-direction:row; }
+  .vf-view-all-wrap a { padding:11px 30px; font-size:.9rem; }
+}
+</style>
+
+<div class="vf-cars-section">
+  <div class="vf-cars-inner">
+
+    <div class="vf-cars-head">
+      <h2>🚗 Khám phá các dòng xe VinFast</h2>
+      <p>VinFast Tân Uyên là Showroom 3S trực thuộc Oto Vinfast Kim Nhật Phát. Địa chỉ tại 1121 ĐT746, Khánh Bình, Tân Uyên, Bình Dương.</p>
+    </div>
+
+    <div class="vf-cars-grid">
+
+      <!-- VF 3 -->
+      <div class="vf-car-card">
+        <div class="car-img">
+          <img src="https://file.hstatic.net/200000599323/file/vinfast-vf3-2024_faef7db1d0784d16bed0e1df15d94fa7.png" alt="VinFast VF 3" loading="lazy"/>
+          <span class="car-badge">Điện</span>
+        </div>
+        <div class="car-body">
+          <div class="car-name">VinFast VF 3</div>
+          <div class="car-price">Giá từ: 299.000.000 VNĐ</div>
+          <div class="car-actions">
+            <a href="/du-toan-chi-phi/" class="car-btn-fill">Dự toán chi phí</a>
+            <a href="/dang-ky-lai-thu/" class="car-btn-line">Lái thử</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VF 5 -->
+      <div class="vf-car-card">
+        <div class="car-img">
+          <img src="https://file.hstatic.net/200000599323/file/vinfast-vf5-2024_a8e0b2c1d2a04c55a1b5e9d0c3f87654.png" alt="VinFast VF 5" loading="lazy"/>
+          <span class="car-badge">Điện</span>
+        </div>
+        <div class="car-body">
+          <div class="car-name">VinFast VF 5</div>
+          <div class="car-price">Giá từ: 529.000.000 VNĐ</div>
+          <div class="car-actions">
+            <a href="/du-toan-chi-phi/" class="car-btn-fill">Dự toán chi phí</a>
+            <a href="/dang-ky-lai-thu/" class="car-btn-line">Lái thử</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VF 6 -->
+      <div class="vf-car-card">
+        <div class="car-img">
+          <img src="https://file.hstatic.net/200000599323/file/vf6_hero_d65a2c5e2b3f4a0ea8b1c9d7e6f54321.png" alt="VinFast VF 6" loading="lazy"/>
+          <span class="car-badge">Điện</span>
+        </div>
+        <div class="car-body">
+          <div class="car-name">VinFast VF 6</div>
+          <div class="car-price">Giá từ: 689.000.000 VNĐ</div>
+          <div class="car-actions">
+            <a href="/du-toan-chi-phi/" class="car-btn-fill">Dự toán chi phí</a>
+            <a href="/dang-ky-lai-thu/" class="car-btn-line">Lái thử</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VF 7 -->
+      <div class="vf-car-card">
+        <div class="car-img">
+          <img src="https://file.hstatic.net/200000599323/file/vf7_b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6.png" alt="VinFast VF 7" loading="lazy"/>
+          <span class="car-badge">Điện</span>
+        </div>
+        <div class="car-body">
+          <div class="car-name">VinFast VF 7</div>
+          <div class="car-price">Giá từ: 799.000.000 VNĐ</div>
+          <div class="car-actions">
+            <a href="/du-toan-chi-phi/" class="car-btn-fill">Dự toán chi phí</a>
+            <a href="/dang-ky-lai-thu/" class="car-btn-line">Lái thử</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VF 8 -->
+      <div class="vf-car-card">
+        <div class="car-img">
+          <img src="https://file.hstatic.net/200000599323/file/vf8_hero_abcdef1234567890abcdef1234567890.png" alt="VinFast VF 8" loading="lazy"/>
+          <span class="car-badge">Điện</span>
+        </div>
+        <div class="car-body">
+          <div class="car-name">VinFast VF 8</div>
+          <div class="car-price">Giá từ: 1.019.000.000 VNĐ</div>
+          <div class="car-actions">
+            <a href="/du-toan-chi-phi/" class="car-btn-fill">Dự toán chi phí</a>
+            <a href="/dang-ky-lai-thu/" class="car-btn-line">Lái thử</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VF 9 -->
+      <div class="vf-car-card">
+        <div class="car-img">
+          <img src="https://file.hstatic.net/200000599323/file/vf9_hero_fedcba9876543210fedcba9876543210.png" alt="VinFast VF 9" loading="lazy"/>
+          <span class="car-badge">Điện · Flagship</span>
+        </div>
+        <div class="car-body">
+          <div class="car-name">VinFast VF 9</div>
+          <div class="car-price">Giá từ: 1.499.000.000 VNĐ</div>
+          <div class="car-actions">
+            <a href="/du-toan-chi-phi/" class="car-btn-fill">Dự toán chi phí</a>
+            <a href="/dang-ky-lai-thu/" class="car-btn-line">Lái thử</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VF MPV 7 -->
+      <div class="vf-car-card">
+        <div class="car-img">
+          <img src="/wp-content/themes/flatsome/assets/images/cars/mpv7.png" alt="VinFast VF MPV 7" loading="lazy"/>
+          <span class="car-badge">Điện</span>
+        </div>
+        <div class="car-body">
+          <div class="car-name">VinFast VF MPV 7</div>
+          <div class="car-price">Giá từ: Liên hệ</div>
+          <div class="car-actions">
+            <a href="/du-toan-chi-phi/" class="car-btn-fill">Dự toán chi phí</a>
+            <a href="/dang-ky-lai-thu/" class="car-btn-line">Lái thử</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end grid -->
+
+    <div class="vf-view-all-wrap">
+      <a href="/san-pham/">Xem tất cả sản phẩm &rarr;</a>
+    </div>
+
+  </div>
+</div>
+<!-- ===== END BLOCK 2 ===== -->
