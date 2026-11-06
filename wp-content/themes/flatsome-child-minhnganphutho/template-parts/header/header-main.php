@@ -272,29 +272,29 @@ $uploads_url = content_url('/uploads/official_cars/common');
       </a>
     </div>
 
-    <style>
-      /* Desktop: hiện full text, ẩn mobile text */
+  </div>
+
+  <style>
+    /* Desktop: hiện full text, ẩn mobile text */
+    .vf-header-btn-text-desktop {
+      display: inline;
+    }
+
+    .vf-header-btn-text-mobile {
+      display: none;
+    }
+
+    /* Mobile/Tablet: hiện text ngắn gọn, button chuẩn touch target */
+    @media (max-width: 849px) {
       .vf-header-btn-text-desktop {
-        display: inline;
+        display: none !important;
       }
 
       .vf-header-btn-text-mobile {
-        display: none;
+        display: inline !important;
       }
-
-      /* Mobile/Tablet: hiện text ngắn gọn, button chuẩn touch target */
-      @media (max-width: 849px) {
-        .vf-header-btn-text-desktop {
-          display: none !important;
-        }
-
-        .vf-header-btn-text-mobile {
-          display: inline !important;
-        }
-      }
-    </style>
-
-  </div>
+    }
+  </style>
 </div>
 
 <!-- OFF-CANVAS MOBILE MENU SLIDE-OUT (EXACT DESIGN MATCHING SAMPLE) -->

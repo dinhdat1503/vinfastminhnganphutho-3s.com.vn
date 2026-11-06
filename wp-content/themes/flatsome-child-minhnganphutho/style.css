@@ -11623,19 +11623,33 @@ input:checked + .vf-slider:before {
     overflow: visible !important;
   }
 
-  /* Inner Grid 3 vùng cân xứng quang học: minmax(44px, 1fr) auto minmax(44px, 1fr) */
+  /* Inner Grid 3 vùng cân xứng quang học & căn giữa tuyệt đối theo trục dọc */
   .header-main .header-inner,
   .header-main .flex-row {
     display: grid !important;
     grid-template-columns: minmax(44px, 1fr) auto minmax(44px, 1fr) !important;
+    grid-template-rows: 1fr !important;
     align-items: center !important;
+    align-content: center !important;
     height: 66px !important;
     min-height: 66px !important;
     max-width: 100% !important;
     padding: 0 16px !important;
     margin: 0 auto !important;
-    gap: 8px !important;
+    column-gap: 8px !important;
+    row-gap: 0 !important;
     overflow: visible !important;
+  }
+
+  /* Triệt tiêu clearfix pseudo-elements của Flatsome/Bootstrap (.container:after) biến thành grid item thừa ở row 2 */
+  .header-main .header-inner::before,
+  .header-main .header-inner::after,
+  .header-main .flex-row::before,
+  .header-main .flex-row::after {
+    display: none !important;
+    content: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 
   /* 1. LEFT — HAMBURGER MENU (Touch target >= 44x44px) */
@@ -11840,7 +11854,8 @@ input:checked + .vf-slider:before {
   .header-main .header-inner,
   .header-main .flex-row {
     padding: 0 10px !important;
-    gap: 6px !important;
+    column-gap: 6px !important;
+    row-gap: 0 !important;
   }
 
   .vf-mobile-toggle {
